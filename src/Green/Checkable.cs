@@ -175,7 +175,7 @@ namespace Green
     /// <param name="value">The value to compare using <see cref="EqualityComparer{T}.Default"/></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<T> Is<T>(this Check<T> check, T value) where T : IEquatable<T> =>
-      check.Is(value, null);
+      check.Is(value, EqualityComparer<T>.Default);
 
     /// <summary>
     /// Checks if the target is not equal to <paramref name="value"/> using <see cref="EqualityComparer{T}.Default"/>
@@ -185,7 +185,7 @@ namespace Green
     /// <param name="value">The value to compare using <see cref="EqualityComparer{T}.Default"/></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<T> IsNot<T>(this Check<T> check, T value) where T : IEquatable<T> =>
-      check.IsNot(value, null);
+      check.IsNot(value, EqualityComparer<T>.Default);
 
     /// <summary>
     /// Checks if the target is less than <paramref name="value"/> using <see cref="EqualityComparer{T}.Default"/>
@@ -195,7 +195,7 @@ namespace Green
     /// <param name="value">The value to compare using <see cref="EqualityComparer{T}.Default"/></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<T> IsLessThan<T>(this Check<T> check, T value) where T : IComparable<T> =>
-      check.IsLessThan(value, null);
+      check.IsLessThan(value, Comparer<T>.Default);
 
     /// <summary>
     /// Checks if the target is greater than <paramref name="value"/> using <see cref="EqualityComparer{T}.Default"/>
@@ -205,7 +205,7 @@ namespace Green
     /// <param name="value">The value to compare using <see cref="EqualityComparer{T}.Default"/></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<T> IsGreaterThan<T>(this Check<T> check, T value) where T : IComparable<T> =>
-      check.IsGreaterThan(value, null);
+      check.IsGreaterThan(value, Comparer<T>.Default);
 
     /// <summary>
     /// Checks if the target is at least <paramref name="minimum"/> using <see cref="EqualityComparer{T}.Default"/>
@@ -215,7 +215,7 @@ namespace Green
     /// <param name="minimum">The value to compare using <see cref="EqualityComparer{T}.Default"/></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<T> IsAtLeast<T>(this Check<T> check, T minimum) where T : IComparable<T> =>
-      check.IsAtLeast(minimum, null);
+      check.IsAtLeast(minimum, Comparer<T>.Default);
 
     /// <summary>
     /// Checks if the target is at most <paramref name="maximum"/> using <see cref="EqualityComparer{T}.Default"/>
@@ -225,7 +225,7 @@ namespace Green
     /// <param name="maximum">The value to compare using  <see cref="EqualityComparer{T}.Default"/></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<T> IsAtMost<T>(this Check<T> check, T maximum) where T : IComparable<T> =>
-      check.IsAtMost(maximum, null);
+      check.IsAtMost(maximum, Comparer<T>.Default);
 
     /// <summary>
     /// Checks if the target is at least <paramref name="minimum"/> and at most <paramref name="maximum"/> using <see cref="EqualityComparer{T}.Default"/>
@@ -236,7 +236,7 @@ namespace Green
     /// <param name="maximum">The maximum value to compare using <see cref="EqualityComparer{T}.Default"/></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<T> IsInRange<T>(this Check<T> check, T minimum, T maximum) where T : IComparable<T> =>
-      check.IsInRange(minimum, maximum, null);
+      check.IsInRange(minimum, maximum, Comparer<T>.Default);
 
     //
     // In
@@ -261,7 +261,7 @@ namespace Green
     /// <param name="values">The values to compare using <see cref="EqualityComparer{T}.Default"/></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<T> IsIn<T>(this Check<T> check, IEnumerable<T> values) =>
-      check.IsIn(values, null);
+      check.IsIn(values, EqualityComparer<T>.Default);
 
     /// <summary>
     /// Checks if <paramref name="values"/> contains the target using <see cref="EqualityComparer{T}.Default"/>
@@ -271,7 +271,7 @@ namespace Green
     /// <param name="values">The values to compare using <see cref="EqualityComparer{T}.Default"/></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<T> IsIn<T>(this Check<T> check, params T[] values) =>
-      check.IsIn(values, null);
+      check.IsIn(values, EqualityComparer<T>.Default);
 
     /// <summary>
     /// Checks if <paramref name="values"/> contains the target using <paramref name="comparer"/>
@@ -307,7 +307,7 @@ namespace Green
     /// <param name="values">The values to compare using <see cref="EqualityComparer{T}.Default"/></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<T> IsNotIn<T>(this Check<T> check, IEnumerable<T> values) =>
-      check.IsNotIn(values, null);
+      check.IsNotIn(values, EqualityComparer<T>.Default);
 
     /// <summary>
     /// Checks if <paramref name="values"/> does not contain the target using <paramref name="comparer"/>
@@ -328,7 +328,7 @@ namespace Green
     /// <param name="values">The values to compare using <see cref="EqualityComparer{T}.Default"/></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<T> IsNotIn<T>(this Check<T> check, params T[] values) =>
-      check.IsNotIn(values, null);
+      check.IsNotIn(values, EqualityComparer<T>.Default);
 
     //
     // Types

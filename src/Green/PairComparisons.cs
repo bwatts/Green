@@ -40,7 +40,7 @@ namespace Green
       readonly IEqualityComparer<TKey> _keyComparer;
       readonly IEqualityComparer<TValue> _valueComparer;
 
-      internal EqualityComparer(IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer)
+      internal EqualityComparer(IEqualityComparer<TKey>? keyComparer, IEqualityComparer<TValue>? valueComparer)
       {
         _keyComparer = keyComparer ?? EqualityComparer<TKey>.Default;
         _valueComparer = valueComparer ?? EqualityComparer<TValue>.Default;

@@ -25,10 +25,10 @@ namespace Green
 
     public IEnumerable<T> Target { get; }
 
-    public ExpectMany<T> That(Func<IEnumerable<T>, bool> check, IssueMany<T> issue = null) => Is(true, check, issue);
-    public ExpectMany<T> Not(Func<IEnumerable<T>, bool> check, IssueMany<T> issue = null) => Is(false, check, issue);
+    public ExpectMany<T> That(Func<IEnumerable<T>, bool> check, IssueMany<T>? issue = null) => Is(true, check, issue);
+    public ExpectMany<T> Not(Func<IEnumerable<T>, bool> check, IssueMany<T>? issue = null) => Is(false, check, issue);
 
-    ExpectMany<T> Is(bool expectedCheckResult, Func<IEnumerable<T>, bool> check, IssueMany<T> issue)
+    ExpectMany<T> Is(bool expectedCheckResult, Func<IEnumerable<T>, bool> check, IssueMany<T>? issue)
     {
       if(check != null)
       {
@@ -38,6 +38,10 @@ namespace Green
         {
           result = check(Target) == expectedCheckResult;
         }
+        //catch(ExpectException error)
+        //{
+        //  
+        //}
         catch(Exception error)
         {
           throw new ExpectException($"Failed to apply check to target value: {Text.Of(Target)}", error);
@@ -52,8 +56,8 @@ namespace Green
       return this;
     }
 
-    public static implicit operator bool(ExpectMany<T> expect) => true;
-    public static implicit operator bool?(ExpectMany<T> expect) => true;
+    public static implicit operator bool(ExpectMany<T> _) => true;
+    public static implicit operator bool?(ExpectMany<T> _) => true;
   }
 
   public struct ExpectMany<TKey, TValue>
@@ -68,10 +72,10 @@ namespace Green
 
     public IEnumerable<KeyValuePair<TKey, TValue>> Target { get; }
 
-    public ExpectMany<TKey, TValue> That(Func<IEnumerable<KeyValuePair<TKey, TValue>>, bool> check, IssueMany<TKey, TValue> issue = null) => Is(true, check, issue);
-    public ExpectMany<TKey, TValue> Not(Func<IEnumerable<KeyValuePair<TKey, TValue>>, bool> check, IssueMany<TKey, TValue> issue = null) => Is(false, check, issue);
+    public ExpectMany<TKey, TValue> That(Func<IEnumerable<KeyValuePair<TKey, TValue>>, bool> check, IssueMany<TKey, TValue>? issue = null) => Is(true, check, issue);
+    public ExpectMany<TKey, TValue> Not(Func<IEnumerable<KeyValuePair<TKey, TValue>>, bool> check, IssueMany<TKey, TValue>? issue = null) => Is(false, check, issue);
 
-    ExpectMany<TKey, TValue> Is(bool expectedCheckResult, Func<IEnumerable<KeyValuePair<TKey, TValue>>, bool> check, IssueMany<TKey, TValue> issue)
+    ExpectMany<TKey, TValue> Is(bool expectedCheckResult, Func<IEnumerable<KeyValuePair<TKey, TValue>>, bool> check, IssueMany<TKey, TValue>? issue)
     {
       if(check != null)
       {
@@ -81,6 +85,10 @@ namespace Green
         {
           result = check(Target) == expectedCheckResult;
         }
+        //catch(ExpectException error)
+        //{
+        //  
+        //}
         catch(Exception error)
         {
           throw new ExpectException($"Failed to apply check to target value: {Text.Of(Target)}", error);

@@ -15,14 +15,17 @@ namespace Green.Messages
       _items = items;
     }
 
-    public string ToString(string format, IFormatProvider formatProvider)
+    public override string ToString() =>
+      ToString(null, CultureInfo.CurrentCulture);
+
+    public string ToString(string? format, IFormatProvider? formatProvider)
     {
       var values = new List<string>();
       var totalLength = 0;
 
       foreach(var item in _items ?? Enumerable.Empty<T>())
       {
-        var value = Text.Of(item).ToString();
+        var value = Text.Of(item).ToString(format, formatProvider);
 
         values.Add(value);
         totalLength += value.Length;
@@ -52,9 +55,6 @@ namespace Green.Messages
       return text.AppendLine().Append("]").ToString();
     }
 
-    public override string ToString() =>
-      ToString(null, CultureInfo.CurrentCulture);
-
     public static implicit operator Text(TextMany<T> text) => text.ToString();
     public static implicit operator string(TextMany<T> text) => text.ToString();
   }
@@ -67,8 +67,11 @@ namespace Green.Messages
     {
       _pairs = pairs;
     }
+      
+    public override string ToString() =>
+      ToString(null, CultureInfo.CurrentCulture);
 
-    public string ToString(string format, IFormatProvider formatProvider)
+    public string ToString(string? format, IFormatProvider? formatProvider)
     {
       var text = new StringBuilder();
 
@@ -83,14 +86,11 @@ namespace Green.Messages
           text.AppendLine(",");
         }
 
-        text.Append(" ").Append(Text.Of(pair));
+        text.Append(" ").Append(Text.Format(pair, format, formatProvider));
       }
 
       return text.AppendLine().Append("}").ToString();
     }
-      
-    public override string ToString() =>
-      ToString(null, CultureInfo.CurrentCulture);
 
     public static implicit operator Text(TextMany<TKey, TValue> text) => text.ToString();
     public static implicit operator string(TextMany<TKey, TValue> text) => text.ToString();

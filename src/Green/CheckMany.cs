@@ -78,8 +78,8 @@ namespace Green
   public struct CheckMany<T> : CheckMany.ICheckMany<T>
   {
     readonly bool _expectedResult;
-    readonly CheckMany.ICheckMany<T> _previous;
-    readonly Func<IEnumerable<T>, bool> _next;
+    readonly CheckMany.ICheckMany<T>? _previous;
+    readonly Func<IEnumerable<T>, bool>? _next;
     readonly bool _expectedNext;
 
     internal CheckMany(IEnumerable<T> target, bool expectedResult)
@@ -197,8 +197,8 @@ namespace Green
   public struct CheckMany<TKey, TValue> : CheckMany.ICheckMany<TKey, TValue>
   {
     readonly bool _expectedResult;
-    readonly CheckMany.ICheckMany<TKey, TValue> _previous;
-    readonly Func<IEnumerable<KeyValuePair<TKey, TValue>>, bool> _next;
+    readonly CheckMany.ICheckMany<TKey, TValue>? _previous;
+    readonly Func<IEnumerable<KeyValuePair<TKey, TValue>>, bool>? _next;
     readonly bool _expectedNext;
 
     internal CheckMany(IEnumerable<KeyValuePair<TKey, TValue>> target, bool expectedResult)

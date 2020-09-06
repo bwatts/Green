@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Green
@@ -10,15 +9,11 @@ namespace Green
   {
     readonly Lazy<string> _stackTrace;
 
-    public ExpectException(string message) : base(message)
-    {
+    public ExpectException(string message) : base(message) =>
       _stackTrace = new Lazy<string>(FilterStackTrace);
-    }
 
-    public ExpectException(string message, Exception inner) : base(message, inner)
-    {
+    public ExpectException(string message, Exception inner) : base(message, inner) =>
       _stackTrace = new Lazy<string>(FilterStackTrace);
-    }
 
     public override string StackTrace => _stackTrace.Value;
 

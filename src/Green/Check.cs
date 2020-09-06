@@ -45,8 +45,8 @@ namespace Green
   public struct Check<T> : Check.ICheck<T>
   {
     readonly bool _expectedResult;
-    readonly Check.ICheck<T> _previous;
-    readonly Func<T, bool> _next;
+    readonly Check.ICheck<T>? _previous;
+    readonly Func<T, bool>? _next;
     readonly bool _expectedNext;
 
     internal Check(T target, bool expectedResult)

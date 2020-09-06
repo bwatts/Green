@@ -6,15 +6,11 @@ namespace Green.Messages
 {
   public struct Text
   {
-    readonly string _value;
+    readonly string? _value;
 
-    Text(string value)
-    {
-      _value = value;
-    }
+    Text(string? value) => _value = value;
 
     public override string ToString() => _value ?? "";
-    public string ToString(IFormatProvider provider) => _value?.ToString(provider) ?? "";
 
     public static implicit operator Text(string value) => new Text(value);
     public static implicit operator Text(FormattableString value) => new Text(value?.ToString());
@@ -24,6 +20,9 @@ namespace Green.Messages
     public static Text<TKey, TValue> Of<TKey, TValue>(KeyValuePair<TKey, TValue> pair) => new Text<TKey, TValue>(pair);
     public static TextMany<T> Many<T>(IEnumerable<T> items) => new TextMany<T>(items);
     public static TextMany<TKey, TValue> Many<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> pairs) => new TextMany<TKey, TValue>(pairs);
+
+    public static string Format<T>(T value, string? format, IFormatProvider? formatProvider) =>
+      Of(value).ToString(format, formatProvider);
 
     public const string Null = "<null>";
     public const string Empty = "\"\"";
@@ -62,20 +61,20 @@ Received: {received}";
       _value = value;
     }
 
-    public string ToString(string format, IFormatProvider formatProvider) =>
+    public override string ToString() =>
+      ToString(null, CultureInfo.CurrentCulture);
+
+    public string ToString(string? format, IFormatProvider? formatProvider) =>
       _value switch
       {
         null => "<null>",
         string s => $"\"{s}\"",
-        char c when char.IsControl(c) || char.IsHighSurrogate(c) || char.IsLowSurrogate(c) => @$"\u{(int) c:X4}",
+        char c when char.IsControl(c) || char.IsHighSurrogate(c) || char.IsLowSurrogate(c) => @$"\u{c:X4}",
         char c => $"'{c}'",
         bool b => b.ToString().ToLowerInvariant(),
         IFormattable formattable => formattable.ToString(format, formatProvider),
         _ => _value.ToString() ?? ""
       };
-
-    public override string ToString() =>
-      ToString(null, CultureInfo.CurrentCulture);
 
     public static implicit operator Text(Text<T> text) => text.ToString();
     public static implicit operator string(Text<T> text) => text.ToString();
@@ -90,11 +89,11 @@ Received: {received}";
       _pair = pair;
     }
 
-    public string ToString(string format, IFormatProvider formatProvider) =>
-      $"[{Text.Of(_pair.Key)}] = {Text.Of(_pair.Value)}";
-
     public override string ToString() =>
       ToString(null, CultureInfo.CurrentCulture);
+
+    public string ToString(string? format, IFormatProvider? formatProvider) =>
+      $"[{Text.Format(_pair.Key, format, formatProvider)}] = {Text.Format(_pair.Value, format, formatProvider)}";
 
     public static implicit operator Text(Text<TKey, TValue> text) => text.ToString();
     public static implicit operator string(Text<TKey, TValue> text) => text.ToString();
