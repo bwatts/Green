@@ -43,7 +43,8 @@ namespace Green
 
         if(trimmed.StartsWith("at Green.Expect`1")
           || trimmed.StartsWith("at Green.ExpectMany`1")
-          || trimmed.StartsWith("at Green.ExpectMany`2"))
+          || trimmed.StartsWith("at Green.ExpectMany`2")
+          || trimmed.StartsWith("at Green.Messages.IssueExtensions"))
         {
           continue;
         }

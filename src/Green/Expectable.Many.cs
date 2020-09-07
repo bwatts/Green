@@ -169,8 +169,9 @@ namespace Green
     //
 
     public static ExpectMany<T> HasCount<T>(this ExpectMany<T> expect, int value, IssueMany<T>? issue = null) =>
-      expect.That(t => t != null &&
-        Expect(t.GetOrFindCount()).Is(value, count => Expected(count, $"Count == {value}", $"Count == {count} ({TextMany(t)})")));
+      expect.That(t =>
+        t != null && Expect(t.GetOrFindCount()).Is(value, count => Expected(count, $"Count == {value}", $"Count == {count}")),
+        issue.ElseExpected("Counts are equal"));
 
     public static ExpectMany<T> HasCount<T>(this ExpectMany<T> expect, Action<Expect<int>> expectValue) =>
       expect.That(t => t != null && expectValue.Invoke(t.GetOrFindCount()));
@@ -615,8 +616,9 @@ namespace Green
     //
 
     public static ExpectMany<TKey, TValue> HasCount<TKey, TValue>(this ExpectMany<TKey, TValue> expect, int value, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null &&
-        Expect(t.GetOrFindCount()).Is(value, count => Expected(count, $"Count == {value}", $"Count == {count} ({TextMany(t)})")));
+      expect.That(t =>
+        t != null && Expect(t.GetOrFindCount()).Is(value, count => Expected(count, $"Count == {value}", $"Count == {count}")),
+        issue.ElseExpected("Counts are equal"));
 
     public static ExpectMany<TKey, TValue> HasCount<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<Expect<int>> expectValue) =>
       expect.That(t => t != null && expectValue.Invoke(t.GetOrFindCount()));

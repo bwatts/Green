@@ -86,16 +86,16 @@ namespace Green
     {
       if(check != null)
       {
-        bool result;
+        var result = false;
 
         try
         {
           result = check(Target) == expectedCheckResult;
         }
-        //catch(ExpectException error)
-        //{
-        //  
-        //}
+        catch(ExpectException error)
+        {
+          issue.Throw(Target, error);
+        }
         catch(Exception error)
         {
           throw new ExpectException($"Failed to apply check to target value: {Text.Of(Target)}", error);
@@ -165,16 +165,16 @@ namespace Green
     {
       if(check != null)
       {
-        bool result;
+        var result = false;
 
         try
         {
           result = check(Target) == expectedCheckResult;
         }
-        //catch(ExpectException error)
-        //{
-        //  
-        //}
+        catch(ExpectException error)
+        {
+          issue.Throw(Target, error);
+        }
         catch(Exception error)
         {
           throw new ExpectException($"Failed to apply check to target value: {Text.Of(Target)}", error);

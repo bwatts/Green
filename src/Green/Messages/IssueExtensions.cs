@@ -21,6 +21,30 @@ namespace Green.Messages
       throw new ExpectException(issue?.Invoke(target) ?? Text(target));
 
     /// <summary>
+    /// Throws an exception with the message of <paramref name="nested"/> and the message returned from <paramref name="issue"/> for <paramref name="target"/>
+    /// </summary>
+    /// <typeparam name="T">The type of target value</typeparam>
+    /// <param name="issue">A message describing the issue with <paramref name="target"/></param>
+    /// <param name="target">The value with the issue</param>
+    /// <param name="nested">The exception describing the unmet nested expectation</param>
+    /// <exception cref="ExpectException">Always thrown</exception>
+    public static void Throw<T>(this Issue<T>? issue, T target, ExpectException nested)
+    {
+      var message = nested?.ToString() ?? "";
+
+      if(issue != null)
+      {
+        message += $@"
+
+--> Outer expectation not met:
+
+{issue(target)}";
+      }
+
+      throw new ExpectException(message);
+    }
+
+    /// <summary>
     /// Throws an exception with the message returned from <paramref name="issue"/> for <paramref name="target"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
@@ -29,6 +53,30 @@ namespace Green.Messages
     /// <exception cref="ExpectException">Always thrown</exception>
     public static void Throw<T>(this IssueMany<T>? issue, IEnumerable<T> target) =>
       throw new ExpectException(issue?.Invoke(target) ?? TextMany(target));
+
+    /// <summary>
+    /// Throws an exception with the message of <paramref name="nested"/> and the message returned from <paramref name="issue"/> for <paramref name="target"/>
+    /// </summary>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
+    /// <param name="issue">A message describing the issue with <paramref name="target"/></param>
+    /// <param name="target">The sequence with the issue</param>
+    /// <param name="nested">The exception describing the unmet nested expectation</param>
+    /// <exception cref="ExpectException">Always thrown</exception>
+    public static void Throw<T>(this IssueMany<T>? issue, IEnumerable<T> target, ExpectException nested)
+    {
+      var message = nested?.ToString() ?? "";
+
+      if(issue != null)
+      {
+        message += $@"
+
+--> Outer expectation not met:
+
+{issue(target)}";
+      }
+
+      throw new ExpectException(message);
+    }
 
     /// <summary>
     /// Throws an exception with the message returned from <paramref name="issue"/> for <paramref name="target"/>
@@ -40,6 +88,31 @@ namespace Green.Messages
     /// <exception cref="ExpectException">Always thrown</exception>
     public static void Throw<TKey, TValue>(this IssueMany<TKey, TValue>? issue, IEnumerable<KeyValuePair<TKey, TValue>> target) =>
       throw new ExpectException(issue?.Invoke(target) ?? TextMany(target));
+
+    /// <summary>
+    /// Throws an exception with the message of <paramref name="nested"/> and the message returned from <paramref name="issue"/> for <paramref name="target"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="issue">A message describing the issue with <paramref name="target"/></param>
+    /// <param name="target">The dictionary with the issue</param>
+    /// <param name="nested">The exception describing the unmet nested expectation</param>
+    /// <exception cref="ExpectException">Always thrown</exception>
+    public static void Throw<TKey, TValue>(this IssueMany<TKey, TValue>? issue, IEnumerable<KeyValuePair<TKey, TValue>> target, ExpectException nested)
+    {
+      var message = nested?.ToString() ?? "";
+
+      if(issue != null)
+      {
+        message += $@"
+
+--> Outer expectation not met:
+
+{issue(target)}";
+      }
+
+      throw new ExpectException(message);
+    }
 
     //
     // Values
