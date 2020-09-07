@@ -19,7 +19,7 @@ namespace Green
     /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
     /// <see langword="true"/> if all subsequent operators return <see langword="true"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="target">The value to which the check applies</param>
     /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
     public static Check<T> Check<T>(T target) =>
@@ -29,7 +29,7 @@ namespace Green
     /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
     /// <see langword="true"/> if all subsequent operators return <see langword="false"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="target">The value to which the check applies</param>
     /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
     public static Check<T> CheckNot<T>(T target) =>
@@ -39,7 +39,7 @@ namespace Green
     /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
     /// <see langword="true"/> if all subsequent operators return <see langword="true"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="target">The sequence to which the check applies</param>
     /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
     public static CheckMany<T> CheckMany<T>(IEnumerable<T> target) =>
@@ -49,7 +49,7 @@ namespace Green
     /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
     /// <see langword="true"/> if all subsequent operators return <see langword="false"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="target">The sequence to which the check applies</param>
     /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
     public static CheckMany<T> CheckManyNot<T>(IEnumerable<T> target) =>
@@ -59,8 +59,8 @@ namespace Green
     /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
     /// <see langword="true"/> if all subsequent operators return <see langword="true"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="target">The dictionary to which the check applies</param>
     /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
     public static CheckMany<TKey, TValue> CheckMany<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> target) =>
@@ -70,8 +70,8 @@ namespace Green
     /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
     /// <see langword="true"/> if all subsequent operators are <see langword="false"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="target">The dictionary to which the check applies</param>
     /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
     public static CheckMany<TKey, TValue> CheckManyNot<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> target) =>
@@ -85,7 +85,7 @@ namespace Green
     /// Starts a query of <paramref name="target"/> that throws <see cref="ExpectException"/> if any subseqeuent
     /// operator returns <see langword="false"/>
     /// </summary>
-    /// <typeparam name="T">The type of expected value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="target">The expected value</param>
     /// <returns>An expectation applied to <paramref name="target"/></returns>
     public static Expect<T> Expect<T>(T target) =>
@@ -95,7 +95,7 @@ namespace Green
     /// Starts a query of <paramref name="target"/> that throws <see cref="ExpectException"/> if any subseqeuent
     /// operator returns <see langword="true"/>
     /// </summary>
-    /// <typeparam name="T">The type of expected value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="target">The expected value</param>
     /// <returns>An expectation applied to <paramref name="target"/></returns>
     public static Expect<T> ExpectNot<T>(T target) =>

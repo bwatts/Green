@@ -9,7 +9,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has an item that equals <paramref name="value"/> using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -19,7 +19,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has an item that equals <paramref name="value"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
@@ -30,7 +30,7 @@ namespace Green
     /// <summary>
     /// Checks if the target does not have an item that equals <paramref name="value"/> using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -40,7 +40,7 @@ namespace Green
     /// <summary>
     /// Checks if the target does not have an item that equals <paramref name="value"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
@@ -55,7 +55,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has all of the items in <paramref name="values"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="values">The values to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
@@ -66,7 +66,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has all of the items in <paramref name="values"/> using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="values">The values to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -76,7 +76,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has all of the items in <paramref name="values"/> using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="values">The values to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -86,7 +86,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has all of the items in <paramref name="values"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <param name="values">The values to compare</param>
@@ -97,7 +97,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has all items resulting in <see langword="true"/> from <paramref name="checkItem"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkItem">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -111,7 +111,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has any of the items in <paramref name="values"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="values">The values to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
@@ -122,7 +122,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has any of the items in <paramref name="values"/> using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="values">The values to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -132,7 +132,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has any of the items in <paramref name="values"/> using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="values">The values to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -142,7 +142,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has any of the items in <paramref name="values"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <param name="values">The values to compare</param>
@@ -153,7 +153,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has any items resulting in <see langword="true"/> from <paramref name="checkItem"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkItem">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -163,7 +163,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has any items
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<T> HasAny<T>(this CheckMany<T> check) =>
@@ -176,7 +176,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has none of the items in <paramref name="values"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="values">The values to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
@@ -187,7 +187,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has none of the items in <paramref name="values"/> using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="values">The values to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -197,7 +197,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has none of the items in <paramref name="values"/> using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="values">The values to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -207,7 +207,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has none of the items in <paramref name="values"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <param name="values">The values to compare</param>
@@ -218,7 +218,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has no items resulting in <see langword="true"/> from <paramref name="checkItem"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkItem">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -228,7 +228,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has no items
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<T> HasNone<T>(this CheckMany<T> check) =>
@@ -241,7 +241,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has all items resulting in <see langword="true"/> from <paramref name="predicate"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="predicate">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -251,7 +251,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has any items resulting in <see langword="true"/> from <paramref name="predicate"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="predicate">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -261,7 +261,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has no items resulting in <see langword="true"/> from <paramref name="predicate"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="predicate">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> check this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -271,7 +271,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has <paramref name="count"/> items resulting in <see langword="true"/> from <paramref name="predicate"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="count">The number of items that should result in <see langword="true"/> from <paramref name="predicate"/></param>
     /// <param name="predicate">The function that checks each item</param>
@@ -286,7 +286,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same items as <paramref name="items"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="items">The items to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
@@ -297,7 +297,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same items as <paramref name="items"/> using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="items">The items to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -307,7 +307,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same items as <paramref name="items"/> using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="items">The items to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -317,7 +317,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same items as <paramref name="items"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <param name="items">The items to compare</param>
@@ -332,7 +332,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same items in the same order as <paramref name="items"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="items">The items to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
@@ -343,7 +343,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same items in the same order as <paramref name="items"/> using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="items">The items to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -353,7 +353,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same items in the same order as <paramref name="items"/> using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="items">The items to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -363,7 +363,7 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same items in the same order as <paramref name="items"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <param name="items">The items to compare</param>
@@ -378,7 +378,7 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals <paramref name="value"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The count to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -388,7 +388,7 @@ namespace Green
     /// <summary>
     /// Checks if the target's count results in <see langword="true"/> from <paramref name="checkValue"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the count value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -398,7 +398,7 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 1
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<T> Has1<T>(this CheckMany<T> check) =>
@@ -407,7 +407,7 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 2
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<T> Has2<T>(this CheckMany<T> check) =>
@@ -416,7 +416,7 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 3
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<T> Has3<T>(this CheckMany<T> check) =>
@@ -425,7 +425,7 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 4
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<T> Has4<T>(this CheckMany<T> check) =>
@@ -434,7 +434,7 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 5
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<T> Has5<T>(this CheckMany<T> check) =>
@@ -443,7 +443,7 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 6
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<T> Has6<T>(this CheckMany<T> check) =>
@@ -452,7 +452,7 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 7
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<T> Has7<T>(this CheckMany<T> check) =>
@@ -461,7 +461,7 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 8
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<T> Has8<T>(this CheckMany<T> check) =>
@@ -470,7 +470,7 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 1 and if the item results in <see langword="true"/> from <paramref name="checkItem"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkItem">The function that checks the item</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -480,7 +480,7 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 2 and if the items result in <see langword="true"/> from <paramref name="checkItems"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkItems">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -490,7 +490,7 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 3 and if the items result in <see langword="true"/> from <paramref name="checkItems"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkItems">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -500,7 +500,7 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 4 and if the items result in <see langword="true"/> from <paramref name="checkItems"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkItems">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -510,7 +510,7 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 5 and if the items result in <see langword="true"/> from <paramref name="checkItems"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkItems">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -520,7 +520,7 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 6 and if the items result in <see langword="true"/> from <paramref name="checkItems"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkItems">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -530,7 +530,7 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 7 and if the items result in <see langword="true"/> from <paramref name="checkItems"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkItems">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -540,7 +540,7 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 8 and if the items result in <see langword="true"/> from <paramref name="checkItems"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkItems">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -554,8 +554,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has an item that equals <paramref name="pair"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pair">The pair to compare keys and values</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -565,8 +565,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has an item that equals <paramref name="pair"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pair">The pair to compare keys and values</param>
     /// <param name="comparer">The object that performs the comparison</param>
@@ -577,8 +577,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has an item that equals <paramref name="pair"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pair"></param>
     /// <param name="keyComparer">The object that performs key comparisons</param>
@@ -589,8 +589,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has an item that equals <paramref name="pair"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pair"></param>
     /// <param name="valueComparer">The object that performs value comparisons</param>
@@ -601,8 +601,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has an item that equals <paramref name="pair"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pair"></param>
     /// <param name="keyComparer">The object that performs key comparisons</param>
@@ -614,8 +614,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has a pair that equals <paramref name="key"/> and <paramref name="value"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="key">The key to compare</param>
     /// <param name="value">The value to compare</param>
@@ -626,8 +626,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has a pair that equals <paramref name="key"/> and <paramref name="value"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="key">The key to compare</param>
     /// <param name="value">The value to compare</param>
@@ -639,8 +639,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has a pair that equals <paramref name="key"/> and <paramref name="value"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="key">The key to compare</param>
     /// <param name="value">The value to compare</param>
@@ -652,8 +652,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has a pair that equals <paramref name="key"/> and <paramref name="value"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="key">The key to compare</param>
     /// <param name="value">The value to compare</param>
@@ -670,8 +670,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has all of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -681,8 +681,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has all of the items in <paramref name="pairs"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
@@ -693,8 +693,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has all of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <param name="keyComparer">The object that performs key comparisons</param>
@@ -705,8 +705,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has all of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <param name="valueComparer">The object that performs value comparisons</param>
@@ -717,8 +717,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has all of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <param name="keyComparer">The object that performs key comparisons</param>
@@ -730,8 +730,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has all of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -741,8 +741,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has all of the items in <paramref name="pairs"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <param name="pairs">The pairs to compare</param>
@@ -753,8 +753,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has all of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="keyComparer">The object that performs key comparisons</param>
     /// <param name="pairs">The pairs to compare</param>
@@ -765,8 +765,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has all of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <param name="pairs">The pairs to compare</param>
@@ -777,8 +777,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has all of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="keyComparer">The object that performs key comparisons</param>
     /// <param name="valueComparer">The object that performs value comparisons</param>
@@ -790,8 +790,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has all items resulting in <see langword="true"/> from <paramref name="checkPair"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkPair">The function that checks each pair</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -801,8 +801,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has all keys resulting in <see langword="true"/> from <paramref name="checkKeys"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkKeys"></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -812,8 +812,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has all values resulting in <see langword="true"/> from <paramref name="checkValues"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValues"></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -823,8 +823,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has all items resulting in <see langword="true"/> from <paramref name="checkPairs"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkPairs"></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -838,8 +838,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has any items
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> HasAny<TKey, TValue>(this CheckMany<TKey, TValue> check) =>
@@ -848,8 +848,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has any of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -859,8 +859,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has any of the items in <paramref name="pairs"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
@@ -871,8 +871,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has any of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <param name="keyComparer">The object that performs key comparisons</param>
@@ -883,8 +883,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has any of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <param name="valueComparer">The object that performs value comparisons</param>
@@ -895,8 +895,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has any of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <param name="keyComparer">The object that performs key comparisons</param>
@@ -908,8 +908,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has any of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -919,8 +919,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has any of the items in <paramref name="pairs"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <param name="pairs">The pairs to compare</param>
@@ -931,8 +931,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has any of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="keyComparer">The object that performs key comparisons</param>
     /// <param name="pairs">The pairs to compare</param>
@@ -943,8 +943,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has any of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <param name="pairs">The pairs to compare</param>
@@ -955,8 +955,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has any of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="keyComparer">The object that performs key comparisons</param>
     /// <param name="valueComparer">The object that performs value comparisons</param>
@@ -968,8 +968,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has any items resulting in <see langword="true"/> from <paramref name="checkPair"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkPair">The function that checks each pair</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -979,8 +979,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has any keys resulting in <see langword="true"/> from <paramref name="checkKey"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkKey"></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -990,8 +990,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has any values resulting in <see langword="true"/> from <paramref name="checkValue"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue"></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1001,8 +1001,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has any items resulting in <see langword="true"/> from <paramref name="checkPair"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkPair">The function that checks each pair</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1016,8 +1016,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has no items
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> HasNone<TKey, TValue>(this CheckMany<TKey, TValue> check) =>
@@ -1026,8 +1026,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has none of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1037,8 +1037,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has none of the items in <paramref name="pairs"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
@@ -1049,8 +1049,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has none of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <param name="keyComparer">The object that performs key comparisons</param>
@@ -1061,8 +1061,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has none of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <param name="valueComparer">The object that performs value comparisons</param>
@@ -1073,8 +1073,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has none of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <param name="keyComparer">The object that performs key comparisons</param>
@@ -1086,8 +1086,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has none of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1097,8 +1097,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has none of the items in <paramref name="pairs"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <param name="pairs">The pairs to compare</param>
@@ -1109,8 +1109,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has none of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="keyComparer">The object that performs key comparisons</param>
     /// <param name="pairs">The pairs to compare</param>
@@ -1121,8 +1121,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has none of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <param name="pairs">The pairs to compare</param>
@@ -1133,8 +1133,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has none of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="keyComparer">The object that performs key comparisons</param>
     /// <param name="valueComparer">The object that performs value comparisons</param>
@@ -1146,8 +1146,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has no items resulting in <see langword="true"/> from <paramref name="checkPair"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkPair">The function that checks each pair</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1157,8 +1157,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has no items resulting in <see langword="true"/> from <paramref name="checkKey"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkKey"></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1168,8 +1168,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has no values resulting in <see langword="true"/> from <paramref name="checkValue"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue"></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1179,8 +1179,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has no items resulting in <see langword="true"/> from <paramref name="checkPair"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkPair">The function that checks each pair</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1194,8 +1194,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has all pairs resulting in <see langword="true"/> from <paramref name="predicate"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="predicate">The function that checks each pair</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1205,8 +1205,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has all pairs resulting in <see langword="true"/> from <paramref name="predicate"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="predicate">The function that checks each pair</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1216,8 +1216,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has any pairs resulting in <see langword="true"/> from <paramref name="predicate"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="predicate">The function that checks each pair</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1227,8 +1227,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has any pairs resulting in <see langword="true"/> from <paramref name="predicate"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="predicate">The function that checks each pair</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1238,8 +1238,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has no pairs resulting in <see langword="true"/> from <paramref name="predicate"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="predicate">The function that checks each pair</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1249,8 +1249,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has no pairs resulting in <see langword="true"/> from <paramref name="predicate"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="predicate">The function that checks each pair</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1260,8 +1260,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has <paramref name="count"/> pairs resulting in <see langword="true"/> from <paramref name="predicate"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="count">The number of items that should result in <see langword="true"/> from <paramref name="predicate"/></param>
     /// <param name="predicate">The function that checks each pair</param>
@@ -1272,8 +1272,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has <paramref name="count"/> pairs resulting in <see langword="true"/> from <paramref name="predicate"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="count">The number of items that should result in <see langword="true"/> from <paramref name="predicate"/></param>
     /// <param name="predicate">The function that checks each pair</param>
@@ -1288,8 +1288,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same pairs as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1299,8 +1299,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same pairs as <paramref name="pairs"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
@@ -1311,8 +1311,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same pairs as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <param name="keyComparer">The object that performs key comparisons</param>
@@ -1323,8 +1323,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same pairs as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <param name="valueComparer">The object that performs value comparisons</param>
@@ -1335,8 +1335,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same pairs as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <param name="keyComparer">The object that performs key comparisons</param>
@@ -1348,8 +1348,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same pairs as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1359,8 +1359,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same pairs as <paramref name="pairs"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <param name="pairs">The pairs to compare</param>
@@ -1371,8 +1371,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same pairs as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="keyComparer">The object that performs key comparisons</param>
     /// <param name="pairs">The pairs to compare</param>
@@ -1383,8 +1383,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same pairs as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <param name="pairs">The pairs to compare</param>
@@ -1395,8 +1395,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same pairs as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="keyComparer">The object that performs key comparisons</param>
     /// <param name="valueComparer">The object that performs value comparisons</param>
@@ -1412,8 +1412,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same pairs in the same order as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1423,8 +1423,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same pairs in the same order as <paramref name="pairs"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
@@ -1435,8 +1435,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same pairs in the same order as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <param name="keyComparer">The object that performs key comparisons</param>
@@ -1447,8 +1447,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same pairs in the same order as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <param name="valueComparer">The object that performs value comparisons</param>
@@ -1459,8 +1459,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same pairs in the same order as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <param name="keyComparer">The object that performs key comparisons</param>
@@ -1472,8 +1472,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same pairs in the same order as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1483,8 +1483,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same pairs in the same order as <paramref name="pairs"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <param name="pairs">The pairs to compare</param>
@@ -1495,8 +1495,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same pairs in the same order as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="keyComparer">The object that performs key comparisons</param>
     /// <param name="pairs">The pairs to compare</param>
@@ -1507,8 +1507,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same pairs in the same order as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <param name="pairs">The pairs to compare</param>
@@ -1519,8 +1519,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has the same pairs in the same order as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="keyComparer">The object that performs key comparisons</param>
     /// <param name="valueComparer">The object that performs value comparisons</param>
@@ -1536,8 +1536,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has a key that equals <paramref name="key"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="key">The key to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
@@ -1555,8 +1555,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has a key that equals <paramref name="key"/> using <see cref="EqualityComparer{TKey}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="key">The key to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1566,8 +1566,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has a key that results in <see langword="true"/> from <paramref name="checkKey"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkKey">The function that checks each key</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1577,8 +1577,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has all keys in <paramref name="keys"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="keys">The keys to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
@@ -1596,8 +1596,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has all keys in <paramref name="keys"/> using <see cref="EqualityComparer{TKey}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="keys">The keys to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1607,8 +1607,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has all keys in <paramref name="keys"/> using <see cref="EqualityComparer{TKey}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="keys">The keys to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1618,8 +1618,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has all keys in <paramref name="keys"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <param name="keys">The keys to compare</param>
@@ -1634,8 +1634,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has a value that equals <paramref name="value"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
@@ -1646,8 +1646,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has a value that equals <paramref name="value"/> using <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1657,8 +1657,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has a value that results in <see langword="true"/> from <paramref name="checkValue"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks each value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1668,8 +1668,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has all values in <paramref name="values"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="values">The values to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
@@ -1680,8 +1680,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has all values in <paramref name="values"/> using <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="values">The values to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1691,8 +1691,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has all values in <paramref name="values"/> using <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="values">The values to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1702,8 +1702,8 @@ namespace Green
     /// <summary>
     /// Checks if the target has all values in <paramref name="values"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <param name="values">The values to compare</param>
@@ -1718,8 +1718,8 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals <paramref name="value"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value"></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1729,8 +1729,8 @@ namespace Green
     /// <summary>
     /// Checks if the target's count results in <see langword="true"/> from <paramref name="checkValue"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue"></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1740,8 +1740,8 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 1
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> Has1<TKey, TValue>(this CheckMany<TKey, TValue> check) =>
@@ -1750,8 +1750,8 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 2
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> Has2<TKey, TValue>(this CheckMany<TKey, TValue> check) =>
@@ -1760,8 +1760,8 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 3
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> Has3<TKey, TValue>(this CheckMany<TKey, TValue> check) =>
@@ -1770,8 +1770,8 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 4
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> Has4<TKey, TValue>(this CheckMany<TKey, TValue> check) =>
@@ -1780,8 +1780,8 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 5
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> Has5<TKey, TValue>(this CheckMany<TKey, TValue> check) =>
@@ -1790,8 +1790,8 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 6
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> Has6<TKey, TValue>(this CheckMany<TKey, TValue> check) =>
@@ -1800,8 +1800,8 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 7
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> Has7<TKey, TValue>(this CheckMany<TKey, TValue> check) =>
@@ -1810,8 +1810,8 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 8
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> Has8<TKey, TValue>(this CheckMany<TKey, TValue> check) =>
@@ -1820,8 +1820,8 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 1 and if the pair results in <see langword="true"/> from <paramref name="checkPair"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkPair">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1831,8 +1831,8 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 2 and if the pairs result in <see langword="true"/> from <paramref name="checkPairs"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkPairs">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1842,8 +1842,8 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 3 and if the pairs result in <see langword="true"/> from <paramref name="checkPairs"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkPairs">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1853,8 +1853,8 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 4 and if the pairs result in <see langword="true"/> from <paramref name="checkPairs"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkPairs">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1864,8 +1864,8 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 5 and if the pairs result in <see langword="true"/> from <paramref name="checkPairs"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkPairs">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1875,8 +1875,8 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 6 and if the pairs result in <see langword="true"/> from <paramref name="checkPairs"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkPairs">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1886,8 +1886,8 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 7 and if the pairs result in <see langword="true"/> from <paramref name="checkPairs"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkPairs">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1897,8 +1897,8 @@ namespace Green
     /// <summary>
     /// Checks if the target's count equals 8 and if the pairs result in <see langword="true"/> from <paramref name="checkPairs"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkPairs">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -1912,7 +1912,7 @@ namespace Green
     /// <summary>
     /// Calls the specified function with a <see cref="CheckMany{T}"/> referencing <paramref name="target"/>
     /// </summary>
-    /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="checkPairs">The function to invoke with a checked argument</param>
     /// <param name="target">The value of the checked argument</param>
     /// <returns>The result of calling <paramref name="checkPairs"/> with a checked argument</returns>
@@ -1922,8 +1922,8 @@ namespace Green
     /// <summary>
     /// Calls the specified function with a <see cref="CheckMany{TKey, TValue}"/> referencing <paramref name="target"/>
     /// </summary>
-    /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="checkPairs">The function to invoke with a checked argument</param>
     /// <param name="target">The value of the checked argument</param>
     /// <returns>The result of calling <paramref name="checkPairs"/> with a checked argument</returns>

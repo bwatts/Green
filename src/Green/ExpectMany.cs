@@ -5,7 +5,7 @@ using Green.Messages;
 namespace Green
 {
   /// <summary>
-  /// Applies queries to target sequences that that throw <see cref="ExpectException"/> if not met
+  /// Applies queries to target sequences that throw <see cref="ExpectException"/> if not met
   /// </summary>
   public static class ExpectMany
   {

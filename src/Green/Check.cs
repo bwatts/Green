@@ -11,7 +11,7 @@ namespace Green
     /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
     /// <see langword="true"/> if all subsequent operators return <see langword="true"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="target">The value to which the check applies</param>
     /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
     public static Check<T> That<T>(T target) =>
@@ -21,7 +21,7 @@ namespace Green
     /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
     /// <see langword="true"/> if all subsequent operators return <see langword="false"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="target">The value to which the check applies</param>
     /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
     public static Check<T> Not<T>(T target) =>

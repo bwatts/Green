@@ -28,10 +28,10 @@ namespace Green
     /// <summary>
     /// Checks if the target is not <see langword="null"/> and results in <see langword="true"/> from <paramref name="checkValue"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the value if present</param>
-    /// <returns></returns>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<T?> HasValue<T>(this Check<T?> check, Func<Check<T>, bool> checkValue) where T : struct =>
       check.That(t => t != null && checkValue != null && checkValue(Check.That(t.Value)));
 
@@ -42,7 +42,7 @@ namespace Green
     /// <summary>
     /// Checks if the target is <see langword="null"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<T> IsNull<T>(this Check<T> check) where T : class =>
@@ -51,7 +51,7 @@ namespace Green
     /// <summary>
     /// Checks if the target is <see langword="null"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<T?> IsNull<T>(this Check<T?> check) where T : struct =>
@@ -60,7 +60,7 @@ namespace Green
     /// <summary>
     /// Checks if the target is not <see langword="null"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<T> IsNotNull<T>(this Check<T> check) where T : class =>
@@ -69,7 +69,7 @@ namespace Green
     /// <summary>
     /// Checks if the target is not <see langword="null"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<T?> IsNotNull<T>(this Check<T?> check) where T : struct =>
@@ -82,7 +82,7 @@ namespace Green
     /// <summary>
     /// Checks if the target equals <paramref name="value"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare using <paramref name="comparer"/></param>
     /// <param name="comparer">The object that performs the comparison</param>
@@ -91,9 +91,9 @@ namespace Green
       check.That(t => Equals(t, value, comparer));
 
     /// <summary>
-    /// Checks if the target is not equal to <paramref name="value"/> using <paramref name="comparer"/>
+    /// Checks if the target does not equal <paramref name="value"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare using <paramref name="comparer"/></param>
     /// <param name="comparer">The object that performs the comparison</param>
@@ -104,7 +104,7 @@ namespace Green
     /// <summary>
     /// Checks if the target is less than <paramref name="value"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare using <paramref name="comparer"/></param>
     /// <param name="comparer">The object that performs the comparison</param>
@@ -115,7 +115,7 @@ namespace Green
     /// <summary>
     /// Checks if the target is greater than <paramref name="value"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare using <paramref name="comparer"/></param>
     /// <param name="comparer">The object that performs the comparison</param>
@@ -126,7 +126,7 @@ namespace Green
     /// <summary>
     /// Checks if the target is at least <paramref name="minimum"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="minimum">The value to compare using <paramref name="comparer"/></param>
     /// <param name="comparer">The object that performs the comparison</param>
@@ -137,7 +137,7 @@ namespace Green
     /// <summary>
     /// Checks if the target is at most <paramref name="maximum"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="maximum">The value to compare using <paramref name="comparer"/></param>
     /// <param name="comparer">The object that performs the comparison</param>
@@ -148,7 +148,7 @@ namespace Green
     /// <summary>
     /// Checks if the target is at least <paramref name="minimum"/> and at most <paramref name="maximum"/> using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="minimum">The minimum value to compare using <paramref name="comparer"/></param>
     /// <param name="maximum">The maximum value to compare using <paramref name="comparer"/></param>
@@ -170,7 +170,7 @@ namespace Green
     /// <summary>
     /// Checks if the target equals <paramref name="value"/> using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare using <see cref="EqualityComparer{T}.Default"/></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -178,9 +178,9 @@ namespace Green
       check.Is(value, EqualityComparer<T>.Default);
 
     /// <summary>
-    /// Checks if the target is not equal to <paramref name="value"/> using <see cref="EqualityComparer{T}.Default"/>
+    /// Checks if the target does not equal <paramref name="value"/> using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare using <see cref="EqualityComparer{T}.Default"/></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -190,7 +190,7 @@ namespace Green
     /// <summary>
     /// Checks if the target is less than <paramref name="value"/> using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare using <see cref="EqualityComparer{T}.Default"/></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -200,7 +200,7 @@ namespace Green
     /// <summary>
     /// Checks if the target is greater than <paramref name="value"/> using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare using <see cref="EqualityComparer{T}.Default"/></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -210,7 +210,7 @@ namespace Green
     /// <summary>
     /// Checks if the target is at least <paramref name="minimum"/> using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="minimum">The value to compare using <see cref="EqualityComparer{T}.Default"/></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -220,7 +220,7 @@ namespace Green
     /// <summary>
     /// Checks if the target is at most <paramref name="maximum"/> using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="maximum">The value to compare using  <see cref="EqualityComparer{T}.Default"/></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -230,7 +230,7 @@ namespace Green
     /// <summary>
     /// Checks if the target is at least <paramref name="minimum"/> and at most <paramref name="maximum"/> using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="minimum">The minimum value to compare using <see cref="EqualityComparer{T}.Default"/></param>
     /// <param name="maximum">The maximum value to compare using <see cref="EqualityComparer{T}.Default"/></param>
@@ -245,7 +245,7 @@ namespace Green
     /// <summary>
     /// Checks if <paramref name="values"/> contains the target using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="values">The values to compare using <paramref name="comparer"/></param>
     /// <param name="comparer">The object that performs the comparisons</param>
@@ -256,7 +256,7 @@ namespace Green
     /// <summary>
     /// Checks if <paramref name="values"/> contains the target using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="values">The values to compare using <see cref="EqualityComparer{T}.Default"/></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -266,7 +266,7 @@ namespace Green
     /// <summary>
     /// Checks if <paramref name="values"/> contains the target using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="values">The values to compare using <see cref="EqualityComparer{T}.Default"/></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -276,7 +276,7 @@ namespace Green
     /// <summary>
     /// Checks if <paramref name="values"/> contains the target using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="comparer">The object that performs the comparisons</param>
     /// <param name="values">The values to compare using <paramref name="comparer"/></param>
@@ -291,7 +291,7 @@ namespace Green
     /// <summary>
     /// Checks if <paramref name="values"/> does not contain the target using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="values">The values to compare using <paramref name="comparer"/></param>
     /// <param name="comparer">The object that performs the comparisons</param>
@@ -302,7 +302,7 @@ namespace Green
     /// <summary>
     /// Checks if <paramref name="values"/> does not contain the target using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="values">The values to compare using <see cref="EqualityComparer{T}.Default"/></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -312,7 +312,7 @@ namespace Green
     /// <summary>
     /// Checks if <paramref name="values"/> does not contain the target using <paramref name="comparer"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="comparer">The object that performs the comparisons</param>
     /// <param name="values">The values to compare using <paramref name="comparer"/></param>
@@ -323,7 +323,7 @@ namespace Green
     /// <summary>
     /// Checks if <paramref name="values"/> does not contain the target using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="values">The values to compare using <see cref="EqualityComparer{T}.Default"/></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -368,10 +368,10 @@ namespace Green
     /// <summary>
     /// Calls the specified function with a <see cref="Check{T}"/> referencing <paramref name="target"/>
     /// </summary>
-    /// <typeparam name="T">The type of checked value</typeparam>
+    /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="checkValue">The function to invoke with a checked argument</param>
     /// <param name="target">The value of the checked argument</param>
-    /// <returns>The result fo calling <paramref name="checkValue"/> with a <see cref="Check{T}"/> referencing <paramref name="target"/></returns>
+    /// <returns>The result of calling <paramref name="checkValue"/> with a <see cref="Check{T}"/> referencing <paramref name="target"/></returns>
     public static bool Invoke<T>(this Func<Check<T>, bool> checkValue, T target) =>
       checkValue != null && checkValue(Check.That(target));
   }

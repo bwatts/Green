@@ -51,7 +51,7 @@ namespace Green
       check.That(string.IsNullOrWhiteSpace);
 
     /// <summary>
-    /// Checks if the target is not equal to <paramref name="value"/> using <paramref name="comparison"/>
+    /// Checks if the target does not equal <paramref name="value"/> using <paramref name="comparison"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare using <paramref name="comparison"/></param>
@@ -61,7 +61,7 @@ namespace Green
       check.Not(t => string.Equals(t, value, comparison));
 
     /// <summary>
-    /// Checks if the target is not equal to the empty string
+    /// Checks if the target does not equal the empty string
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
