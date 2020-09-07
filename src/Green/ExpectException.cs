@@ -5,16 +5,31 @@ using System.Text;
 
 namespace Green
 {
+  /// <summary>
+  /// An error describing a failed expectation
+  /// </summary>
   public class ExpectException : Exception
   {
     readonly Lazy<string> _stackTrace;
 
+    /// <summary>
+    /// Initializes an instance of <see cref="ExpectException"/>
+    /// </summary>
+    /// <param name="message">The message describing an issue with the target value</param>
     public ExpectException(string message) : base(message) =>
       _stackTrace = new Lazy<string>(FilterStackTrace);
 
+    /// <summary>
+    /// Initializes an instance of <see cref="ExpectException"/>
+    /// </summary>
+    /// <param name="message">The message describing an issue with the target value</param>
+    /// <param name="inner">The exception that caused this exception</param>
     public ExpectException(string message, Exception inner) : base(message, inner) =>
       _stackTrace = new Lazy<string>(FilterStackTrace);
 
+    /// <summary>
+    /// Gets text with the immediate frames of the call stack. Ignores Green implementation details.
+    /// </summary>
     public override string StackTrace => _stackTrace.Value;
 
     string FilterStackTrace()

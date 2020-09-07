@@ -3,26 +3,26 @@ using System;
 namespace Green
 {
   /// <summary>
-  /// Applies <see langword="bool"/>-valued queries to target data
+  /// Applies <see langword="bool"/>-valued queries to target values
   /// </summary>
   public static class Check
   {
     /// <summary>
-    /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/>.
-    /// Returns <see langword="true"/> if all subsequent operators return <see langword="true"/>.
+    /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
+    /// <see langword="true"/> if all subsequent operators return <see langword="true"/>
     /// </summary>
     /// <typeparam name="T">The type of checked value</typeparam>
-    /// <param name="target">The checked value</param>
+    /// <param name="target">The value to which the check applies</param>
     /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
     public static Check<T> That<T>(T target) =>
       new Check<T>(target, true);
 
     /// <summary>
-    /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/>.
-    /// Returns <see langword="true"/> if all subsequent operators return <see langword="false"/>.
+    /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
+    /// <see langword="true"/> if all subsequent operators return <see langword="false"/>
     /// </summary>
     /// <typeparam name="T">The type of checked value</typeparam>
-    /// <param name="target">The checked value</param>
+    /// <param name="target">The value to which the check applies</param>
     /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
     public static Check<T> Not<T>(T target) =>
       new Check<T>(target, false);
@@ -39,9 +39,10 @@ namespace Green
   }
 
   /// <summary>
-  /// A <see langword="bool"/>-valued query targeting a value of type <typeparamref name="T"/>. Implicitly converts to <see langword="bool"/>.
+  /// A <see langword="bool"/>-valued query targeting a value of type <typeparamref name="T"/>.
+  /// Implicitly converts to <see langword="bool"/>.
   /// </summary>
-  /// <typeparam name="T">The type of checked value</typeparam>
+  /// <typeparam name="T">The type of target value</typeparam>
   public struct Check<T> : Check.ICheck<T>
   {
     readonly bool _expectedResult;
@@ -91,8 +92,7 @@ namespace Green
     public T Target { get; }
 
     /// <summary>
-    /// Continues this <see langword="bool"/>-valued query. Returns <see langword="true"/> if
-    /// <paramref name="next"/> returns <see langword="true"/>.
+    /// Returns <see langword="true"/> if <paramref name="next"/> returns <see langword="true"/> when applied
     /// </summary>
     /// <param name="next">The next function to apply when applying this check</param>
     /// <returns>A continuation of this check that applies <paramref name="next"/></returns>
@@ -100,8 +100,7 @@ namespace Green
       Is(true, next);
 
     /// <summary>
-    /// Continues this <see langword="bool"/>-valued query. Returns <see langword="true"/> if
-    /// <paramref name="next"/> returns <see langword="false"/>.
+    /// Returns <see langword="true"/> if <paramref name="next"/> returns <see langword="false"/> when applied
     /// </summary>
     /// <param name="next">The next function to apply when applying this check</param>
     /// <returns>A continuation of this check that applies <paramref name="next"/></returns>
@@ -109,10 +108,9 @@ namespace Green
       Is(false, next);
 
     /// <summary>
-    /// Negates this this <see langword="bool"/>-valued query. Returns <see langword="true"/> if
-    /// this check returns <see langword="false"/>.
+    /// Returns <see langword="true"/> if this check returns <see langword="false"/> when applied
     /// </summary>
-    /// <returns>A negation of this check</returns>
+    /// <returns>A continuation of this check that negates its result</returns>
     public Check<T> Not() =>
       new Check<T>(this);
 
@@ -149,12 +147,14 @@ namespace Green
     /// Implicitly applies <paramref name="check"/> and returns the result
     /// </summary>
     /// <param name="check">The check to implicitly apply</param>
+    /// <returns>The result of applying <paramref name="check"/></returns>
     public static implicit operator bool(Check<T> check) => check.Apply();
 
     /// <summary>
     /// Implicitly applies <paramref name="check"/> and returns the result
     /// </summary>
     /// <param name="check">The check to implicitly apply</param>
+    /// <returns>The result of applying <paramref name="check"/></returns>
     public static implicit operator bool?(Check<T> check) => check.Apply();
   }
 }

@@ -4,48 +4,48 @@ using System.Collections.Generic;
 namespace Green
 {
   /// <summary>
-  /// Applies <see langword="bool"/>-valued queries to sequences of target data
+  /// Applies <see langword="bool"/>-valued queries to target sequences and dictionaries
   /// </summary>
   public static class CheckMany
   {
     /// <summary>
-    /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/>.
-    /// Returns <see langword="true"/> if all subsequent operators return <see langword="true"/>.
+    /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
+    /// <see langword="true"/> if all subsequent operators return <see langword="true"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the checked sequence</typeparam>
-    /// <param name="target">The checked sequence</param>
+    /// <param name="target">The sequence to which the check applies</param>
     /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
     public static CheckMany<T> That<T>(IEnumerable<T> target) =>
       new CheckMany<T>(target, true);
 
     /// <summary>
-    /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/>.
-    /// Returns <see langword="true"/> if all subsequent operators return <see langword="false"/>.
+    /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
+    /// <see langword="true"/> if all subsequent operators return <see langword="false"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the checked sequence</typeparam>
-    /// <param name="target">The checked sequence</param>
+    /// <param name="target">The sequence to which the check applies</param>
     /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
     public static CheckMany<T> Not<T>(IEnumerable<T> target) =>
       new CheckMany<T>(target, false);
 
     /// <summary>
-    /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/>.
-    /// Returns <see langword="true"/> if all subsequent operators return <see langword="true"/>.
+    /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
+    /// <see langword="true"/> if all subsequent operators return <see langword="true"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
-    /// <param name="target">The checked dictionary</param>
+    /// <param name="target">The dictionary to which the check applies</param>
     /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
     public static CheckMany<TKey, TValue> That<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> target) =>
       new CheckMany<TKey, TValue>(target, true);
 
     /// <summary>
-    /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/>.
-    /// Evaluates to <see langword="true"/> if all subsequent operators are <see langword="false"/>.
+    /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
+    /// <see langword="true"/> if all subsequent operators are <see langword="false"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
-    /// <param name="target">The checked dictionary</param>
+    /// <param name="target">The dictionary to which the check applies</param>
     /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
     public static CheckMany<TKey, TValue> Not<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> target) =>
       new CheckMany<TKey, TValue>(target, false);
@@ -72,9 +72,10 @@ namespace Green
   }
 
   /// <summary>
-  /// A <see langword="bool"/>-valued query targeting a sequence with items of type <typeparamref name="T"/>. Implicitly converts to <see langword="bool"/>.
+  /// A <see langword="bool"/>-valued query targeting a sequence with items of type <typeparamref name="T"/>.
+  /// Implicitly converts to <see langword="bool"/>.
   /// </summary>
-  /// <typeparam name="T">The type of items in the checked sequence</typeparam>
+  /// <typeparam name="T">The type of items in the target sequence</typeparam>
   public struct CheckMany<T> : CheckMany.ICheckMany<T>
   {
     readonly bool _expectedResult;
@@ -124,26 +125,23 @@ namespace Green
     public IEnumerable<T> Target { get; }
 
     /// <summary>
-    /// Continues this <see langword="bool"/>-valued query. Returns <see langword="true"/> if
-    /// <paramref name="next"/> returns <see langword="true"/>.
+    /// Returns <see langword="true"/> if <paramref name="next"/> returns <see langword="true"/> when applied
     /// </summary>
     /// <param name="next">The next function to apply when applying this check</param>
     /// <returns>A continuation of this check that applies <paramref name="next"/></returns>
     public CheckMany<T> That(Func<IEnumerable<T>, bool> next) => Is(true, next);
 
     /// <summary>
-    /// Continues this <see langword="bool"/>-valued query. Returns <see langword="true"/> if
-    /// <paramref name="next"/> returns <see langword="false"/>.
+    /// Returns <see langword="true"/> if <paramref name="next"/> returns <see langword="false"/> when applied
     /// </summary>
     /// <param name="next">The next function to apply when applying this check</param>
     /// <returns>A continuation of this check that applies <paramref name="next"/></returns>
     public CheckMany<T> Not(Func<IEnumerable<T>, bool> next) => Is(false, next);
 
     /// <summary>
-    /// Negates this this <see langword="bool"/>-valued query. Returns <see langword="true"/> if
-    /// this check returns <see langword="false"/>.
+    /// Returns <see langword="true"/> if this check returns <see langword="false"/> when applied
     /// </summary>
-    /// <returns>A negation of this check</returns>
+    /// <returns>A continuation of this check that negates its result</returns>
     public CheckMany<T> Not() => new CheckMany<T>(this);
 
     CheckMany<T> Is(bool expected, Func<IEnumerable<T>, bool> next) =>
@@ -179,12 +177,14 @@ namespace Green
     /// Implicitly applies <paramref name="check"/> and returns the result
     /// </summary>
     /// <param name="check">The check to implicitly apply</param>
+    /// <returns>The result of applying <paramref name="check"/></returns>
     public static implicit operator bool(CheckMany<T> check) => check.Apply();
 
     /// <summary>
     /// Implicitly applies <paramref name="check"/> and returns the result
     /// </summary>
     /// <param name="check">The check to implicitly apply</param>
+    /// <returns>The result of applying <paramref name="check"/></returns>
     public static implicit operator bool?(CheckMany<T> check) => check.Apply();
   }
 
@@ -192,8 +192,8 @@ namespace Green
   /// A <see langword="bool"/>-valued query targeting a dictionary with keys of type <typeparamref name="TKey"/>
   /// and values of type <typeparamref name="TValue"/>. Implicitly converts to <see langword="bool"/>.
   /// </summary>
-  /// <typeparam name="TKey">The type of keys in the checked dictionary</typeparam>
-  /// <typeparam name="TValue">The type of values in the checked dictionary</typeparam>
+  /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+  /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
   public struct CheckMany<TKey, TValue> : CheckMany.ICheckMany<TKey, TValue>
   {
     readonly bool _expectedResult;
@@ -243,24 +243,21 @@ namespace Green
     public IEnumerable<KeyValuePair<TKey, TValue>> Target { get; }
 
     /// <summary>
-    /// Continues this <see langword="bool"/>-valued query. Returns <see langword="true"/> if
-    /// <paramref name="next"/> returns <see langword="true"/>.
+    /// Returns <see langword="true"/> if <paramref name="next"/> returns <see langword="true"/> when applied
     /// </summary>
     /// <param name="next">The next function to apply when applying this check</param>
     /// <returns>A continuation of this check that applies <paramref name="next"/></returns>
     public CheckMany<TKey, TValue> That(Func<IEnumerable<KeyValuePair<TKey, TValue>>, bool> next) => Is(true, next);
 
     /// <summary>
-    /// Continues this <see langword="bool"/>-valued query. Returns <see langword="true"/> if
-    /// <paramref name="next"/> returns <see langword="false"/>.
+    /// Returns <see langword="true"/> if <paramref name="next"/> returns <see langword="false"/> when applied
     /// </summary>
     /// <param name="next">The next function to apply when applying this check</param>
     /// <returns>A continuation of this check that applies <paramref name="next"/></returns>
     public CheckMany<TKey, TValue> Not(Func<IEnumerable<KeyValuePair<TKey, TValue>>, bool> next) => Is(false, next);
 
     /// <summary>
-    /// Negates this this <see langword="bool"/>-valued query. Returns <see langword="true"/> if
-    /// this check returns <see langword="false"/>.
+    /// Returns <see langword="true"/> if this check returns <see langword="false"/> when applied
     /// </summary>
     /// <returns>A negation of this check</returns>
     public CheckMany<TKey, TValue> Not() => new CheckMany<TKey, TValue>(this);
@@ -298,12 +295,14 @@ namespace Green
     /// Implicitly applies <paramref name="check"/> and returns the result
     /// </summary>
     /// <param name="check">The check to implicitly apply</param>
+    /// <returns>The result of applying <paramref name="check"/></returns>
     public static implicit operator bool(CheckMany<TKey, TValue> check) => check.Apply();
 
     /// <summary>
     /// Implicitly applies <paramref name="check"/> and returns the result
     /// </summary>
     /// <param name="check">The check to implicitly apply</param>
+    /// <returns>The result of applying <paramref name="check"/></returns>
     public static implicit operator bool?(CheckMany<TKey, TValue> check) => check.Apply();
   }
 }
