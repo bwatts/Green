@@ -84,7 +84,7 @@ namespace Green
     /// </summary>
     /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="value">The value to compare using <paramref name="comparer"/></param>
+    /// <param name="value">The value to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
@@ -97,7 +97,7 @@ namespace Green
     /// </summary>
     /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="value">The value to compare using <paramref name="comparer"/></param>
+    /// <param name="value">The value to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
@@ -110,7 +110,7 @@ namespace Green
     /// </summary>
     /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="value">The value to compare using <paramref name="comparer"/></param>
+    /// <param name="value">The value to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
@@ -123,7 +123,7 @@ namespace Green
     /// </summary>
     /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="value">The value to compare using <paramref name="comparer"/></param>
+    /// <param name="value">The value to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
@@ -136,7 +136,7 @@ namespace Green
     /// </summary>
     /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="minimum">The value to compare using <paramref name="comparer"/></param>
+    /// <param name="minimum">The value to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
@@ -149,7 +149,7 @@ namespace Green
     /// </summary>
     /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="maximum">The value to compare using <paramref name="comparer"/></param>
+    /// <param name="maximum">The value to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>

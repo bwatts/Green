@@ -84,7 +84,7 @@ namespace Green
     /// </summary>
     /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare using <paramref name="comparer"/></param>
+    /// <param name="value">The value to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<T> Is<T>(this Check<T> check, T value, IEqualityComparer<T> comparer) where T : IEquatable<T> =>
@@ -95,7 +95,7 @@ namespace Green
     /// </summary>
     /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare using <paramref name="comparer"/></param>
+    /// <param name="value">The value to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<T> IsNot<T>(this Check<T> check, T value, IEqualityComparer<T> comparer) where T : IEquatable<T> =>
@@ -106,7 +106,7 @@ namespace Green
     /// </summary>
     /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare using <paramref name="comparer"/></param>
+    /// <param name="value">The value to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<T> IsLessThan<T>(this Check<T> check, T value, IComparer<T> comparer) where T : IComparable<T> =>
@@ -117,7 +117,7 @@ namespace Green
     /// </summary>
     /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare using <paramref name="comparer"/></param>
+    /// <param name="value">The value to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<T> IsGreaterThan<T>(this Check<T> check, T value, IComparer<T> comparer) where T : IComparable<T> =>
@@ -128,7 +128,7 @@ namespace Green
     /// </summary>
     /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="minimum">The value to compare using <paramref name="comparer"/></param>
+    /// <param name="minimum">The value to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<T> IsAtLeast<T>(this Check<T> check, T minimum, IComparer<T> comparer) where T : IComparable<T> =>
@@ -139,7 +139,7 @@ namespace Green
     /// </summary>
     /// <typeparam name="T">The type of target value</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="maximum">The value to compare using <paramref name="comparer"/></param>
+    /// <param name="maximum">The value to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<T> IsAtMost<T>(this Check<T> check, T maximum, IComparer<T> comparer) where T : IComparable<T> =>

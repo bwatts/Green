@@ -54,7 +54,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<byte> IsMinValue(this Check<byte> check) =>
-      check.That(t => t == 0);
+      check.That(t => t == byte.MinValue);
 
     /// <summary>
     /// Checks if the target is <see cref="byte.MaxValue"/>
@@ -62,7 +62,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<byte> IsMaxValue(this Check<byte> check) =>
-      check.That(t => t == 0);
+      check.That(t => t == byte.MaxValue);
 
     /// <summary>
     /// Checks if the target is not <see cref="byte.MinValue"/>
@@ -70,7 +70,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<byte> IsNotMinValue(this Check<byte> check) =>
-      check.That(t => t == 0);
+      check.That(t => t != byte.MinValue);
 
     /// <summary>
     /// Checks if the target is not <see cref="byte.MaxValue"/>
@@ -78,7 +78,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<byte> IsNotMaxValue(this Check<byte> check) =>
-      check.That(t => t == 0);
+      check.That(t => t != byte.MaxValue);
 
     //
     // Decimal
@@ -167,20 +167,20 @@ namespace Green
       check.That(t => t == decimal.MaxValue);
 
     /// <summary>
-    /// Checks if the target is <see cref="decimal.MinValue"/>
+    /// Checks if the target is not <see cref="decimal.MinValue"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<decimal> IsNotMinValue(this Check<decimal> check) =>
-      check.That(t => t == decimal.MinValue);
+      check.That(t => t != decimal.MinValue);
 
     /// <summary>
-    /// Checks if the target is <see cref="decimal.MaxValue"/>
+    /// Checks if the target is not <see cref="decimal.MaxValue"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<decimal> IsNotMaxValue(this Check<decimal> check) =>
-      check.That(t => t == decimal.MaxValue);
+      check.That(t => t != decimal.MaxValue);
 
     //
     // Double

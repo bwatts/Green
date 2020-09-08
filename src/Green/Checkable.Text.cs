@@ -9,6 +9,15 @@ namespace Green
   public static partial class Checkable
   {
     /// <summary>
+    /// Checks if the target equals <paramref name="value"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="value">The value to compare</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<string> Is(this Check<string> check, string value) =>
+      check.That(t => string.Equals(t, value));
+
+    /// <summary>
     /// Checks if the target equals <paramref name="value"/> using <paramref name="comparison"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
@@ -19,7 +28,7 @@ namespace Green
       check.That(t => string.Equals(t, value, comparison));
 
     /// <summary>
-    /// Checks if the target equals the empty string
+    /// Checks if the target equals the empty string ("")
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -27,7 +36,7 @@ namespace Green
       check.That(t => t == "");
 
     /// <summary>
-    /// Checks if the target is only whitespace
+    /// Checks if the target is whitespace only
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -43,7 +52,7 @@ namespace Green
       check.That(string.IsNullOrEmpty);
 
     /// <summary>
-    /// Checks if the target is <see langword="null"/> or only whitespace
+    /// Checks if the target is <see langword="null"/> or whitespace only
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -69,7 +78,7 @@ namespace Green
       check.That(t => t != "");
 
     /// <summary>
-    /// Checks if the target is not only whitespace
+    /// Checks if the target is not whitespace only
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -85,7 +94,7 @@ namespace Green
       check.Not(string.IsNullOrEmpty);
 
     /// <summary>
-    /// Checks if the target is <see langword="null"/> or only whitespace
+    /// Checks if the target is <see langword="null"/> or whitespace only
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -143,7 +152,7 @@ namespace Green
     /// Checks if the target starts with <paramref name="value"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare at the start</param>
+    /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<string> StartsWith(this Check<string> check, string value) =>
       check.That(t => t != null && t.StartsWith(value));
@@ -152,8 +161,8 @@ namespace Green
     /// Checks if the target starts with <paramref name="value"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare at the start</param>
-    /// <param name="ignoreCase">Whether to ignore case when comparing</param>
+    /// <param name="value">The value to compare</param>
+    /// <param name="ignoreCase">Whether to perform a case-insensitive comparison</param>
     /// <param name="culture">Cultural information to use when comparing</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<string> StartsWith(this Check<string> check, string value, bool ignoreCase, CultureInfo culture) =>
@@ -163,7 +172,7 @@ namespace Green
     /// Checks if the target starts with <paramref name="value"/> using <paramref name="comparison"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare at the start</param>
+    /// <param name="value">The value to compare</param>
     /// <param name="comparison">The type of comparison to perform</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<string> StartsWith(this Check<string> check, string value, StringComparison comparison) =>
@@ -173,7 +182,7 @@ namespace Green
     /// Checks if the target ends with <paramref name="value"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare at the end</param>
+    /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<string> EndsWith(this Check<string> check, string value) =>
       check.That(t => t != null && t.EndsWith(value));
@@ -182,8 +191,8 @@ namespace Green
     /// Checks if the target ends with <paramref name="value"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare at the end</param>
-    /// <param name="ignoreCase">Whether to ignore case when comparing</param>
+    /// <param name="value">The value to compare</param>
+    /// <param name="ignoreCase">Whether to perform a case-insensitive comparison</param>
     /// <param name="culture">Cultural information to use when comparing</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<string> EndsWith(this Check<string> check, string value, bool ignoreCase, CultureInfo culture) =>
@@ -193,7 +202,7 @@ namespace Green
     /// Checks if the target ends with <paramref name="value"/> using <paramref name="comparison"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare at the end</param>
+    /// <param name="value">The value to compare</param>
     /// <param name="comparison">The type of comparison to perform</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<string> EndsWith(this Check<string> check, string value, StringComparison comparison) =>
@@ -221,7 +230,7 @@ namespace Green
     /// Checks if the target contains <paramref name="value"/> using <paramref name="comparer"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare using <paramref name="comparer"/></param>
+    /// <param name="value">The value to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<string> Contains(this Check<string> check, char value, IEqualityComparer<char> comparer) =>
@@ -245,7 +254,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare at the start</param>
-    /// <param name="ignoreCase">Whether to ignore case when comparing</param>
+    /// <param name="ignoreCase">Whether to perform a case-insensitive comparison</param>
     /// <param name="culture">Cultural information to use when comparing</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<string> DoesNotStartWith(this Check<string> check, string value, bool ignoreCase, CultureInfo culture) =>
@@ -275,7 +284,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare at the end</param>
-    /// <param name="ignoreCase">Whether to ignore case when comparing</param>
+    /// <param name="ignoreCase">Whether to perform a case-insensitive comparison</param>
     /// <param name="culture">Cultural information to use when comparing</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<string> DoesNotEndWith(this Check<string> check, string value, bool ignoreCase, CultureInfo culture) =>
@@ -313,7 +322,7 @@ namespace Green
     /// Checks if the target does not contain <paramref name="value"/> using <paramref name="comparer"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare using <paramref name="comparer"/></param>
+    /// <param name="value">The value to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<string> DoesNotContain(this Check<string> check, char value, IEqualityComparer<char> comparer) =>
@@ -359,7 +368,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="regex">The regular expression to match</param>
-    /// <param name="ignoreCase">Whether to ignore case when matching</param>
+    /// <param name="ignoreCase">Whether to perform a case-insensitive match</param>
     /// <param name="singleline">Whether to use single-line mode, where the period (.) matches every character (instead of every character except \n)</param>
     /// <param name="multiline">Whether to use multi-line mode, where ^ and $ match the beginning and end of each line (instead of the beginning and end of the input string)</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -372,7 +381,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="regex">The regular expression to match</param>
     /// <param name="matchTimeout">The maximum time to wait before throwing <see cref="RegexMatchTimeoutException"/></param>
-    /// <param name="ignoreCase">Whether to ignore case when matching</param>
+    /// <param name="ignoreCase">Whether to perform a case-insensitive match</param>
     /// <param name="singleline">Whether to use single-line mode, where the period (.) matches every character (instead of every character except \n)</param>
     /// <param name="multiline">Whether to use multi-line mode, where ^ and $ match the beginning and end of each line (instead of the beginning and end of the input string)</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -384,8 +393,8 @@ namespace Green
     /// Checks if the target matches <paramref name="wildcardPattern"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="wildcardPattern">The pattern to match, where * matches zero or more times and ? matches zero or one time.</param>
-    /// <param name="ignoreCase">Whether to ignore case when matching</param>
+    /// <param name="wildcardPattern">The pattern to match, where * matches zero or more times and ? matches zero or one time</param>
+    /// <param name="ignoreCase">Whether to perform a case-insensitive match</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<string> MatchesWildcard(this Check<string> check, string wildcardPattern, bool ignoreCase = false) =>
       check.Matches(ToRegex(wildcardPattern), ToOptions(ignoreCase, singleline: true, multiline: false));
@@ -439,7 +448,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="regex">The regular expression to match</param>
-    /// <param name="ignoreCase">Whether to ignore case when matching</param>
+    /// <param name="ignoreCase">Whether to perform a case-insensitive match</param>
     /// <param name="singleline">Whether to use single-line mode, where the period (.) matches every character (instead of every character except \n)</param>
     /// <param name="multiline">Whether to use multi-line mode, where ^ and $ match the beginning and end of each line (instead of the beginning and end of the input string)</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -452,7 +461,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="regex">The regular expression to match</param>
     /// <param name="matchTimeout">The maximum time to wait before throwing <see cref="RegexMatchTimeoutException"/></param>
-    /// <param name="ignoreCase">Whether to ignore case when matching</param>
+    /// <param name="ignoreCase">Whether to perform a case-insensitive match</param>
     /// <param name="singleline">Whether to use single-line mode, where the period (.) matches every character (instead of every character except \n)</param>
     /// <param name="multiline">Whether to use multi-line mode, where ^ and $ match the beginning and end of each line (instead of the beginning and end of the input string)</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -465,7 +474,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="wildcardPattern">The pattern to match, where * matches zero or more times and ? matches zero or one time.</param>
-    /// <param name="ignoreCase">Whether to ignore case when matching</param>
+    /// <param name="ignoreCase">Whether to perform a case-insensitive match</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<string> DoesNotMatchWildcard(this Check<string> check, string wildcardPattern, bool ignoreCase = false) =>
       check.Matches(ToRegex(wildcardPattern), ToOptions(ignoreCase, singleline: true, multiline: false));
