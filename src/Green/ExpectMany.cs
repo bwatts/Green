@@ -113,12 +113,14 @@ namespace Green
     /// <summary>
     /// Returns <see langword="true"/> to enable further expectations
     /// </summary>
-    public static implicit operator bool(ExpectMany<T> _) => true;
+    public static implicit operator bool(ExpectMany<T> _) =>
+      true;
 
     /// <summary>
     /// Returns <see langword="true"/> to enable further expectations
     /// </summary>
-    public static implicit operator bool?(ExpectMany<T> _) => true;
+    public static implicit operator bool?(ExpectMany<T> _) =>
+      true;
   }
 
   /// <summary>
@@ -192,11 +194,13 @@ namespace Green
     /// <summary>
     /// Returns <see langword="true"/> to enable further expectations
     /// </summary>
-    public static implicit operator bool(ExpectMany<TKey, TValue> _) => true;
+    public static implicit operator bool(ExpectMany<TKey, TValue> _) =>
+      true;
 
     /// <summary>
     /// Returns <see langword="true"/> to enable further expectations
     /// </summary>
-    public static implicit operator bool?(ExpectMany<TKey, TValue> _) => true;
+    public static implicit operator bool?(ExpectMany<TKey, TValue> _) =>
+      true;
   }
 }

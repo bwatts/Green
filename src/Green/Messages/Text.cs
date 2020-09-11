@@ -26,6 +26,10 @@ namespace Green.Messages
     public override string ToString() =>
       _value ?? "";
 
+    //
+    // Operators
+    //
+
     /// <summary>
     /// Creates a <see cref="Text"/> instance for <paramref name="value"/>
     /// </summary>
@@ -48,6 +52,10 @@ namespace Green.Messages
     public static implicit operator string(Text text) =>
       text.ToString();
 
+    //
+    // Factory
+    //
+
     /// <summary>
     /// Gets text for <paramref name="value"/> that defers formatting until requested
     /// </summary>
@@ -64,8 +72,19 @@ namespace Green.Messages
     /// <typeparam name="TValue">The type of value in the pair to format</typeparam>
     /// <param name="pair">The pair to format</param>
     /// <returns>Text for <paramref name="pair"/> that defers formatting until requested</returns>
-    public static Text<TKey, TValue> Of<TKey, TValue>(KeyValuePair<TKey, TValue> pair) =>
+    public static Text<TKey, TValue> Pair<TKey, TValue>(KeyValuePair<TKey, TValue> pair) =>
       new Text<TKey, TValue>(pair);
+
+    /// <summary>
+    /// Gets text for <paramref name="key"/> and <paramref name="value"/> that defers formatting until requested
+    /// </summary>
+    /// <typeparam name="TKey">The type of key in the pair to format</typeparam>
+    /// <typeparam name="TValue">The type of value in the pair to format</typeparam>
+    /// <param name="key">The key in the pair to format</param>
+    /// <param name="value">The key in the pair to format</param>
+    /// <returns>Text for <paramref name="key"/> and <paramref name="value"/> that defers formatting until requested</returns>
+    public static Text<TKey, TValue> Pair<TKey, TValue>(TKey key, TValue value) =>
+      Pair(new KeyValuePair<TKey, TValue>(key, value));
 
     /// <summary>
     /// Gets text for <paramref name="items"/> that defers formatting until requested
@@ -81,9 +100,14 @@ namespace Green.Messages
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the dictionary to format</typeparam>
     /// <typeparam name="TValue">The type of values in the dictionary to format</typeparam>
+    /// <param name="pairs">The dictionary to format</param>
     /// <returns>Text for <paramref name="pairs"/> that defers formatting until requested</returns>
     public static TextMany<TKey, TValue> Many<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> pairs) =>
       new TextMany<TKey, TValue>(pairs);
+
+    //
+    // Formatting
+    //
 
     /// <summary>
     /// Formats <paramref name="value"/> by passing <paramref name="format"/> and <paramref name="formatProvider"/> to its <see cref="IFormattable"/> implementation, if any
@@ -209,7 +233,7 @@ Received: {received}";
       {
         null => "<null>",
         string s => $"\"{s}\"",
-        char c when char.IsControl(c) || char.IsHighSurrogate(c) || char.IsLowSurrogate(c) => @$"\u{c:X4}",
+        char c when char.IsControl(c) || char.IsHighSurrogate(c) || char.IsLowSurrogate(c) => @$"\u{(int) c:X4}",
         char c => $"'{c}'",
         bool b => b.ToString().ToLowerInvariant(),
         IFormattable formattable => formattable.ToString(format, formatProvider),
@@ -221,14 +245,16 @@ Received: {received}";
     /// </summary>
     /// <param name="text">The text to implicitly convert</param>
     /// <returns>The <see cref="Text"/> value of <paramref name="text"/></returns>
-    public static implicit operator Text(Text<T> text) => text.ToString();
+    public static implicit operator Text(Text<T> text) =>
+      text.ToString();
 
     /// <summary>
     /// Implicitly gets the <see cref="string"/> value of <paramref name="text"/>
     /// </summary>
     /// <param name="text">The text to implicitly convert</param>
     /// <returns>The <see cref="string"/> value of <paramref name="text"/></returns>
-    public static implicit operator string(Text<T> text) => text.ToString();
+    public static implicit operator string(Text<T> text) =>
+      text.ToString();
   }
 
   /// <summary>
@@ -266,13 +292,15 @@ Received: {received}";
     /// </summary>
     /// <param name="text">The text to implicitly convert</param>
     /// <returns>The <see cref="Text"/> value of <paramref name="text"/></returns>
-    public static implicit operator Text(Text<TKey, TValue> text) => text.ToString();
+    public static implicit operator Text(Text<TKey, TValue> text) =>
+      text.ToString();
 
     /// <summary>
     /// Implicitly gets the <see cref="string"/> value of <paramref name="text"/>
     /// </summary>
     /// <param name="text">The text to implicitly convert</param>
     /// <returns>The <see cref="string"/> value of <paramref name="text"/></returns>
-    public static implicit operator string(Text<TKey, TValue> text) => text.ToString();
+    public static implicit operator string(Text<TKey, TValue> text) =>
+      text.ToString();
   }
 }

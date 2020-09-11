@@ -38,8 +38,19 @@ namespace Green.Messages
     /// <typeparam name="TValue">The type of value in the pair to format</typeparam>
     /// <param name="pair">The pair to format</param>
     /// <returns>Text for <paramref name="pair"/> that defers formatting until requested</returns>
-    public static Text<TKey, TValue> Text<TKey, TValue>(KeyValuePair<TKey, TValue> pair) =>
-      Messages.Text.Of(pair);
+    public static Text<TKey, TValue> Pair<TKey, TValue>(KeyValuePair<TKey, TValue> pair) =>
+      Messages.Text.Pair(pair);
+
+    /// <summary>
+    /// Gets text for <paramref name="key"/> and <paramref name="value"/> that defers formatting until requested
+    /// </summary>
+    /// <typeparam name="TKey">The type of key in the pair to format</typeparam>
+    /// <typeparam name="TValue">The type of value in the pair to format</typeparam>
+    /// <param name="key">The key in the pair to format</param>
+    /// <param name="value">The key in the pair to format</param>
+    /// <returns>Text for <paramref name="key"/> and <paramref name="value"/> that defers formatting until requested</returns>
+    public static Text<TKey, TValue> Pair<TKey, TValue>(TKey key, TValue value) =>
+      Messages.Text.Pair(key, value);
 
     /// <summary>
     /// Gets text for <paramref name="items"/> that defers formatting until requested

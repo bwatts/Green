@@ -74,14 +74,16 @@ namespace Green.Messages
     /// </summary>
     /// <param name="text">The text to implicitly convert</param>
     /// <returns>The <see cref="Text"/> value of <paramref name="text"/></returns>
-    public static implicit operator Text(TextMany<T> text) => text.ToString();
+    public static implicit operator Text(TextMany<T> text) =>
+      text.ToString();
 
     /// <summary>
     /// Implicitly gets the <see cref="string"/> value of <paramref name="text"/>
     /// </summary>
     /// <param name="text">The text to implicitly convert</param>
     /// <returns>The <see cref="string"/> value of <paramref name="text"/></returns>
-    public static implicit operator string(TextMany<T> text) => text.ToString();
+    public static implicit operator string(TextMany<T> text) =>
+      text.ToString();
   }
 
   /// <summary>
@@ -113,23 +115,24 @@ namespace Green.Messages
     /// <returns>The result of formatting the dictionary</returns>
     public string ToString(string? format, IFormatProvider? formatProvider)
     {
-      var text = new StringBuilder();
+      var text = new StringBuilder("{");
 
       foreach(var pair in _pairs ?? Enumerable.Empty<KeyValuePair<TKey, TValue>>())
       {
-        if(text.Length == 0)
+        if(text.Length > 1)
         {
-          text.AppendLine("{");
-        }
-        else
-        {
-          text.AppendLine(",");
+          text.Append(",");
         }
 
-        text.Append(" ").Append(Text.Format(pair, format, formatProvider));
+        text.AppendLine().Append("  ").Append(Text.Pair(pair).ToString(format, formatProvider));
       }
 
-      return text.AppendLine().Append("}").ToString();
+      if(text.Length > 1)
+      {
+        text.AppendLine();
+      }
+
+      return text.Append("}").ToString();
     }
 
     /// <summary>
@@ -137,13 +140,15 @@ namespace Green.Messages
     /// </summary>
     /// <param name="text">The text to implicitly convert</param>
     /// <returns>The <see cref="Text"/> value of <paramref name="text"/></returns>
-    public static implicit operator Text(TextMany<TKey, TValue> text) => text.ToString();
+    public static implicit operator Text(TextMany<TKey, TValue> text) =>
+      text.ToString();
 
     /// <summary>
     /// Implicitly gets the <see cref="string"/> value of <paramref name="text"/>
     /// </summary>
     /// <param name="text">The text to implicitly convert</param>
     /// <returns>The <see cref="string"/> value of <paramref name="text"/></returns>
-    public static implicit operator string(TextMany<TKey, TValue> text) => text.ToString();
+    public static implicit operator string(TextMany<TKey, TValue> text) =>
+      text.ToString();
   }
 }

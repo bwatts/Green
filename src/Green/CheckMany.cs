@@ -178,14 +178,16 @@ namespace Green
     /// </summary>
     /// <param name="check">The check to implicitly apply</param>
     /// <returns>The result of applying <paramref name="check"/></returns>
-    public static implicit operator bool(CheckMany<T> check) => check.Apply();
+    public static implicit operator bool(CheckMany<T> check) =>
+      check.Apply();
 
     /// <summary>
     /// Implicitly applies <paramref name="check"/> and returns the result
     /// </summary>
     /// <param name="check">The check to implicitly apply</param>
     /// <returns>The result of applying <paramref name="check"/></returns>
-    public static implicit operator bool?(CheckMany<T> check) => check.Apply();
+    public static implicit operator bool?(CheckMany<T> check) =>
+      check.Apply();
   }
 
   /// <summary>
@@ -296,13 +298,15 @@ namespace Green
     /// </summary>
     /// <param name="check">The check to implicitly apply</param>
     /// <returns>The result of applying <paramref name="check"/></returns>
-    public static implicit operator bool(CheckMany<TKey, TValue> check) => check.Apply();
+    public static implicit operator bool(CheckMany<TKey, TValue> check) =>
+      check.Apply();
 
     /// <summary>
     /// Implicitly applies <paramref name="check"/> and returns the result
     /// </summary>
     /// <param name="check">The check to implicitly apply</param>
     /// <returns>The result of applying <paramref name="check"/></returns>
-    public static implicit operator bool?(CheckMany<TKey, TValue> check) => check.Apply();
+    public static implicit operator bool?(CheckMany<TKey, TValue> check) =>
+      check.Apply();
   }
 }

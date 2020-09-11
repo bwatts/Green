@@ -148,13 +148,15 @@ namespace Green
     /// </summary>
     /// <param name="check">The check to implicitly apply</param>
     /// <returns>The result of applying <paramref name="check"/></returns>
-    public static implicit operator bool(Check<T> check) => check.Apply();
+    public static implicit operator bool(Check<T> check) =>
+      check.Apply();
 
     /// <summary>
     /// Implicitly applies <paramref name="check"/> and returns the result
     /// </summary>
     /// <param name="check">The check to implicitly apply</param>
     /// <returns>The result of applying <paramref name="check"/></returns>
-    public static implicit operator bool?(Check<T> check) => check.Apply();
+    public static implicit operator bool?(Check<T> check) =>
+      check.Apply();
   }
 }
