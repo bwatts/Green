@@ -580,7 +580,7 @@ namespace Green
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="pair"></param>
+    /// <param name="pair">The pair to compare keys and values</param>
     /// <param name="keyComparer">The object that performs key comparisons</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> Has<TKey, TValue>(this CheckMany<TKey, TValue> check, KeyValuePair<TKey, TValue> pair, IEqualityComparer<TKey> keyComparer) =>
@@ -592,7 +592,7 @@ namespace Green
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="pair"></param>
+    /// <param name="pair">The pair to compare keys and values</param>
     /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> Has<TKey, TValue>(this CheckMany<TKey, TValue> check, KeyValuePair<TKey, TValue> pair, IEqualityComparer<TValue> valueComparer) =>
@@ -604,7 +604,7 @@ namespace Green
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="pair"></param>
+    /// <param name="pair">The pair to compare keys and values</param>
     /// <param name="keyComparer">The object that performs key comparisons</param>
     /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
@@ -799,37 +799,37 @@ namespace Green
       check.That(t => t != null && t.All(checkPair.Invoke));
 
     /// <summary>
-    /// Checks if the target has all keys resulting in <see langword="true"/> from <paramref name="checkKeys"/>
+    /// Checks if the target has all keys resulting in <see langword="true"/> from <paramref name="checkKey"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="checkKeys"></param>
+    /// <param name="checkKey"></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<TKey, TValue> HasAll<TKey, TValue>(this CheckMany<TKey, TValue> check, Func<Check<TKey>, bool> checkKeys) =>
-      check.That(t => t != null && t.All(pair => checkKeys.Invoke(pair.Key)));
+    public static CheckMany<TKey, TValue> HasAll<TKey, TValue>(this CheckMany<TKey, TValue> check, Func<Check<TKey>, bool> checkKey) =>
+      check.That(t => t != null && t.All(pair => checkKey.Invoke(pair.Key)));
 
     /// <summary>
-    /// Checks if the target has all values resulting in <see langword="true"/> from <paramref name="checkValues"/>
+    /// Checks if the target has all values resulting in <see langword="true"/> from <paramref name="checkValue"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="checkValues"></param>
+    /// <param name="checkValue"></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<TKey, TValue> HasAll<TKey, TValue>(this CheckMany<TKey, TValue> check, Func<Check<TValue>, bool> checkValues) =>
-      check.That(t => t != null && t.All(pair => checkValues.Invoke(pair.Value)));
+    public static CheckMany<TKey, TValue> HasAll<TKey, TValue>(this CheckMany<TKey, TValue> check, Func<Check<TValue>, bool> checkValue) =>
+      check.That(t => t != null && t.All(pair => checkValue.Invoke(pair.Value)));
 
     /// <summary>
-    /// Checks if the target has all items resulting in <see langword="true"/> from <paramref name="checkPairs"/>
+    /// Checks if the target has all items resulting in <see langword="true"/> from <paramref name="checkPair"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="checkPairs"></param>
+    /// <param name="checkPair"></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<TKey, TValue> HasAll<TKey, TValue>(this CheckMany<TKey, TValue> check, Func<Check<TKey>, Check<TValue>, bool> checkPairs) =>
-      check.That(t => t != null && t.All(pair => checkPairs.Invoke(pair)));
+    public static CheckMany<TKey, TValue> HasAll<TKey, TValue>(this CheckMany<TKey, TValue> check, Func<Check<TKey>, Check<TValue>, bool> checkPair) =>
+      check.That(t => t != null && t.All(pair => checkPair.Invoke(pair)));
 
     //
     // Any (pairs)
