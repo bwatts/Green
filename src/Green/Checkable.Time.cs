@@ -905,13 +905,12 @@ namespace Green
       check.That(t => t?.StandardName == value);
 
     /// <summary>
-    /// Checks if the target's <see cref="TimeZoneInfo.SupportsDaylightSavingTime"/> property equals <paramref name="value"/>
+    /// Checks if the target's <see cref="TimeZoneInfo.SupportsDaylightSavingTime"/> property is <see langword="true"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeZoneInfo> SupportsDaylightSavingTime(this Check<TimeZoneInfo> check, bool value) =>
-      check.That(t => t?.SupportsDaylightSavingTime == value);
+    public static Check<TimeZoneInfo> SupportsDaylightSavingTime(this Check<TimeZoneInfo> check) =>
+      check.That(t => t?.SupportsDaylightSavingTime == true);
 
     //
     // TimeZoneInfo (values)

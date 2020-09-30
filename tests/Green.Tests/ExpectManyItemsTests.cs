@@ -90,28 +90,5 @@ namespace Green
       // Act
       Assert.Throws<ExpectException>(() => expect.That(_ => false));
     }
-
-    [Fact]
-    public void Not_ReturnsSame()
-    {
-      // Arrange
-      var expect = ExpectMany.That(_target);
-
-      // Act
-      var nextExpect = expect.Not(_ => false);
-
-      // Assert
-      Assert.Equal(expect, nextExpect);
-    }
-
-    [Fact]
-    public void Not_Throws_IfTrue()
-    {
-      // Arrange
-      var expect = ExpectMany.That(_target);
-
-      // Act
-      Assert.Throws<ExpectException>(() => expect.Not(_ => true));
-    }
   }
 }

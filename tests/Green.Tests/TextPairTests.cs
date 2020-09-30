@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using Xunit;
 
-namespace Green.Messages
+namespace Green
 {
   public class TextPairTests
   {
@@ -29,19 +28,6 @@ namespace Green.Messages
 
       // Assert
       Assert.Equal("[\"key\"] = 'v'", result);
-    }
-
-    [Fact]
-    public void Converts_ToText()
-    {
-      // Arrange
-      var text = Text.Pair(1, true);
-
-      // Act
-      Text result = text;
-
-      // Assert
-      Assert.Equal("[1] = true", result.ToString());
     }
 
     [Fact]

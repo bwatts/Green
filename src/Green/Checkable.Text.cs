@@ -896,49 +896,44 @@ namespace Green
       check.That(t => t?.UserInfo == value);
 
     /// <summary>
-    /// Checks if the target's <see cref="Uri.IsAbsoluteUri"/> property equals <paramref name="value"/>
+    /// Checks if the target's <see cref="Uri.IsAbsoluteUri"/> property is <see langword="true"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> IsAbsoluteUri(this Check<Uri> check, bool value) =>
-      check.That(t => t?.IsAbsoluteUri == value);
+    public static Check<Uri> IsAbsoluteUri(this Check<Uri> check) =>
+      check.That(t => t?.IsAbsoluteUri == true);
 
     /// <summary>
-    /// Checks if the target's <see cref="Uri.IsFile"/> property equals <paramref name="value"/>
+    /// Checks if the target's <see cref="Uri.IsFile"/> property is <see langword="true"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> IsFile(this Check<Uri> check, bool value) =>
-      check.That(t => t?.IsFile == value);
+    public static Check<Uri> IsFile(this Check<Uri> check) =>
+      check.That(t => t?.IsFile == true);
 
     /// <summary>
-    /// Checks if the target's <see cref="Uri.AbsolutePath"/> property equals <paramref name="value"/>
+    /// Checks if the target's <see cref="Uri.AbsolutePath"/> property is <see langword="true"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> IsUnc(this Check<Uri> check, bool value) =>
-      check.That(t => t?.IsUnc == value);
+    public static Check<Uri> IsUnc(this Check<Uri> check) =>
+      check.That(t => t?.IsUnc == true);
 
     /// <summary>
-    /// Checks if the target's <see cref="Uri.IsLoopback"/> property equals <paramref name="value"/>
+    /// Checks if the target's <see cref="Uri.IsLoopback"/> property is <see langword="true"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> IsLoopback(this Check<Uri> check, bool value) =>
-      check.That(t => t?.IsLoopback == value);
+    public static Check<Uri> IsLoopback(this Check<Uri> check) =>
+      check.That(t => t?.IsLoopback == true);
 
     /// <summary>
-    /// Checks if the target's <see cref="Uri.UserEscaped"/> property equals <paramref name="value"/>
+    /// Checks if the target's <see cref="Uri.UserEscaped"/> property is <see langword="true"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> IsUserEscaped(this Check<Uri> check, bool value) =>
-      check.That(t => t?.UserEscaped == value);
+    public static Check<Uri> IsUserEscaped(this Check<Uri> check) =>
+      check.That(t => t?.UserEscaped == true);
 
     //
     // Uri (values)

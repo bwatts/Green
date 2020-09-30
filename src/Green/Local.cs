@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Green
 {
@@ -142,5 +144,121 @@ namespace Green
     /// <returns>An expectation applied to <paramref name="target"/></returns>
     public static ExpectMany<TKey, TValue> ExpectManyNot<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> target) =>
       Green.ExpectMany.Not(target);
+
+    //
+    // Throws
+    //
+
+    /// <summary>
+    /// Throws <see cref="ExpectException"/> if <paramref name="target"/> does not throw <typeparamref name="TException"/>
+    /// </summary>
+    /// <typeparam name="TException">The type of exception to expect</typeparam>
+    /// <param name="target">The action that is expected to throw <typeparamref name="TException"/></param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <exception cref="ExpectException">Thrown if <paramref name="target"/> does not throw <typeparamref name="TException"/></exception>
+    public static void Throws<TException>(Action target, Issue<Action>? issue = null) where TException : Exception =>
+      Green.Expect.Throws<TException>(target, issue);
+
+    /// <summary>
+    /// Throws <see cref="ExpectException"/> if <paramref name="target"/> does not throw <typeparamref name="TException"/>
+    /// </summary>
+    /// <typeparam name="TException">The type of exception to expect</typeparam>
+    /// <param name="target">The function that is expected to throw <typeparamref name="TException"/></param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <exception cref="ExpectException">Thrown if <paramref name="target"/> does not throw <typeparamref name="TException"/></exception>
+    public static void Throws<TException>(Func<object> target, Issue<Func<object>>? issue = null) where TException : Exception =>
+      Green.Expect.Throws<TException>(target, issue);
+
+    /// <summary>
+    /// Throws <see cref="ExpectException"/> if <paramref name="target"/> does not throw <typeparamref name="TException"/>
+    /// </summary>
+    /// <typeparam name="TException">The type of exception to expect</typeparam>
+    /// <param name="target">The function that is expected to throw <typeparamref name="TException"/></param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <exception cref="ExpectException">Thrown if <paramref name="target"/> does not throw <typeparamref name="TException"/></exception>
+    /// <returns>An asynchronous invocation of <paramref name="target"/></returns>
+    public static Task ThrowsAsync<TException>(Func<Task> target, Issue<Func<Task>>? issue = null) where TException : Exception =>
+      Green.Expect.ThrowsAsync<TException>(target, issue);
+
+    /// <summary>
+    /// Throws <see cref="ExpectException"/> if <paramref name="target"/> does not throw an exception
+    /// </summary>
+    /// <param name="target">The action that is expected to throw an exception</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <exception cref="ExpectException">Thrown if <paramref name="target"/> does not throw an exception</exception>
+    public static void Throws(Action target, Issue<Action>? issue = null) =>
+      Green.Expect.Throws(target, issue);
+
+    /// <summary>
+    /// Throws <see cref="ExpectException"/> if <paramref name="target"/> does not throw an exception
+    /// </summary>
+    /// <param name="target">The function that is expected to throw an exception</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <exception cref="ExpectException">Thrown if <paramref name="target"/> does not throw an exception</exception>
+    public static void Throws(Func<object> target, Issue<Func<object>>? issue = null) =>
+      Green.Expect.Throws(target, issue);
+
+    /// <summary>
+    /// Throws <see cref="ExpectException"/> if <paramref name="target"/> does not throw an exception
+    /// </summary>
+    /// <param name="target">The function that is expected to throw an exception</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <exception cref="ExpectException">Thrown if <paramref name="target"/> does not throw an exception</exception>
+    /// <returns>An asynchronous invocation of <paramref name="target"/></returns>
+    public static Task ThrowsAsync(Func<Task> target, Issue<Func<Task>>? issue = null) =>
+      Green.Expect.ThrowsAsync(target, issue);
+
+    //
+    // Text
+    //
+
+    /// <summary>
+    /// Gets text for <paramref name="value"/> that defers formatting until requested
+    /// </summary>
+    /// <typeparam name="T">The type of value to format</typeparam>
+    /// <param name="value">The value to format</param>
+    /// <returns>Text for <paramref name="value"/> that defers formatting until requested</returns>
+    public static Text<T> Text<T>(T value) =>
+      Green.Text.Of(value);
+
+    /// <summary>
+    /// Gets text for <paramref name="pair"/> that defers formatting until requested
+    /// </summary>
+    /// <typeparam name="TKey">The type of key in the pair to format</typeparam>
+    /// <typeparam name="TValue">The type of value in the pair to format</typeparam>
+    /// <param name="pair">The pair to format</param>
+    /// <returns>Text for <paramref name="pair"/> that defers formatting until requested</returns>
+    public static Text<TKey, TValue> TextPair<TKey, TValue>(KeyValuePair<TKey, TValue> pair) =>
+      Green.Text.Pair(pair);
+
+    /// <summary>
+    /// Gets text for <paramref name="key"/> and <paramref name="value"/> that defers formatting until requested
+    /// </summary>
+    /// <typeparam name="TKey">The type of key in the pair to format</typeparam>
+    /// <typeparam name="TValue">The type of value in the pair to format</typeparam>
+    /// <param name="key">The key in the pair to format</param>
+    /// <param name="value">The key in the pair to format</param>
+    /// <returns>Text for <paramref name="key"/> and <paramref name="value"/> that defers formatting until requested</returns>
+    public static Text<TKey, TValue> TextPair<TKey, TValue>(TKey key, TValue value) =>
+      Green.Text.Pair(key, value);
+
+    /// <summary>
+    /// Gets text for <paramref name="items"/> that defers formatting until requested
+    /// </summary>
+    /// <typeparam name="T">The type of items in the sequence to format</typeparam>
+    /// <param name="items">The sequence to format</param>
+    /// <returns>Text for <paramref name="items"/> that defers formatting until requested</returns>
+    public static TextMany<T> Many<T>(IEnumerable<T> items) =>
+      Green.Text.Many(items);
+
+    /// <summary>
+    /// Gets text for <paramref name="pairs"/> that defers formatting until requested
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the dictionary to format</typeparam>
+    /// <typeparam name="TValue">The type of values in the dictionary to format</typeparam>
+    /// <param name="pairs">The dictionary to format</param>
+    /// <returns>Text for <paramref name="pairs"/> that defers formatting until requested</returns>
+    public static TextMany<TKey, TValue> Many<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> pairs) =>
+      Green.Text.Many(pairs);
   }
 }

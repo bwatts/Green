@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
-namespace Green.Messages
+namespace Green
 {
   /// <summary>
   /// A sequence with items of type <typeparamref name="T"/> that defers formatting until requested
@@ -12,9 +12,9 @@ namespace Green.Messages
   /// <typeparam name="T">The type of items in the sequence to format</typeparam>
   public struct TextMany<T> : IFormattable
   {
-    readonly IEnumerable<T> _items;
+    readonly IEnumerable<T>? _items;
 
-    internal TextMany(IEnumerable<T> items)
+    internal TextMany(IEnumerable<T>? items)
     {
       _items = items;
     }
@@ -70,14 +70,6 @@ namespace Green.Messages
     }
 
     /// <summary>
-    /// Implicitly gets the <see cref="Text"/> value of <paramref name="text"/>
-    /// </summary>
-    /// <param name="text">The text to implicitly convert</param>
-    /// <returns>The <see cref="Text"/> value of <paramref name="text"/></returns>
-    public static implicit operator Text(TextMany<T> text) =>
-      text.ToString();
-
-    /// <summary>
     /// Implicitly gets the <see cref="string"/> value of <paramref name="text"/>
     /// </summary>
     /// <param name="text">The text to implicitly convert</param>
@@ -93,9 +85,9 @@ namespace Green.Messages
   /// <typeparam name="TValue">The type of values in the dictionary to format</typeparam>
   public struct TextMany<TKey, TValue> : IFormattable
   {
-    readonly IEnumerable<KeyValuePair<TKey, TValue>> _pairs;
+    readonly IEnumerable<KeyValuePair<TKey, TValue>>? _pairs;
 
-    internal TextMany(IEnumerable<KeyValuePair<TKey, TValue>> pairs)
+    internal TextMany(IEnumerable<KeyValuePair<TKey, TValue>>? pairs)
     {
       _pairs = pairs;
     }
@@ -134,14 +126,6 @@ namespace Green.Messages
 
       return text.Append("}").ToString();
     }
-
-    /// <summary>
-    /// Implicitly gets the <see cref="Text"/> value of <paramref name="text"/>
-    /// </summary>
-    /// <param name="text">The text to implicitly convert</param>
-    /// <returns>The <see cref="Text"/> value of <paramref name="text"/></returns>
-    public static implicit operator Text(TextMany<TKey, TValue> text) =>
-      text.ToString();
 
     /// <summary>
     /// Implicitly gets the <see cref="string"/> value of <paramref name="text"/>

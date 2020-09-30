@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Green.Messages;
 
 namespace Green
 {
@@ -70,19 +69,7 @@ namespace Green
     /// <param name="issue">A message describing the issue if the expectation is not met</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if <paramref name="check"/> returns <see langword="false"/></exception>
-    public ExpectMany<T> That(Func<IEnumerable<T>, bool> check, IssueMany<T>? issue = null) =>
-      Is(true, check, issue);
-
-    /// <summary>
-    /// Throws <see cref="ExpectException"/> if <paramref name="check"/> returns <see langword="true"/>
-    /// </summary>
-    /// <param name="check">The function to apply to the target sequence</param>
-    /// <param name="issue">A message describing the issue if the expectation is not met</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    public ExpectMany<T> Not(Func<IEnumerable<T>, bool> check, IssueMany<T>? issue = null) =>
-      Is(false, check, issue);
-
-    ExpectMany<T> Is(bool expectedCheckResult, Func<IEnumerable<T>, bool> check, IssueMany<T>? issue)
+    public ExpectMany<T> That(Func<IEnumerable<T>, bool> check, IssueMany<T>? issue = null)
     {
       if(check != null)
       {
@@ -90,20 +77,16 @@ namespace Green
 
         try
         {
-          result = check(Target) == expectedCheckResult;
+          result = check(Target);
         }
-        catch(ExpectException error)
+        catch(Exception inner)
         {
-          issue.Throw(Target, error);
-        }
-        catch(Exception error)
-        {
-          throw new ExpectException($"Failed to apply check to target value: {Text.Of(Target)}", error);
+          throw issue.ToException(Target, _expectedResult, inner);
         }
 
         if(result != _expectedResult)
         {
-          issue.Throw(Target);
+          throw issue.ToException(Target, _expectedResult);
         }
       }
 
@@ -173,18 +156,14 @@ namespace Green
         {
           result = check(Target) == expectedCheckResult;
         }
-        catch(ExpectException error)
+        catch(Exception inner)
         {
-          issue.Throw(Target, error);
-        }
-        catch(Exception error)
-        {
-          throw new ExpectException($"Failed to apply check to target value: {Text.Of(Target)}", error);
+          throw issue.ToException(Target, _expectedResult, inner);
         }
 
         if(result != _expectedResult)
         {
-          issue.Throw(Target);
+          throw issue.ToException(Target, _expectedResult);
         }
       }
 

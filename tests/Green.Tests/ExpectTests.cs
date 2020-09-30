@@ -91,29 +91,6 @@ namespace Green
       Assert.Throws<ExpectException>(() => expect.That(_ => false));
     }
 
-    [Fact]
-    public void Not_ReturnsSame()
-    {
-      // Arrange
-      var expect = Expect.That(_target);
-
-      // Act
-      var nextExpect = expect.Not(_ => false);
-
-      // Assert
-      Assert.Equal(expect, nextExpect);
-    }
-
-    [Fact]
-    public void Not_Throws_IfTrue()
-    {
-      // Arrange
-      var expect = Expect.That(_target);
-
-      // Act
-      Assert.Throws<ExpectException>(() => expect.Not(_ => true));
-    }
-
     //
     // Throws
     //
@@ -145,7 +122,8 @@ namespace Green
     public void Throws_Action_ThrowsIfNoException()
     {
       // Arrange
-      static void Target() { }
+      static void Target()
+      { }
 
       // Act
       Assert.Throws<ExpectException>(() =>
@@ -181,7 +159,7 @@ namespace Green
     public void Throws_Func_ThrowsIfNoException()
     {
       // Arrange
-      static object Target() => null;
+      static object Target() => null!;
 
       // Act
       Assert.Throws<ExpectException>(() =>

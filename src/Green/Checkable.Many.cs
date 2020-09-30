@@ -7,16 +7,6 @@ namespace Green
   public static partial class Checkable
   {
     /// <summary>
-    /// Checks if the target has an item that equals <paramref name="value"/> using <see cref="EqualityComparer{T}.Default"/>
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> Has<T>(this CheckMany<T> check, T value) =>
-      check.Has(value, EqualityComparer<T>.Default);
-
-    /// <summary>
     /// Checks if the target has an item that equals <paramref name="value"/> using <paramref name="comparer"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
@@ -28,14 +18,14 @@ namespace Green
       check.That(t => t != null && t.Contains(value, comparer));
 
     /// <summary>
-    /// Checks if the target does not have an item that equals <paramref name="value"/> using <see cref="EqualityComparer{T}.Default"/>
+    /// Checks if the target has an item that equals <paramref name="value"/> using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> DoesNotHave<T>(this CheckMany<T> check, T value) =>
-      check.DoesNotHave(value, EqualityComparer<T>.Default);
+    public static CheckMany<T> Has<T>(this CheckMany<T> check, T value) =>
+      check.Has(value, EqualityComparer<T>.Default);
 
     /// <summary>
     /// Checks if the target does not have an item that equals <paramref name="value"/> using <paramref name="comparer"/>
@@ -47,6 +37,16 @@ namespace Green
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<T> DoesNotHave<T>(this CheckMany<T> check, T value, IEqualityComparer<T> comparer) =>
       check.Not(t => t != null && t.Contains(value, comparer));
+
+    /// <summary>
+    /// Checks if the target does not have an item that equals <paramref name="value"/> using <see cref="EqualityComparer{T}.Default"/>
+    /// </summary>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="value">The value to compare</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static CheckMany<T> DoesNotHave<T>(this CheckMany<T> check, T value) =>
+      check.DoesNotHave(value, EqualityComparer<T>.Default);
 
     //
     // All
@@ -376,7 +376,7 @@ namespace Green
     //
 
     /// <summary>
-    /// Checks if the target's count equals <paramref name="value"/>
+    /// Checks if the target's count is <paramref name="value"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
@@ -396,7 +396,7 @@ namespace Green
       check.That(t => t != null && checkValue.Invoke(t.GetOrFindCount()));
 
     /// <summary>
-    /// Checks if the target's count equals 1
+    /// Checks if the target's count is 1
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
@@ -405,7 +405,7 @@ namespace Green
       check.HasCount(1);
 
     /// <summary>
-    /// Checks if the target's count equals 2
+    /// Checks if the target's count is 2
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
@@ -414,7 +414,7 @@ namespace Green
       check.HasCount(2);
 
     /// <summary>
-    /// Checks if the target's count equals 3
+    /// Checks if the target's count is 3
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
@@ -423,7 +423,7 @@ namespace Green
       check.HasCount(3);
 
     /// <summary>
-    /// Checks if the target's count equals 4
+    /// Checks if the target's count is 4
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
@@ -432,7 +432,7 @@ namespace Green
       check.HasCount(4);
 
     /// <summary>
-    /// Checks if the target's count equals 5
+    /// Checks if the target's count is 5
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
@@ -441,7 +441,7 @@ namespace Green
       check.HasCount(5);
 
     /// <summary>
-    /// Checks if the target's count equals 6
+    /// Checks if the target's count is 6
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
@@ -450,7 +450,7 @@ namespace Green
       check.HasCount(6);
 
     /// <summary>
-    /// Checks if the target's count equals 7
+    /// Checks if the target's count is 7
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
@@ -459,7 +459,7 @@ namespace Green
       check.HasCount(7);
 
     /// <summary>
-    /// Checks if the target's count equals 8
+    /// Checks if the target's count is 8
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
@@ -468,7 +468,7 @@ namespace Green
       check.HasCount(8);
 
     /// <summary>
-    /// Checks if the target's count equals 1 and if the item results in <see langword="true"/> from <paramref name="checkItem"/>
+    /// Checks if the target's count is 1 and if the item results in <see langword="true"/> from <paramref name="checkItem"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
@@ -478,7 +478,7 @@ namespace Green
       check.That(t => t.TryCountItems(1, out var items) && (checkItem == null || checkItem(items[0])));
 
     /// <summary>
-    /// Checks if the target's count equals 2 and if the items result in <see langword="true"/> from <paramref name="checkItems"/>
+    /// Checks if the target's count is 2 and if the items result in <see langword="true"/> from <paramref name="checkItems"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
@@ -488,7 +488,7 @@ namespace Green
       check.That(t => t.TryCountItems(2, out var items) && (checkItems == null || checkItems(items[0], items[1])));
 
     /// <summary>
-    /// Checks if the target's count equals 3 and if the items result in <see langword="true"/> from <paramref name="checkItems"/>
+    /// Checks if the target's count is 3 and if the items result in <see langword="true"/> from <paramref name="checkItems"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
@@ -498,7 +498,7 @@ namespace Green
       check.That(t => t.TryCountItems(3, out var items) && (checkItems == null || checkItems(items[0], items[1], items[2])));
 
     /// <summary>
-    /// Checks if the target's count equals 4 and if the items result in <see langword="true"/> from <paramref name="checkItems"/>
+    /// Checks if the target's count is 4 and if the items result in <see langword="true"/> from <paramref name="checkItems"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
@@ -508,7 +508,7 @@ namespace Green
       check.That(t => t.TryCountItems(4, out var items) && (checkItems == null || checkItems(items[0], items[1], items[2], items[3])));
 
     /// <summary>
-    /// Checks if the target's count equals 5 and if the items result in <see langword="true"/> from <paramref name="checkItems"/>
+    /// Checks if the target's count is 5 and if the items result in <see langword="true"/> from <paramref name="checkItems"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
@@ -518,7 +518,7 @@ namespace Green
       check.That(t => t.TryCountItems(5, out var items) && (checkItems == null || checkItems(items[0], items[1], items[2], items[3], items[4])));
 
     /// <summary>
-    /// Checks if the target's count equals 6 and if the items result in <see langword="true"/> from <paramref name="checkItems"/>
+    /// Checks if the target's count is 6 and if the items result in <see langword="true"/> from <paramref name="checkItems"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
@@ -528,7 +528,7 @@ namespace Green
       check.That(t => t.TryCountItems(6, out var items) && (checkItems == null || checkItems(items[0], items[1], items[2], items[3], items[4], items[5])));
 
     /// <summary>
-    /// Checks if the target's count equals 7 and if the items result in <see langword="true"/> from <paramref name="checkItems"/>
+    /// Checks if the target's count is 7 and if the items result in <see langword="true"/> from <paramref name="checkItems"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
@@ -538,7 +538,7 @@ namespace Green
       check.That(t => t.TryCountItems(7, out var items) && (checkItems == null || checkItems(items[0], items[1], items[2], items[3], items[4], items[5], items[6])));
 
     /// <summary>
-    /// Checks if the target's count equals 8 and if the items result in <see langword="true"/> from <paramref name="checkItems"/>
+    /// Checks if the target's count is 8 and if the items result in <see langword="true"/> from <paramref name="checkItems"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
@@ -550,17 +550,6 @@ namespace Green
     //
     // Has (pairs)
     //
-
-    /// <summary>
-    /// Checks if the target has an item that equals <paramref name="pair"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="pair">The pair to compare keys and values</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<TKey, TValue> Has<TKey, TValue>(this CheckMany<TKey, TValue> check, KeyValuePair<TKey, TValue> pair) =>
-      check.Has(pair, pair.GetComparer());
 
     /// <summary>
     /// Checks if the target has an item that equals <paramref name="pair"/> using <paramref name="comparer"/>
@@ -575,6 +564,19 @@ namespace Green
       check.That(t => t != null && t.Contains(pair, comparer.ElseDefault()));
 
     /// <summary>
+    /// Checks if the target has an item that equals <paramref name="pair"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="pair">The pair to compare keys and values</param>
+    /// <param name="keyComparer">The object that performs key comparisons</param>
+    /// <param name="valueComparer">The object that performs value comparisons</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static CheckMany<TKey, TValue> Has<TKey, TValue>(this CheckMany<TKey, TValue> check, KeyValuePair<TKey, TValue> pair, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer) =>
+      check.That(t => t != null && t.Contains(pair, PairComparer.For(keyComparer, valueComparer)));
+
+    /// <summary>
     /// Checks if the target has an item that equals <paramref name="pair"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
@@ -584,7 +586,7 @@ namespace Green
     /// <param name="keyComparer">The object that performs key comparisons</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> Has<TKey, TValue>(this CheckMany<TKey, TValue> check, KeyValuePair<TKey, TValue> pair, IEqualityComparer<TKey> keyComparer) =>
-      check.That(t => t != null && t.Contains(pair, pair.GetComparer(keyComparer)));
+      check.That(t => t != null && t.Contains(pair, PairComparer.For<TKey, TValue>(keyComparer)));
 
     /// <summary>
     /// Checks if the target has an item that equals <paramref name="pair"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
@@ -596,58 +598,31 @@ namespace Green
     /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> Has<TKey, TValue>(this CheckMany<TKey, TValue> check, KeyValuePair<TKey, TValue> pair, IEqualityComparer<TValue> valueComparer) =>
-      check.That(t => t != null && t.Contains(pair, pair.GetComparer(valueComparer)));
+      check.That(t => t != null && t.Contains(pair, PairComparer.For<TKey, TValue>(valueComparer)));
 
     /// <summary>
-    /// Checks if the target has an item that equals <paramref name="pair"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
+    /// Checks if the target has an item that equals <paramref name="pair"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="pair">The pair to compare keys and values</param>
-    /// <param name="keyComparer">The object that performs key comparisons</param>
-    /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<TKey, TValue> Has<TKey, TValue>(this CheckMany<TKey, TValue> check, KeyValuePair<TKey, TValue> pair, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer) =>
-      check.That(t => t != null && t.Contains(pair, pair.GetComparer(keyComparer, valueComparer)));
+    public static CheckMany<TKey, TValue> Has<TKey, TValue>(this CheckMany<TKey, TValue> check, KeyValuePair<TKey, TValue> pair) =>
+      check.Has(pair, PairComparer.For<TKey, TValue>());
 
     /// <summary>
-    /// Checks if the target has a pair that equals <paramref name="key"/> and <paramref name="value"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
+    /// Checks if the target has a pair that equals <paramref name="key"/> and <paramref name="value"/> using <paramref name="comparer"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="key">The key to compare</param>
     /// <param name="value">The value to compare</param>
+    /// <param name="comparer">The object that performs the comparison</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<TKey, TValue> Has<TKey, TValue>(this CheckMany<TKey, TValue> check, TKey key, TValue value) =>
-      check.Has(new KeyValuePair<TKey, TValue>(key, value));
-
-    /// <summary>
-    /// Checks if the target has a pair that equals <paramref name="key"/> and <paramref name="value"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="key">The key to compare</param>
-    /// <param name="value">The value to compare</param>
-    /// <param name="keyComparer">The object that performs key comparisons</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<TKey, TValue> Has<TKey, TValue>(this CheckMany<TKey, TValue> check, TKey key, TValue value, IEqualityComparer<TKey> keyComparer) =>
-      check.Has(new KeyValuePair<TKey, TValue>(key, value), keyComparer);
-
-    /// <summary>
-    /// Checks if the target has a pair that equals <paramref name="key"/> and <paramref name="value"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="key">The key to compare</param>
-    /// <param name="value">The value to compare</param>
-    /// <param name="valueComparer">The object that performs value comparisons</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<TKey, TValue> Has<TKey, TValue>(this CheckMany<TKey, TValue> check, TKey key, TValue value, IEqualityComparer<TValue> valueComparer) =>
-      check.Has(new KeyValuePair<TKey, TValue>(key, value), valueComparer);
+    public static CheckMany<TKey, TValue> Has<TKey, TValue>(this CheckMany<TKey, TValue> check, TKey key, TValue value, IEqualityComparer<KeyValuePair<TKey, TValue>> comparer) =>
+      check.Has(KeyValuePair.Create(key, value), comparer);
 
     /// <summary>
     /// Checks if the target has a pair that equals <paramref name="key"/> and <paramref name="value"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
@@ -661,7 +636,45 @@ namespace Green
     /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> Has<TKey, TValue>(this CheckMany<TKey, TValue> check, TKey key, TValue value, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer) =>
-      check.Has(new KeyValuePair<TKey, TValue>(key, value), keyComparer, valueComparer);
+      check.Has(KeyValuePair.Create(key, value), keyComparer, valueComparer);
+
+    /// <summary>
+    /// Checks if the target has a pair that equals <paramref name="key"/> and <paramref name="value"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="key">The key to compare</param>
+    /// <param name="value">The value to compare</param>
+    /// <param name="keyComparer">The object that performs key comparisons</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static CheckMany<TKey, TValue> Has<TKey, TValue>(this CheckMany<TKey, TValue> check, TKey key, TValue value, IEqualityComparer<TKey> keyComparer) =>
+      check.Has(KeyValuePair.Create(key, value), keyComparer);
+
+    /// <summary>
+    /// Checks if the target has a pair that equals <paramref name="key"/> and <paramref name="value"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="key">The key to compare</param>
+    /// <param name="value">The value to compare</param>
+    /// <param name="valueComparer">The object that performs value comparisons</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static CheckMany<TKey, TValue> Has<TKey, TValue>(this CheckMany<TKey, TValue> check, TKey key, TValue value, IEqualityComparer<TValue> valueComparer) =>
+      check.Has(KeyValuePair.Create(key, value), valueComparer);
+
+    /// <summary>
+    /// Checks if the target has a pair that equals <paramref name="key"/> and <paramref name="value"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="key">The key to compare</param>
+    /// <param name="value">The value to compare</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static CheckMany<TKey, TValue> Has<TKey, TValue>(this CheckMany<TKey, TValue> check, TKey key, TValue value) =>
+      check.Has(KeyValuePair.Create(key, value));
 
     //
     // All (pairs)
@@ -676,7 +689,7 @@ namespace Green
     /// <param name="pairs">The pairs to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> HasAll<TKey, TValue>(this CheckMany<TKey, TValue> check, IEnumerable<KeyValuePair<TKey, TValue>> pairs) =>
-      check.HasAll(pairs, pairs.GetComparer());
+      check.HasAll(pairs, PairComparer.For<TKey, TValue>());
 
     /// <summary>
     /// Checks if the target has all of the items in <paramref name="pairs"/> using <paramref name="comparer"/>
@@ -700,7 +713,7 @@ namespace Green
     /// <param name="keyComparer">The object that performs key comparisons</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> HasAll<TKey, TValue>(this CheckMany<TKey, TValue> check, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer) =>
-      check.That(t => t != null && pairs != null && t.IsSupersetOf(pairs, pairs.GetComparer(keyComparer)));
+      check.That(t => t != null && pairs != null && t.IsSupersetOf(pairs, PairComparer.For<TKey, TValue>(keyComparer)));
 
     /// <summary>
     /// Checks if the target has all of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
@@ -712,7 +725,7 @@ namespace Green
     /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> HasAll<TKey, TValue>(this CheckMany<TKey, TValue> check, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TValue> valueComparer) =>
-      check.That(t => t != null && pairs != null && t.IsSupersetOf(pairs, pairs.GetComparer(valueComparer)));
+      check.That(t => t != null && pairs != null && t.IsSupersetOf(pairs, PairComparer.For<TKey, TValue>(valueComparer)));
 
     /// <summary>
     /// Checks if the target has all of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
@@ -725,7 +738,7 @@ namespace Green
     /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> HasAll<TKey, TValue>(this CheckMany<TKey, TValue> check, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer) =>
-      check.That(t => t != null && pairs != null && t.IsSupersetOf(pairs, pairs.GetComparer(keyComparer, valueComparer)));
+      check.That(t => t != null && pairs != null && t.IsSupersetOf(pairs, PairComparer.For(keyComparer, valueComparer)));
 
     /// <summary>
     /// Checks if the target has all of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -854,7 +867,7 @@ namespace Green
     /// <param name="pairs">The pairs to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> HasAny<TKey, TValue>(this CheckMany<TKey, TValue> check, IEnumerable<KeyValuePair<TKey, TValue>> pairs) =>
-      check.HasAll(pairs, pairs.GetComparer());
+      check.HasAll(pairs, PairComparer.For<TKey, TValue>());
 
     /// <summary>
     /// Checks if the target has any of the items in <paramref name="pairs"/> using <paramref name="comparer"/>
@@ -878,7 +891,7 @@ namespace Green
     /// <param name="keyComparer">The object that performs key comparisons</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> HasAny<TKey, TValue>(this CheckMany<TKey, TValue> check, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer) =>
-      check.That(t => t != null && pairs != null && t.IntersectsWith(pairs, pairs.GetComparer(keyComparer)));
+      check.That(t => t != null && pairs != null && t.IntersectsWith(pairs, PairComparer.For<TKey, TValue>(keyComparer)));
 
     /// <summary>
     /// Checks if the target has any of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
@@ -890,7 +903,7 @@ namespace Green
     /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> HasAny<TKey, TValue>(this CheckMany<TKey, TValue> check, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TValue> valueComparer) =>
-      check.That(t => t != null && pairs != null && t.IntersectsWith(pairs, pairs.GetComparer(valueComparer)));
+      check.That(t => t != null && pairs != null && t.IntersectsWith(pairs, PairComparer.For<TKey, TValue>(valueComparer)));
 
     /// <summary>
     /// Checks if the target has any of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
@@ -903,7 +916,7 @@ namespace Green
     /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> HasAny<TKey, TValue>(this CheckMany<TKey, TValue> check, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer) =>
-      check.That(t => t != null && pairs != null && t.IntersectsWith(pairs, pairs.GetComparer(keyComparer, valueComparer)));
+      check.That(t => t != null && pairs != null && t.IntersectsWith(pairs, PairComparer.For(keyComparer, valueComparer)));
 
     /// <summary>
     /// Checks if the target has any of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -1032,7 +1045,7 @@ namespace Green
     /// <param name="pairs">The pairs to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> HasNone<TKey, TValue>(this CheckMany<TKey, TValue> check, IEnumerable<KeyValuePair<TKey, TValue>> pairs) =>
-      check.HasAll(pairs, pairs.GetComparer());
+      check.HasAll(pairs, PairComparer.For<TKey, TValue>());
 
     /// <summary>
     /// Checks if the target has none of the items in <paramref name="pairs"/> using <paramref name="comparer"/>
@@ -1056,7 +1069,7 @@ namespace Green
     /// <param name="keyComparer">The object that performs key comparisons</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> HasNone<TKey, TValue>(this CheckMany<TKey, TValue> check, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer) =>
-      check.That(t => t != null && pairs != null && !t.IntersectsWith(pairs, pairs.GetComparer(keyComparer)));
+      check.That(t => t != null && pairs != null && !t.IntersectsWith(pairs, PairComparer.For<TKey, TValue>(keyComparer)));
 
     /// <summary>
     /// Checks if the target has none of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
@@ -1068,7 +1081,7 @@ namespace Green
     /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> HasNone<TKey, TValue>(this CheckMany<TKey, TValue> check, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TValue> valueComparer) =>
-      check.That(t => t != null && pairs != null && !t.IntersectsWith(pairs, pairs.GetComparer(valueComparer)));
+      check.That(t => t != null && pairs != null && !t.IntersectsWith(pairs, PairComparer.For<TKey, TValue>(valueComparer)));
 
     /// <summary>
     /// Checks if the target has none of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
@@ -1081,7 +1094,7 @@ namespace Green
     /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> HasNone<TKey, TValue>(this CheckMany<TKey, TValue> check, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer) =>
-      check.That(t => t != null && pairs != null && !t.IntersectsWith(pairs, pairs.GetComparer(keyComparer, valueComparer)));
+      check.That(t => t != null && pairs != null && !t.IntersectsWith(pairs, PairComparer.For(keyComparer, valueComparer)));
 
     /// <summary>
     /// Checks if the target has none of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -1294,7 +1307,7 @@ namespace Green
     /// <param name="pairs">The pairs to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> HasSame<TKey, TValue>(this CheckMany<TKey, TValue> check, IEnumerable<KeyValuePair<TKey, TValue>> pairs) =>
-      check.HasSame(pairs, pairs.GetComparer());
+      check.HasSame(pairs, PairComparer.For<TKey, TValue>());
 
     /// <summary>
     /// Checks if the target has the same pairs as <paramref name="pairs"/> using <paramref name="comparer"/>
@@ -1318,7 +1331,7 @@ namespace Green
     /// <param name="keyComparer">The object that performs key comparisons</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> HasSame<TKey, TValue>(this CheckMany<TKey, TValue> check, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer) =>
-      check.That(t => t != null && pairs != null && t.OrderBy(pair => pair.Key).SequenceEqual(pairs.OrderBy(pair => pair.Key), pairs.GetComparer(keyComparer)));
+      check.That(t => t != null && pairs != null && t.OrderBy(pair => pair.Key).SequenceEqual(pairs.OrderBy(pair => pair.Key), PairComparer.For<TKey, TValue>(keyComparer)));
 
     /// <summary>
     /// Checks if the target has the same pairs as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
@@ -1330,7 +1343,7 @@ namespace Green
     /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> HasSame<TKey, TValue>(this CheckMany<TKey, TValue> check, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TValue> valueComparer) =>
-      check.That(t => t != null && pairs != null && t.OrderBy(pair => pair.Key).SequenceEqual(pairs.OrderBy(pair => pair.Key), pairs.GetComparer(valueComparer)));
+      check.That(t => t != null && pairs != null && t.OrderBy(pair => pair.Key).SequenceEqual(pairs.OrderBy(pair => pair.Key), PairComparer.For<TKey, TValue>(valueComparer)));
 
     /// <summary>
     /// Checks if the target has the same pairs as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
@@ -1343,7 +1356,7 @@ namespace Green
     /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> HasSame<TKey, TValue>(this CheckMany<TKey, TValue> check, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer) =>
-      check.That(t => t != null && pairs != null && t.OrderBy(pair => pair.Key).SequenceEqual(pairs.OrderBy(pair => pair.Key), pairs.GetComparer(keyComparer, valueComparer)));
+      check.That(t => t != null && pairs != null && t.OrderBy(pair => pair.Key).SequenceEqual(pairs.OrderBy(pair => pair.Key), PairComparer.For(keyComparer, valueComparer)));
 
     /// <summary>
     /// Checks if the target has the same pairs as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -1418,7 +1431,7 @@ namespace Green
     /// <param name="pairs">The pairs to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> HasSameInOrder<TKey, TValue>(this CheckMany<TKey, TValue> check, IEnumerable<KeyValuePair<TKey, TValue>> pairs) =>
-      check.HasSame(pairs, pairs.GetComparer());
+      check.HasSame(pairs, PairComparer.For<TKey, TValue>());
 
     /// <summary>
     /// Checks if the target has the same pairs in the same order as <paramref name="pairs"/> using <paramref name="comparer"/>
@@ -1442,7 +1455,7 @@ namespace Green
     /// <param name="keyComparer">The object that performs key comparisons</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> HasSameInOrder<TKey, TValue>(this CheckMany<TKey, TValue> check, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer) =>
-      check.That(t => t != null && pairs != null && t.SequenceEqual(pairs, pairs.GetComparer(keyComparer)));
+      check.That(t => t != null && pairs != null && t.SequenceEqual(pairs, PairComparer.For<TKey, TValue>(keyComparer)));
 
     /// <summary>
     /// Checks if the target has the same pairs in the same order as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
@@ -1454,7 +1467,7 @@ namespace Green
     /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> HasSameInOrder<TKey, TValue>(this CheckMany<TKey, TValue> check, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TValue> valueComparer) =>
-      check.That(t => t != null && pairs != null && t.SequenceEqual(pairs, pairs.GetComparer(valueComparer)));
+      check.That(t => t != null && pairs != null && t.SequenceEqual(pairs, PairComparer.For<TKey, TValue>(valueComparer)));
 
     /// <summary>
     /// Checks if the target has the same pairs in the same order as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
@@ -1467,7 +1480,7 @@ namespace Green
     /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<TKey, TValue> HasSameInOrder<TKey, TValue>(this CheckMany<TKey, TValue> check, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer) =>
-      check.That(t => t != null && pairs != null && t.SequenceEqual(pairs, pairs.GetComparer(keyComparer, valueComparer)));
+      check.That(t => t != null && pairs != null && t.SequenceEqual(pairs, PairComparer.For(keyComparer, valueComparer)));
 
     /// <summary>
     /// Checks if the target has the same pairs in the same order as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -1716,7 +1729,7 @@ namespace Green
     //
 
     /// <summary>
-    /// Checks if the target's count equals <paramref name="value"/>
+    /// Checks if the target's count is <paramref name="value"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -1738,7 +1751,7 @@ namespace Green
       check.That(t => t != null && checkValue.Invoke(t.GetOrFindCount()));
 
     /// <summary>
-    /// Checks if the target's count equals 1
+    /// Checks if the target's count is 1
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -1748,7 +1761,7 @@ namespace Green
       check.HasCount(1);
 
     /// <summary>
-    /// Checks if the target's count equals 2
+    /// Checks if the target's count is 2
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -1758,7 +1771,7 @@ namespace Green
       check.HasCount(2);
 
     /// <summary>
-    /// Checks if the target's count equals 3
+    /// Checks if the target's count is 3
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -1768,7 +1781,7 @@ namespace Green
       check.HasCount(3);
 
     /// <summary>
-    /// Checks if the target's count equals 4
+    /// Checks if the target's count is 4
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -1778,7 +1791,7 @@ namespace Green
       check.HasCount(4);
 
     /// <summary>
-    /// Checks if the target's count equals 5
+    /// Checks if the target's count is 5
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -1788,7 +1801,7 @@ namespace Green
       check.HasCount(5);
 
     /// <summary>
-    /// Checks if the target's count equals 6
+    /// Checks if the target's count is 6
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -1798,7 +1811,7 @@ namespace Green
       check.HasCount(6);
 
     /// <summary>
-    /// Checks if the target's count equals 7
+    /// Checks if the target's count is 7
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -1808,7 +1821,7 @@ namespace Green
       check.HasCount(7);
 
     /// <summary>
-    /// Checks if the target's count equals 8
+    /// Checks if the target's count is 8
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -1818,7 +1831,7 @@ namespace Green
       check.HasCount(8);
 
     /// <summary>
-    /// Checks if the target's count equals 1 and if the pair results in <see langword="true"/> from <paramref name="checkPair"/>
+    /// Checks if the target's count is 1 and if the pair results in <see langword="true"/> from <paramref name="checkPair"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -1829,7 +1842,7 @@ namespace Green
       check.That(t => TryCountItems(t, 1, out var items) && (checkPair == null || checkPair(items[0])));
 
     /// <summary>
-    /// Checks if the target's count equals 2 and if the pairs result in <see langword="true"/> from <paramref name="checkPairs"/>
+    /// Checks if the target's count is 2 and if the pairs result in <see langword="true"/> from <paramref name="checkPairs"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -1840,7 +1853,7 @@ namespace Green
       check.That(t => TryCountItems(t, 2, out var items) && (checkPairs == null || checkPairs(items[0], items[1])));
 
     /// <summary>
-    /// Checks if the target's count equals 3 and if the pairs result in <see langword="true"/> from <paramref name="checkPairs"/>
+    /// Checks if the target's count is 3 and if the pairs result in <see langword="true"/> from <paramref name="checkPairs"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -1851,7 +1864,7 @@ namespace Green
       check.That(t => TryCountItems(t, 3, out var items) && (checkPairs == null || checkPairs(items[0], items[1], items[2])));
 
     /// <summary>
-    /// Checks if the target's count equals 4 and if the pairs result in <see langword="true"/> from <paramref name="checkPairs"/>
+    /// Checks if the target's count is 4 and if the pairs result in <see langword="true"/> from <paramref name="checkPairs"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -1862,7 +1875,7 @@ namespace Green
       check.That(t => TryCountItems(t, 4, out var items) && (checkPairs == null || checkPairs(items[0], items[1], items[2], items[3])));
 
     /// <summary>
-    /// Checks if the target's count equals 5 and if the pairs result in <see langword="true"/> from <paramref name="checkPairs"/>
+    /// Checks if the target's count is 5 and if the pairs result in <see langword="true"/> from <paramref name="checkPairs"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -1873,7 +1886,7 @@ namespace Green
       check.That(t => TryCountItems(t, 5, out var items) && (checkPairs == null || checkPairs(items[0], items[1], items[2], items[3], items[4])));
 
     /// <summary>
-    /// Checks if the target's count equals 6 and if the pairs result in <see langword="true"/> from <paramref name="checkPairs"/>
+    /// Checks if the target's count is 6 and if the pairs result in <see langword="true"/> from <paramref name="checkPairs"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -1884,7 +1897,7 @@ namespace Green
       check.That(t => TryCountItems(t, 6, out var items) && (checkPairs == null || checkPairs(items[0], items[1], items[2], items[3], items[4], items[5])));
 
     /// <summary>
-    /// Checks if the target's count equals 7 and if the pairs result in <see langword="true"/> from <paramref name="checkPairs"/>
+    /// Checks if the target's count is 7 and if the pairs result in <see langword="true"/> from <paramref name="checkPairs"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -1895,7 +1908,7 @@ namespace Green
       check.That(t => TryCountItems(t, 7, out var items) && (checkPairs == null || checkPairs(items[0], items[1], items[2], items[3], items[4], items[5], items[6])));
 
     /// <summary>
-    /// Checks if the target's count equals 8 and if the pairs result in <see langword="true"/> from <paramref name="checkPairs"/>
+    /// Checks if the target's count is 8 and if the pairs result in <see langword="true"/> from <paramref name="checkPairs"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>

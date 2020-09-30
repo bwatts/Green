@@ -1,5 +1,4 @@
 using System;
-using Green.Messages;
 
 namespace Green
 {
@@ -17,7 +16,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<byte> IsZero(this Expect<byte> expect, Issue<byte>? issue = null) =>
-      expect.That(t => t == 0, issue.ElseExpected("0"));
+      expect.That(t => t == 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is not zero
@@ -27,7 +26,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<byte> IsNotZero(this Expect<byte> expect, Issue<byte>? issue = null) =>
-      expect.That(t => t != 0, issue.ElseExpected("not 0"));
+      expect.That(t => t != 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is divisible by 2
@@ -37,7 +36,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<byte> IsEven(this Expect<byte> expect, Issue<byte>? issue = null) =>
-      expect.That(t => t % 2 == 0, issue.ElseExpected("even"));
+      expect.That(t => t % 2 == 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is not divisible by 2
@@ -47,7 +46,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<byte> IsOdd(this Expect<byte> expect, Issue<byte>? issue = null) =>
-      expect.That(t => t % 2 != 0, issue.ElseExpected("odd"));
+      expect.That(t => t % 2 != 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is in the range 0-100
@@ -57,7 +56,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<byte> IsPercentage(this Expect<byte> expect, Issue<byte>? issue = null) =>
-      expect.That(t => t >= 0 && t <= 100, issue.ElseExpected("percentage (0-100)"));
+      expect.That(t => t >= 0 && t <= 100, issue.Operator());
 
     /// <summary>
     /// Expects the target is <see cref="byte.MinValue"/>
@@ -67,7 +66,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<byte> IsMinValue(this Expect<byte> expect, Issue<byte>? issue = null) =>
-      expect.That(t => t == byte.MinValue, issue.ElseExpected($"{nameof(byte.MinValue)} ({byte.MinValue})"));
+      expect.That(t => t == byte.MinValue, issue.Operator());
 
     /// <summary>
     /// Expects the target is <see cref="byte.MaxValue"/>
@@ -77,7 +76,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<byte> IsMaxValue(this Expect<byte> expect, Issue<byte>? issue = null) =>
-      expect.That(t => t == byte.MaxValue, issue.ElseExpected($"{nameof(byte.MaxValue)} ({byte.MaxValue})"));
+      expect.That(t => t == byte.MaxValue, issue.Operator());
 
     /// <summary>
     /// Expects the target is not <see cref="byte.MinValue"/>
@@ -87,7 +86,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<byte> IsNotMinValue(this Expect<byte> expect, Issue<byte>? issue = null) =>
-      expect.That(t => t != byte.MinValue, issue.ElseExpected($"not {nameof(byte.MinValue)} ({byte.MinValue})"));
+      expect.That(t => t != byte.MinValue, issue.Operator());
 
     /// <summary>
     /// Expects the target is not <see cref="byte.MaxValue"/>
@@ -97,7 +96,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<byte> IsNotMaxValue(this Expect<byte> expect, Issue<byte>? issue = null) =>
-      expect.That(t => t != byte.MaxValue, issue.ElseExpected($"not {nameof(byte.MaxValue)} ({byte.MaxValue})"));
+      expect.That(t => t != byte.MaxValue, issue.Operator());
 
     //
     // Decimal
@@ -111,7 +110,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<decimal> IsNegative(this Expect<decimal> expect, Issue<decimal>? issue = null) =>
-      expect.That(t => t < 0, issue.ElseExpected("negative"));
+      expect.That(t => t < 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is less than or equal to zero
@@ -121,7 +120,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<decimal> IsNotPositive(this Expect<decimal> expect, Issue<decimal>? issue = null) =>
-      expect.That(t => t <= 0, issue.ElseExpected("not positive"));
+      expect.That(t => t <= 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is zero
@@ -131,7 +130,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<decimal> IsZero(this Expect<decimal> expect, Issue<decimal>? issue = null) =>
-      expect.That(t => t == 0, issue.ElseExpected("0"));
+      expect.That(t => t == 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is greater than or equal to zero
@@ -141,7 +140,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<decimal> IsNotNegative(this Expect<decimal> expect, Issue<decimal>? issue = null) =>
-      expect.That(t => t >= 0, issue.ElseExpected("not negative"));
+      expect.That(t => t >= 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is greater than zero
@@ -151,7 +150,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<decimal> IsPositive(this Expect<decimal> expect, Issue<decimal>? issue = null) =>
-      expect.That(t => t > 0, issue.ElseExpected("positive"));
+      expect.That(t => t > 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is in the range 0-100
@@ -161,7 +160,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<decimal> IsAdjustedPercentage(this Expect<decimal> expect, Issue<decimal>? issue = null) =>
-      expect.That(t => t > 0, issue.ElseExpected("adjusted percentage(0-100)"));
+      expect.That(t => t > 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is in the range 0-1
@@ -171,7 +170,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<decimal> IsLiteralPercentage(this Expect<decimal> expect, Issue<decimal>? issue = null) =>
-      expect.That(t => t > 0, issue.ElseExpected("literal percentage (0.0-1.0)"));
+      expect.That(t => t > 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is <paramref name="value"/> ± <paramref name="precision"/>
@@ -183,7 +182,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<decimal> IsCloseTo(this Expect<decimal> expect, decimal value, decimal precision, Issue<decimal>? issue = null) =>
-      expect.That(t => Math.Abs(t - value) <= precision, issue.ElseExpected($"{value} ± {precision}"));
+      expect.That(t => Math.Abs(t - value) <= precision, issue.Operator(value, precision));
 
     /// <summary>
     /// Expects the target is <see cref="decimal.MinValue"/>
@@ -193,7 +192,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<decimal> IsMinValue(this Expect<decimal> expect, Issue<decimal>? issue = null) =>
-      expect.That(t => t == decimal.MinValue, issue.ElseExpected($"{nameof(float.MinValue)} ({float.MinValue})"));
+      expect.That(t => t == decimal.MinValue, issue.Operator());
 
     /// <summary>
     /// Expects the target is <see cref="decimal.MaxValue"/>
@@ -203,7 +202,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<decimal> IsMaxValue(this Expect<decimal> expect, Issue<decimal>? issue = null) =>
-      expect.That(t => t == decimal.MaxValue, issue.ElseExpected($"{nameof(decimal.MaxValue)} ({decimal.MaxValue})"));
+      expect.That(t => t == decimal.MaxValue, issue.Operator());
 
     /// <summary>
     /// Expects the target is not <see cref="decimal.MinValue"/>
@@ -213,7 +212,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<decimal> IsNotMinValue(this Expect<decimal> expect, Issue<decimal>? issue = null) =>
-      expect.That(t => t != decimal.MinValue, issue.ElseExpected($"not {nameof(decimal.MinValue)} ({decimal.MinValue})"));
+      expect.That(t => t != decimal.MinValue, issue.Operator());
 
     /// <summary>
     /// Expects the target is not <see cref="decimal.MaxValue"/>
@@ -223,7 +222,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<decimal> IsNotMaxValue(this Expect<decimal> expect, Issue<decimal>? issue = null) =>
-      expect.That(t => t != decimal.MaxValue, issue.ElseExpected($"not {nameof(decimal.MaxValue)} ({decimal.MaxValue})"));
+      expect.That(t => t != decimal.MaxValue, issue.Operator());
 
     //
     // Double
@@ -237,7 +236,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<double> IsNegative(this Expect<double> expect, Issue<double>? issue = null) =>
-      expect.That(t => t < 0, issue.ElseExpected("negative"));
+      expect.That(t => t < 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is less than or equal to zero
@@ -247,7 +246,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<double> IsNotPositive(this Expect<double> expect, Issue<double>? issue = null) =>
-      expect.That(t => t <= 0, issue.ElseExpected("not positive"));
+      expect.That(t => t <= 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is zero
@@ -257,7 +256,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<double> IsZero(this Expect<double> expect, Issue<double>? issue = null) =>
-      expect.That(t => t == 0, issue.ElseExpected("0"));
+      expect.That(t => t == 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is greater than or equal to zero
@@ -267,7 +266,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<double> IsNotNegative(this Expect<double> expect, Issue<double>? issue = null) =>
-      expect.That(t => t >= 0, issue.ElseExpected("not negative"));
+      expect.That(t => t >= 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is greater than zero
@@ -277,7 +276,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<double> IsPositive(this Expect<double> expect, Issue<double>? issue = null) =>
-      expect.That(t => t > 0, issue.ElseExpected("positive"));
+      expect.That(t => t > 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is in the range 0-100
@@ -287,7 +286,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<double> IsAdjustedPercentage(this Expect<double> expect, Issue<double>? issue = null) =>
-      expect.That(t => t > 0, issue.ElseExpected("adjusted percentage(0-100)"));
+      expect.That(t => t > 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is in the range 0-1
@@ -297,7 +296,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<double> IsLiteralPercentage(this Expect<double> expect, Issue<double>? issue = null) =>
-      expect.That(t => t > 0, issue.ElseExpected("literal percentage (0.0-1.0)"));
+      expect.That(t => t > 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is <paramref name="value"/> ± <paramref name="precision"/>
@@ -309,7 +308,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<double> IsCloseTo(this Expect<double> expect, double value, double precision, Issue<double>? issue = null) =>
-      expect.That(t => Math.Abs(t - value) <= precision, issue.ElseExpected($"{value} ± {precision}"));
+      expect.That(t => Math.Abs(t - value) <= precision, issue.Operator(value, precision));
 
     /// <summary>
     /// Expects the target is <see cref="double.MinValue"/>
@@ -319,7 +318,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<double> IsMinValue(this Expect<double> expect, Issue<double>? issue = null) =>
-      expect.That(t => t == double.MinValue, issue.ElseExpected($"{nameof(float.MinValue)} ({float.MinValue})"));
+      expect.That(t => t == double.MinValue, issue.Operator());
 
     /// <summary>
     /// Expects the target is <see cref="double.MaxValue"/>
@@ -329,7 +328,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<double> IsMaxValue(this Expect<double> expect, Issue<double>? issue = null) =>
-      expect.That(t => t == double.MaxValue, issue.ElseExpected($"{nameof(double.MaxValue)} ({double.MaxValue})"));
+      expect.That(t => t == double.MaxValue, issue.Operator());
 
     /// <summary>
     /// Expects the target is not <see cref="double.MinValue"/>
@@ -339,7 +338,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<double> IsNotMinValue(this Expect<double> expect, Issue<double>? issue = null) =>
-      expect.That(t => t != double.MinValue, issue.ElseExpected($"not {nameof(double.MinValue)} ({double.MinValue})"));
+      expect.That(t => t != double.MinValue, issue.Operator());
 
     /// <summary>
     /// Expects the target is not <see cref="double.MaxValue"/>
@@ -349,7 +348,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<double> IsNotMaxValue(this Expect<double> expect, Issue<double>? issue = null) =>
-      expect.That(t => t != double.MaxValue, issue.ElseExpected($"not {nameof(double.MaxValue)} ({double.MaxValue})"));
+      expect.That(t => t != double.MaxValue, issue.Operator());
 
     //
     // Int32
@@ -363,7 +362,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<int> IsNegative(this Expect<int> expect, Issue<int>? issue = null) =>
-      expect.That(t => t < 0, issue.ElseExpected("negative"));
+      expect.That(t => t < 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is less than or equal to zero
@@ -373,7 +372,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<int> IsNotPositive(this Expect<int> expect, Issue<int>? issue = null) =>
-      expect.That(t => t <= 0, issue.ElseExpected("not positive"));
+      expect.That(t => t <= 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is zero
@@ -383,7 +382,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<int> IsZero(this Expect<int> expect, Issue<int>? issue = null) =>
-      expect.That(t => t == 0, issue.ElseExpected("0"));
+      expect.That(t => t == 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is greater than or equal to zero
@@ -393,7 +392,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<int> IsNotNegative(this Expect<int> expect, Issue<int>? issue = null) =>
-      expect.That(t => t >= 0, issue.ElseExpected("not negative"));
+      expect.That(t => t >= 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is greater than zero
@@ -403,7 +402,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<int> IsPositive(this Expect<int> expect, Issue<int>? issue = null) =>
-      expect.That(t => t > 0, issue.ElseExpected("positive"));
+      expect.That(t => t > 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is is divisible by 2
@@ -413,7 +412,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<int> IsEven(this Expect<int> expect, Issue<int>? issue = null) =>
-      expect.That(t => t % 2 == 0, issue.ElseExpected("even"));
+      expect.That(t => t % 2 == 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is not divisible by 2
@@ -423,7 +422,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<int> IsOdd(this Expect<int> expect, Issue<int>? issue = null) =>
-      expect.That(t => t % 2 != 0, issue.ElseExpected("odd"));
+      expect.That(t => t % 2 != 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is in the range 0-100
@@ -433,7 +432,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<int> IsPercentage(this Expect<int> expect, Issue<int>? issue = null) =>
-      expect.That(t => t >= 0 && t <= 100, issue.ElseExpected("percentage (0-100)"));
+      expect.That(t => t >= 0 && t <= 100, issue.Operator());
 
     /// <summary>
     /// Expects the target is <see cref="int.MinValue"/>
@@ -443,7 +442,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<int> IsMinValue(this Expect<int> expect, Issue<int>? issue = null) =>
-      expect.That(t => t == int.MinValue, issue.ElseExpected($"{nameof(float.MinValue)} ({float.MinValue})"));
+      expect.That(t => t == int.MinValue, issue.Operator());
 
     /// <summary>
     /// Expects the target is <see cref="int.MaxValue"/>
@@ -453,7 +452,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<int> IsMaxValue(this Expect<int> expect, Issue<int>? issue = null) =>
-      expect.That(t => t == int.MaxValue, issue.ElseExpected($"{nameof(int.MaxValue)} ({int.MaxValue})"));
+      expect.That(t => t == int.MaxValue, issue.Operator());
 
     /// <summary>
     /// Expects the target is not <see cref="int.MinValue"/>
@@ -463,7 +462,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<int> IsNotMinValue(this Expect<int> expect, Issue<int>? issue = null) =>
-      expect.That(t => t != int.MinValue, issue.ElseExpected($"not {nameof(int.MinValue)} ({int.MinValue})"));
+      expect.That(t => t != int.MinValue, issue.Operator());
 
     /// <summary>
     /// Expects the target is not <see cref="int.MaxValue"/>
@@ -473,7 +472,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<int> IsNotMaxValue(this Expect<int> expect, Issue<int>? issue = null) =>
-      expect.That(t => t != int.MaxValue, issue.ElseExpected($"not {nameof(int.MaxValue)} ({int.MaxValue})"));
+      expect.That(t => t != int.MaxValue, issue.Operator());
 
     //
     // Int64
@@ -487,7 +486,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<long> IsNegative(this Expect<long> expect, Issue<long>? issue = null) =>
-      expect.That(t => t < 0, issue.ElseExpected("negative"));
+      expect.That(t => t < 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is less than or equal to zero
@@ -497,7 +496,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<long> IsNotPositive(this Expect<long> expect, Issue<long>? issue = null) =>
-      expect.That(t => t <= 0, issue.ElseExpected("not positive"));
+      expect.That(t => t <= 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is zero
@@ -507,7 +506,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<long> IsZero(this Expect<long> expect, Issue<long>? issue = null) =>
-      expect.That(t => t == 0, issue.ElseExpected("0"));
+      expect.That(t => t == 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is greater than or equal to zero
@@ -517,7 +516,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<long> IsNotNegative(this Expect<long> expect, Issue<long>? issue = null) =>
-      expect.That(t => t >= 0, issue.ElseExpected("not negative"));
+      expect.That(t => t >= 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is greater than zero
@@ -527,7 +526,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<long> IsPositive(this Expect<long> expect, Issue<long>? issue = null) =>
-      expect.That(t => t > 0, issue.ElseExpected("positive"));
+      expect.That(t => t > 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is is divisible by 2
@@ -537,7 +536,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<long> IsEven(this Expect<long> expect, Issue<long>? issue = null) =>
-      expect.That(t => t % 2 == 0, issue.ElseExpected("even"));
+      expect.That(t => t % 2 == 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is not divisible by 2
@@ -547,7 +546,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<long> IsOdd(this Expect<long> expect, Issue<long>? issue = null) =>
-      expect.That(t => t % 2 != 0, issue.ElseExpected("odd"));
+      expect.That(t => t % 2 != 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is in the range 0-100
@@ -557,7 +556,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<long> IsPercentage(this Expect<long> expect, Issue<long>? issue = null) =>
-      expect.That(t => t >= 0 && t <= 100, issue.ElseExpected("percentage (0-100)"));
+      expect.That(t => t >= 0 && t <= 100, issue.Operator());
 
     /// <summary>
     /// Expects the target is <see cref="long.MinValue"/>
@@ -567,7 +566,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<long> IsMinValue(this Expect<long> expect, Issue<long>? issue = null) =>
-      expect.That(t => t == long.MinValue, issue.ElseExpected($"{nameof(float.MinValue)} ({float.MinValue})"));
+      expect.That(t => t == long.MinValue, issue.Operator());
 
     /// <summary>
     /// Expects the target is <see cref="long.MaxValue"/>
@@ -577,7 +576,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<long> IsMaxValue(this Expect<long> expect, Issue<long>? issue = null) =>
-      expect.That(t => t == long.MaxValue, issue.ElseExpected($"{nameof(long.MaxValue)} ({long.MaxValue})"));
+      expect.That(t => t == long.MaxValue, issue.Operator());
 
     /// <summary>
     /// Expects the target is not <see cref="long.MinValue"/>
@@ -587,7 +586,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<long> IsNotMinValue(this Expect<long> expect, Issue<long>? issue = null) =>
-      expect.That(t => t != long.MinValue, issue.ElseExpected($"not {nameof(long.MinValue)} ({long.MinValue})"));
+      expect.That(t => t != long.MinValue, issue.Operator());
 
     /// <summary>
     /// Expects the target is not <see cref="long.MaxValue"/>
@@ -597,7 +596,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<long> IsNotMaxValue(this Expect<long> expect, Issue<long>? issue = null) =>
-      expect.That(t => t != long.MaxValue, issue.ElseExpected($"not {nameof(long.MaxValue)} ({long.MaxValue})"));
+      expect.That(t => t != long.MaxValue, issue.Operator());
 
     //
     // Single
@@ -611,7 +610,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<float> IsNegative(this Expect<float> expect, Issue<float>? issue = null) =>
-      expect.That(t => t < 0, issue.ElseExpected("negative"));
+      expect.That(t => t < 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is less than or equal to zero
@@ -621,7 +620,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<float> IsNotPositive(this Expect<float> expect, Issue<float>? issue = null) =>
-      expect.That(t => t <= 0, issue.ElseExpected("not positive"));
+      expect.That(t => t <= 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is zero
@@ -631,7 +630,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<float> IsZero(this Expect<float> expect, Issue<float>? issue = null) =>
-      expect.That(t => t == 0, issue.ElseExpected("0"));
+      expect.That(t => t == 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is greater than or equal to zero
@@ -641,7 +640,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<float> IsNotNegative(this Expect<float> expect, Issue<float>? issue = null) =>
-      expect.That(t => t >= 0, issue.ElseExpected("not negative"));
+      expect.That(t => t >= 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is greater than zero
@@ -651,7 +650,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<float> IsPositive(this Expect<float> expect, Issue<float>? issue = null) =>
-      expect.That(t => t > 0, issue.ElseExpected("positive"));
+      expect.That(t => t > 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is in the range 0-100
@@ -661,7 +660,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<float> IsAdjustedPercentage(this Expect<float> expect, Issue<float>? issue = null) =>
-      expect.That(t => t > 0, issue.ElseExpected("adjusted percentage(0-100)"));
+      expect.That(t => t > 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is in the range 0-1
@@ -671,7 +670,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<float> IsLiteralPercentage(this Expect<float> expect, Issue<float>? issue = null) =>
-      expect.That(t => t > 0, issue.ElseExpected("literal percentage (0.0-1.0)"));
+      expect.That(t => t > 0, issue.Operator());
 
     /// <summary>
     /// Expects the target is <paramref name="value"/> ± <paramref name="precision"/>
@@ -683,7 +682,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<float> IsCloseTo(this Expect<float> expect, float value, float precision, Issue<float>? issue = null) =>
-      expect.That(t => Math.Abs(t - value) <= precision, issue.ElseExpected($"{value} ± {precision}"));
+      expect.That(t => Math.Abs(t - value) <= precision, issue.Operator(value, precision));
 
     /// <summary>
     /// Expects the target is <see cref="float.MinValue"/>
@@ -693,7 +692,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<float> IsMinValue(this Expect<float> expect, Issue<float>? issue = null) =>
-      expect.That(t => t == float.MinValue, issue.ElseExpected($"{nameof(float.MinValue)} ({float.MinValue})"));
+      expect.That(t => t == float.MinValue, issue.Operator());
 
     /// <summary>
     /// Expects the target is <see cref="float.MaxValue"/>
@@ -703,7 +702,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<float> IsMaxValue(this Expect<float> expect, Issue<float>? issue = null) =>
-      expect.That(t => t == float.MaxValue, issue.ElseExpected($"{nameof(float.MaxValue)} ({float.MaxValue})"));
+      expect.That(t => t == float.MaxValue, issue.Operator());
 
     /// <summary>
     /// Expects the target is not <see cref="float.MinValue"/>
@@ -713,7 +712,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<float> IsNotMinValue(this Expect<float> expect, Issue<float>? issue = null) =>
-      expect.That(t => t != float.MinValue, issue.ElseExpected($"not {nameof(float.MinValue)} ({float.MinValue})"));
+      expect.That(t => t != float.MinValue, issue.Operator());
 
     /// <summary>
     /// Expects the target is not <see cref="float.MaxValue"/>
@@ -723,6 +722,6 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<float> IsNotMaxValue(this Expect<float> expect, Issue<float>? issue = null) =>
-      expect.That(t => t != float.MaxValue, issue.ElseExpected($"not {nameof(float.MaxValue)} ({float.MaxValue})"));
+      expect.That(t => t != float.MaxValue, issue.Operator());
   }
 }

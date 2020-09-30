@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Green.Messages;
 using static Green.Local;
-using static Green.Messages.Local;
 
 namespace Green
 {
@@ -12,18 +10,6 @@ namespace Green
     //
     // Has
     //
-
-    /// <summary>
-    /// Expects the target has an item that equals <paramref name="value"/> using <see cref="EqualityComparer{T}.Default"/>
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="value">The value to compare</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<T> Has<T>(this ExpectMany<T> expect, T value, IssueMany<T>? issue = null) =>
-      expect.That(t => t != null && t.Contains(value), issue.ElseExpected(Text(value)));
 
     /// <summary>
     /// Expects the target has an item that equals <paramref name="value"/> using <paramref name="comparer"/>
@@ -36,10 +22,10 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> Has<T>(this ExpectMany<T> expect, T value, IEqualityComparer<T> comparer, IssueMany<T>? issue = null) =>
-      expect.That(t => t != null && t.Contains(value, comparer), issue.ElseExpected($"{Text(value)}{comparer.ToSuffix()}"));
+      expect.That(t => t != null && t.Contains(value, comparer), issue.Operator(value, comparer));
 
     /// <summary>
-    /// Expects the target does not have an item that equals <paramref name="value"/> using <see cref="EqualityComparer{T}.Default"/>
+    /// Expects the target has an item that equals <paramref name="value"/> using <see cref="EqualityComparer{T}.Default"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
@@ -47,8 +33,8 @@ namespace Green
     /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<T> DoesNotHave<T>(this ExpectMany<T> expect, T value, IssueMany<T>? issue = null) =>
-      expect.Not(t => t != null && t.Contains(value), issue.ElseExpected($"not {Text(value)}"));
+    public static ExpectMany<T> Has<T>(this ExpectMany<T> expect, T value, IssueMany<T>? issue = null) =>
+      expect.Has(value, EqualityComparer<T>.Default, issue);
 
     /// <summary>
     /// Expects the target does not have an item that equals <paramref name="value"/> using <paramref name="comparer"/>
@@ -61,7 +47,19 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> DoesNotHave<T>(this ExpectMany<T> expect, T value, IEqualityComparer<T> comparer, IssueMany<T>? issue = null) =>
-      expect.Not(t => t != null && t.Contains(value, comparer), issue.ElseExpected($"not {value}{comparer.ToSuffix()}"));
+      expect.That(t => t == null || !t.Contains(value, comparer), issue.Operator(value, comparer));
+
+    /// <summary>
+    /// Expects the target does not have an item that equals <paramref name="value"/> using <see cref="EqualityComparer{T}.Default"/>
+    /// </summary>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="value">The value to compare</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<T> DoesNotHave<T>(this ExpectMany<T> expect, T value, IssueMany<T>? issue = null) =>
+      expect.DoesNotHave(value, EqualityComparer<T>.Default, issue);
 
     //
     // All
@@ -78,9 +76,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> HasAll<T>(this ExpectMany<T> expect, IEnumerable<T> values, IEqualityComparer<T> comparer, IssueMany<T>? issue = null) =>
-      expect.That(
-        t => t != null && values != null && t.IsSupersetOf(values, comparer),
-        issue.ElseExpected(t => $"all of {TextMany(values)}{comparer.ToSuffix()}"));
+      expect.That(t => t != null && values != null && t.IsSupersetOf(values, comparer), issue.Operator(values, comparer));
 
     /// <summary>
     /// Expects the target has all of the items in <paramref name="values"/> using <see cref="EqualityComparer{T}.Default"/>
@@ -149,9 +145,10 @@ namespace Green
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="expectItem">The function to invoke with an expected argument</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<T> HasAll<T>(this ExpectMany<T> expect, Action<Expect<T>> expectItem) =>
-      expect.That(t => t != null && t.All(expectItem.Invoke));
+    public static ExpectMany<T> HasAll<T>(this ExpectMany<T> expect, Action<Expect<T>> expectItem, IssueMany<T>? issue = null) =>
+      expect.That(t => t != null && t.All(expectItem.Invoke), issue.Operator(expectItem));
 
     //
     // Any
@@ -168,9 +165,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> HasAny<T>(this ExpectMany<T> expect, IEnumerable<T> values, IEqualityComparer<T> comparer, IssueMany<T>? issue = null) =>
-      expect.That(
-        t => t != null && values != null && t.IntersectsWith(values, comparer),
-        issue.ElseExpected(t => $"any of {TextMany(values)}{comparer.ToSuffix()}"));
+      expect.That(t => t != null && values != null && t.IntersectsWith(values, comparer), issue.Operator(values, comparer));
 
     /// <summary>
     /// Expects the target has any of the items in <paramref name="values"/> using <see cref="EqualityComparer{T}.Default"/>
@@ -241,7 +236,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> HasAny<T>(this ExpectMany<T> expect, IssueMany<T>? issue) =>
-      expect.That(t => t != null && t.Any(), issue.ElseExpected("any items"));
+      expect.That(t => t != null && t.Any(), issue.Operator());
 
     //
     // None
@@ -258,9 +253,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> HasNone<T>(this ExpectMany<T> expect, IEnumerable<T> values, IEqualityComparer<T> comparer, IssueMany<T>? issue = null) =>
-      expect.That(
-        t => t != null && values != null && !t.IntersectsWith(values, comparer),
-        issue.ElseExpected(t => $"none of {TextMany(values)}{comparer.ToSuffix()}"));
+      expect.That(t => t != null && values != null && !t.IntersectsWith(values, comparer), issue.Operator(values, comparer));
 
     /// <summary>
     /// Expects the target has none of the items in <paramref name="values"/> using <see cref="EqualityComparer{T}.Default"/>
@@ -331,7 +324,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> HasNone<T>(this ExpectMany<T> expect, IssueMany<T>? issue = null) =>
-      expect.That(t => t != null && !t.Any(), issue.ElseExpected("no items"));
+      expect.That(t => t != null && !t.Any(), issue.Operator());
 
     //
     // Where
@@ -347,7 +340,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> HasAllWhere<T>(this ExpectMany<T> expect, Func<T, bool> predicate, IssueMany<T>? issue = null) =>
-      expect.That(t => t != null && predicate != null && t.All(predicate), issue.ElseExpected($"all match predicate {predicate}"));
+      expect.That(t => t != null && predicate != null && t.All(predicate), issue.Operator(predicate));
 
     /// <summary>
     /// Expects the target has any items resulting in <see langword="true"/> from <paramref name="predicate"/>
@@ -359,7 +352,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> HasAnyWhere<T>(this ExpectMany<T> expect, Func<T, bool> predicate, IssueMany<T>? issue = null) =>
-      expect.That(t => t != null && predicate != null && t.Any(predicate), issue.ElseExpected($"any match predicate {predicate}"));
+      expect.That(t => t != null && predicate != null && t.Any(predicate), issue.Operator(predicate));
 
     /// <summary>
     /// Expects the target has no items resulting in <see langword="true"/> from <paramref name="predicate"/>
@@ -371,7 +364,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> HasNoneWhere<T>(this ExpectMany<T> expect, Func<T, bool> predicate, IssueMany<T>? issue = null) =>
-      expect.That(t => t != null && predicate != null && !t.Any(predicate), issue.ElseExpected($"none match predicate {predicate}"));
+      expect.That(t => t != null && predicate != null && !t.Any(predicate), issue.Operator(predicate));
 
     /// <summary>
     /// Expects the target has <paramref name="count"/> items resulting in <see langword="true"/> from <paramref name="predicate"/>
@@ -384,7 +377,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> HasCountWhere<T>(this ExpectMany<T> expect, int count, Func<T, bool> predicate, IssueMany<T>? issue = null) =>
-      expect.That(t => t != null && predicate != null && t.Count(predicate) == count, issue.ElseExpected($"count of {count} matching predicate {predicate}"));
+      expect.That(t => t != null && predicate != null && t.Count(predicate) == count, issue.Operator(count, predicate));
 
     //
     // Same
@@ -401,9 +394,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> HasSame<T>(this ExpectMany<T> expect, IEnumerable<T> items, IEqualityComparer<T> comparer, IssueMany<T>? issue = null) =>
-      expect.That(
-        t => t != null && items != null && t.OrderBy(item => item).SequenceEqual(items.OrderBy(item => item), comparer),
-        issue.ElseExpected(t => $"same items as {TextMany(items)}{comparer.ToSuffix()}"));
+      expect.That(t => t != null && items != null && t.OrderBy(item => item).SequenceEqual(items.OrderBy(item => item), comparer), issue.Operator(items, comparer));
 
     /// <summary>
     /// Expects the target has the same items as <paramref name="items"/> using <see cref="EqualityComparer{T}.Default"/>
@@ -480,9 +471,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> HasSameInOrder<T>(this ExpectMany<T> expect, IEnumerable<T> items, IEqualityComparer<T> comparer, IssueMany<T>? issue = null) =>
-      expect.That(
-        t => t != null && items != null && t.SequenceEqual(items, comparer),
-        issue.ElseExpected(t => $"same items in same order as {TextMany(items)}{comparer.ToSuffix()}"));
+      expect.That(t => t != null && items != null && t.SequenceEqual(items, comparer), issue.Operator(items, comparer));
 
     /// <summary>
     /// Expects the target has the same items in the same order as <paramref name="items"/> using <see cref="EqualityComparer{T}.Default"/>
@@ -548,7 +537,7 @@ namespace Green
     //
 
     /// <summary>
-    /// Expects the target's count equals <paramref name="value"/>
+    /// Expects the target's count is <paramref name="value"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
@@ -557,9 +546,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> HasCount<T>(this ExpectMany<T> expect, int value, IssueMany<T>? issue = null) =>
-      expect.That(t =>
-        t != null && Expect(t.GetOrFindCount()).Is(value, count => Expected(count, $"Count == {value}", $"Count == {count}")),
-        issue.ElseExpected("Counts are equal"));
+      expect.That(t => t != null && t.GetOrFindCount() == value, issue.Operator(value));
 
     /// <summary>
     /// Expects the target's count to meet <paramref name="expectValue"/>
@@ -567,13 +554,14 @@ namespace Green
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="expectValue">The function to invoke with an expected argument</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<T> HasCount<T>(this ExpectMany<T> expect, Action<Expect<int>> expectValue) =>
-      expect.That(t => t != null && expectValue.Invoke(t.GetOrFindCount()));
+    public static ExpectMany<T> HasCount<T>(this ExpectMany<T> expect, Action<Expect<int>> expectValue, IssueMany<T>? issue = null) =>
+      expect.That(t => t != null && expectValue.Invoke(t.GetOrFindCount()), issue.Operator(expectValue));
 
     /// <summary>
-    /// Expects the target's count to equal 1
+    /// Expects the target's count is 1
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
@@ -584,7 +572,7 @@ namespace Green
       expect.HasCount(1, issue);
 
     /// <summary>
-    /// Expects the target's count to equal 2
+    /// Expects the target's count is 2
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
@@ -595,7 +583,7 @@ namespace Green
       expect.HasCount(2, issue);
 
     /// <summary>
-    /// Expects the target's count to equal 3
+    /// Expects the target's count is 3
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
@@ -606,7 +594,7 @@ namespace Green
       expect.HasCount(3, issue);
 
     /// <summary>
-    /// Expects the target's count to equal 4
+    /// Expects the target's count is 4
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
@@ -617,7 +605,7 @@ namespace Green
       expect.HasCount(4, issue);
 
     /// <summary>
-    /// Expects the target's count to equal 5
+    /// Expects the target's count is 5
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
@@ -628,7 +616,7 @@ namespace Green
       expect.HasCount(5, issue);
 
     /// <summary>
-    /// Expects the target's count to equal 6
+    /// Expects the target's count is 6
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
@@ -639,7 +627,7 @@ namespace Green
       expect.HasCount(6, issue);
 
     /// <summary>
-    /// Expects the target's count to equal 7
+    /// Expects the target's count is 7
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
@@ -650,7 +638,7 @@ namespace Green
       expect.HasCount(7, issue);
 
     /// <summary>
-    /// Expects the target's count to equal 8
+    /// Expects the target's count is 8
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
@@ -661,7 +649,7 @@ namespace Green
       expect.HasCount(8, issue);
 
     /// <summary>
-    /// Expects the target's count to equal 1 and item to meet <paramref name="expectItem"/>
+    /// Expects the target's count is 1 and item to meet <paramref name="expectItem"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
@@ -673,7 +661,7 @@ namespace Green
       expect.HasN(1, issue, items => expectItem?.Invoke(items[0]));
 
     /// <summary>
-    /// Expects the target's count to equal 2 and items to meet <paramref name="expectItems"/>
+    /// Expects the target's count is 2 and items to meet <paramref name="expectItems"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
@@ -685,7 +673,7 @@ namespace Green
       expect.HasN(2, issue, items => expectItems?.Invoke(items[0], items[1]));
 
     /// <summary>
-    /// Expects the target's count to equal 3 and items to meet <paramref name="expectItems"/>
+    /// Expects the target's count is 3 and items to meet <paramref name="expectItems"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
@@ -697,7 +685,7 @@ namespace Green
       expect.HasN(3, issue, items => expectItems?.Invoke(items[0], items[1], items[2]));
 
     /// <summary>
-    /// Expects the target's count to equal 4 and items to meet <paramref name="expectItems"/>
+    /// Expects the target's count is 4 and items to meet <paramref name="expectItems"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
@@ -709,7 +697,7 @@ namespace Green
       expect.HasN(4, issue, items => expectItems?.Invoke(items[0], items[1], items[2], items[3]));
 
     /// <summary>
-    /// Expects the target's count to equal 5 and items to meet <paramref name="expectItems"/>
+    /// Expects the target's count is 5 and items to meet <paramref name="expectItems"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
@@ -721,7 +709,7 @@ namespace Green
       expect.HasN(5, issue, items => expectItems?.Invoke(items[0], items[1], items[2], items[3], items[4]));
 
     /// <summary>
-    /// Expects the target's count to equal 6 and items to meet <paramref name="expectItems"/>
+    /// Expects the target's count is 6 and items to meet <paramref name="expectItems"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
@@ -733,7 +721,7 @@ namespace Green
       expect.HasN(6, issue, items => expectItems?.Invoke(items[0], items[1], items[2], items[3], items[4], items[5]));
 
     /// <summary>
-    /// Expects the target's count to equal 7 and items to meet <paramref name="expectItems"/>
+    /// Expects the target's count is 7 and items to meet <paramref name="expectItems"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
@@ -745,7 +733,7 @@ namespace Green
       expect.HasN(7, issue, items => expectItems?.Invoke(items[0], items[1], items[2], items[3], items[4], items[5], items[6]));
 
     /// <summary>
-    /// Expects the target's count to equal 8 and items to meet <paramref name="expectItems"/>
+    /// Expects the target's count is 8 and items to meet <paramref name="expectItems"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
@@ -767,24 +755,11 @@ namespace Green
           expectItems(items);
 
           return true;
-        }, issue.ElseExpected($"Count == {n}", t => $"Count == {t.GetOrFindCount()} ({TextMany(t)})"));
+        }, issue.Operator(n, expectItems));
 
     //
     // Has (pairs)
     //
-
-    /// <summary>
-    /// Expects the target has an item that equals <paramref name="pair"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="pair">The pair to compare keys and values</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> Has<TKey, TValue>(this ExpectMany<TKey, TValue> expect, KeyValuePair<TKey, TValue> pair, IssueMany<TKey, TValue>? issue = null) =>
-      expect.Has(pair, pair.GetComparer(), issue);
 
     /// <summary>
     /// Expects the target has an item that equals <paramref name="pair"/> using <paramref name="comparer"/>
@@ -798,7 +773,22 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> Has<TKey, TValue>(this ExpectMany<TKey, TValue> expect, KeyValuePair<TKey, TValue> pair, IEqualityComparer<KeyValuePair<TKey, TValue>> comparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && t.Contains(pair, comparer.ElseDefault()), issue.ElseExpected($"{Text(pair)}{comparer.ToSuffix()}"));
+      expect.That(t => t != null && t.Contains(pair, comparer.ElseDefault()), issue.Operator(pair, comparer));
+
+    /// <summary>
+    /// Expects the target has an item that equals <paramref name="pair"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="pair">The pair to compare keys and values</param>
+    /// <param name="keyComparer">The object that performs value comparisons</param>
+    /// <param name="valueComparer">The object that performs value comparisons</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> Has<TKey, TValue>(this ExpectMany<TKey, TValue> expect, KeyValuePair<TKey, TValue> pair, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t => t != null && t.Contains(pair, PairComparer.For(keyComparer, valueComparer)), issue.Operator(pair, keyComparer));
 
     /// <summary>
     /// Expects the target has an item that equals <paramref name="pair"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -812,7 +802,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> Has<TKey, TValue>(this ExpectMany<TKey, TValue> expect, KeyValuePair<TKey, TValue> pair, IEqualityComparer<TKey> keyComparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && t.Contains(pair, pair.GetComparer(keyComparer)), issue.ElseExpected($"{Text(pair)}{keyComparer.ToKeySuffix()}"));
+      expect.That(t => t != null && t.Contains(pair, PairComparer.For<TKey, TValue>(keyComparer)), issue.Operator(pair, keyComparer));
 
     /// <summary>
     /// Expects the target has an item that equals <paramref name="pair"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
@@ -826,67 +816,39 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> Has<TKey, TValue>(this ExpectMany<TKey, TValue> expect, KeyValuePair<TKey, TValue> pair, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && t.Contains(pair, pair.GetComparer(valueComparer)), issue.ElseExpected($"{Text(pair)}{valueComparer.ToValueSuffix()}"));
+      expect.That(t => t != null && t.Contains(pair, PairComparer.For<TKey, TValue>(valueComparer)), issue.Operator(pair, valueComparer));
 
     /// <summary>
-    /// Expects the target has an item that equals <paramref name="pair"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
+    /// Expects the target has an item that equals <paramref name="pair"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="pair">The pair to compare keys and values</param>
-    /// <param name="keyComparer">The object that performs key comparisons</param>
-    /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> Has<TKey, TValue>(this ExpectMany<TKey, TValue> expect, KeyValuePair<TKey, TValue> pair, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && t.Contains(pair, pair.GetComparer(keyComparer, valueComparer)), issue.ElseExpected($"{Text(pair)}{keyComparer.ToKeySuffix()}{valueComparer.ToValueSuffix()}"));
+    public static ExpectMany<TKey, TValue> Has<TKey, TValue>(this ExpectMany<TKey, TValue> expect, KeyValuePair<TKey, TValue> pair, IssueMany<TKey, TValue>? issue = null) =>
+      expect.Has(pair, PairComparer.For<TKey, TValue>(), issue);
 
+    //
+    // Has (key/value)
+    //
 
     /// <summary>
-    /// Expects the target has a pair that equals <paramref name="key"/> and <paramref name="value"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
+    /// Expects the target has a pair that equals <paramref name="key"/> and <paramref name="value"/> using <paramref name="comparer"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="key">The key to compare</param>
     /// <param name="value">The value to compare</param>
+    /// <param name="comparer">The object that performs the comparison</param>
     /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> Has<TKey, TValue>(this ExpectMany<TKey, TValue> expect, TKey key, TValue value, IssueMany<TKey, TValue>? issue = null) =>
-      expect.Has(new KeyValuePair<TKey, TValue>(key, value), issue);
-
-    /// <summary>
-    /// Expects the target has a pair that equals <paramref name="key"/> and <paramref name="value"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="key">The key to compare</param>
-    /// <param name="value">The value to compare</param>
-    /// <param name="keyComparer">The object that performs key comparisons</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> Has<TKey, TValue>(this ExpectMany<TKey, TValue> expect, TKey key, TValue value, IEqualityComparer<TKey> keyComparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.Has(new KeyValuePair<TKey, TValue>(key, value), keyComparer, issue);
-
-    /// <summary>
-    /// Expects the target has a pair that equals <paramref name="key"/> and <paramref name="value"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="key">The key to compare</param>
-    /// <param name="value">The value to compare</param>
-    /// <param name="valueComparer">The object that performs value comparisons</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> Has<TKey, TValue>(this ExpectMany<TKey, TValue> expect, TKey key, TValue value, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.Has(new KeyValuePair<TKey, TValue>(key, value), valueComparer, issue);
+    public static ExpectMany<TKey, TValue> Has<TKey, TValue>(this ExpectMany<TKey, TValue> expect, TKey key, TValue value, IEqualityComparer<KeyValuePair<TKey, TValue>> comparer, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t => t != null && t.Contains(KeyValuePair.Create(key, value), comparer.ElseDefault()), issue.Operator(key, value, comparer));
 
     /// <summary>
     /// Expects the target has a pair that equals <paramref name="key"/> and <paramref name="value"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
@@ -902,24 +864,55 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> Has<TKey, TValue>(this ExpectMany<TKey, TValue> expect, TKey key, TValue value, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.Has(new KeyValuePair<TKey, TValue>(key, value), keyComparer, valueComparer, issue);
-
-    //
-    // All (pairs)
-    //
+      expect.That(t => t != null && t.Contains(KeyValuePair.Create(key, value), PairComparer.For(keyComparer, valueComparer)), issue.Operator(key, value, keyComparer, valueComparer));
 
     /// <summary>
-    /// Expects the target has all of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
+    /// Expects the target has a pair that equals <paramref name="key"/> and <paramref name="value"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="pairs">The pairs to compare</param>
+    /// <param name="key">The key to compare</param>
+    /// <param name="value">The value to compare</param>
+    /// <param name="keyComparer">The object that performs key comparisons</param>
     /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasAll<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IssueMany<TKey, TValue>? issue = null) =>
-      expect.HasAll(pairs, pairs.GetComparer(), issue);
+    public static ExpectMany<TKey, TValue> Has<TKey, TValue>(this ExpectMany<TKey, TValue> expect, TKey key, TValue value, IEqualityComparer<TKey> keyComparer, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t => t != null && t.Contains(KeyValuePair.Create(key, value), PairComparer.For<TKey, TValue>(keyComparer)), issue.Operator(key, value, keyComparer));
+
+    /// <summary>
+    /// Expects the target has a pair that equals <paramref name="key"/> and <paramref name="value"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="key">The key to compare</param>
+    /// <param name="value">The value to compare</param>
+    /// <param name="valueComparer">The object that performs value comparisons</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> Has<TKey, TValue>(this ExpectMany<TKey, TValue> expect, TKey key, TValue value, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t => t != null && t.Contains(KeyValuePair.Create(key, value), PairComparer.For<TKey, TValue>(valueComparer)), issue.Operator(key, value, valueComparer));
+
+    /// <summary>
+    /// Expects the target has a pair that equals <paramref name="key"/> and <paramref name="value"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="key">The key to compare</param>
+    /// <param name="value">The value to compare</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> Has<TKey, TValue>(this ExpectMany<TKey, TValue> expect, TKey key, TValue value, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t => t != null && t.Contains(KeyValuePair.Create(key, value), PairComparer.For<TKey, TValue>()), issue.Operator(key, value));
+
+    //
+    // All (pairs)
+    //
 
     /// <summary>
     /// Expects the target has all of the items in <paramref name="pairs"/> using <paramref name="comparer"/>
@@ -933,35 +926,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasAll<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<KeyValuePair<TKey, TValue>> comparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && pairs != null && t.IsSupersetOf(pairs, comparer.ElseDefault()), issue.ElseExpected($"all of {TextMany(pairs)}{comparer.ToSuffix()}"));
-
-    /// <summary>
-    /// Expects the target has all of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="pairs">The pairs to compare</param>
-    /// <param name="keyComparer">The object that performs key comparisons</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasAll<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && pairs != null && t.IsSupersetOf(pairs, pairs.GetComparer(keyComparer)), issue.ElseExpected($"all of {TextMany(pairs)}{keyComparer.ToKeySuffix()}"));
-
-    /// <summary>
-    /// Expects the target has all of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="pairs">The pairs to compare</param>
-    /// <param name="valueComparer">The object that performs value comparisons</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasAll<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && pairs != null && t.IsSupersetOf(pairs, pairs.GetComparer(valueComparer)), issue.ElseExpected($"all of {TextMany(pairs)}{valueComparer.ToValueSuffix()}"));
+      expect.That(t => t != null && pairs != null && t.IsSupersetOf(pairs, comparer.ElseDefault()), issue.Operator(pairs, comparer));
 
     /// <summary>
     /// Expects the target has all of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
@@ -976,7 +941,35 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasAll<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && pairs != null && t.IsSupersetOf(pairs, pairs.GetComparer(keyComparer, valueComparer)), issue.ElseExpected($"all of {TextMany(pairs)}{keyComparer.ToKeySuffix()}{valueComparer.ToValueSuffix()}"));
+      expect.That(t => t != null && pairs != null && t.IsSupersetOf(pairs, PairComparer.For(keyComparer, valueComparer)), issue.Operator(pairs, keyComparer, valueComparer));
+
+    /// <summary>
+    /// Expects the target has all of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="pairs">The pairs to compare</param>
+    /// <param name="keyComparer">The object that performs key comparisons</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> HasAll<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t => t != null && pairs != null && t.IsSupersetOf(pairs, PairComparer.For<TKey, TValue>(keyComparer)), issue.Operator(pairs, keyComparer));
+
+    /// <summary>
+    /// Expects the target has all of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="pairs">The pairs to compare</param>
+    /// <param name="valueComparer">The object that performs value comparisons</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> HasAll<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t => t != null && pairs != null && t.IsSupersetOf(pairs, PairComparer.For<TKey, TValue>(valueComparer)), issue.Operator(pairs, valueComparer));
 
     /// <summary>
     /// Expects the target has all of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -985,10 +978,48 @@ namespace Green
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="pairs">The pairs to compare</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasAll<TKey, TValue>(this ExpectMany<TKey, TValue> expect, params KeyValuePair<TKey, TValue>[] pairs) =>
-      expect.HasAll(pairs.AsEnumerable());
+    public static ExpectMany<TKey, TValue> HasAll<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IssueMany<TKey, TValue>? issue = null) =>
+      expect.HasAll(pairs, PairComparer.For<TKey, TValue>(), issue);
+
+    /// <summary>
+    /// Expects the target's keys to all meet <paramref name="expectKey"/>
+    /// </summary>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="expectKey">The function to invoke with an expected argument</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> HasAll<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<Expect<TKey>> expectKey, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t => t != null && t.All(pair => expectKey.Invoke(pair.Key)), issue.Operator(expectKey));
+
+    /// <summary>
+    /// Expects the target's values to all meet <paramref name="expectValue"/>
+    /// </summary>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="expectValue">The function to invoke with an expected argument</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> HasAll<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<Expect<TValue>> expectValue, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t => t != null && t.All(pair => expectValue.Invoke(pair.Value)), issue.Operator(expectValue));
+
+    /// <summary>
+    /// Expects the target's pairs to all meet <paramref name="expectPair"/>
+    /// </summary>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="expectPair">The function to invoke with an expected argument</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> HasAll<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<Expect<TKey>, Expect<TValue>> expectPair, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t => t != null && t.All(pair => expectPair.Invoke(pair)), issue.Operator(expectPair));
+
+    //
+    // All (pairs params)
+    //
 
     /// <summary>
     /// Expects the target has all of the items in <paramref name="pairs"/> using <paramref name="comparer"/>
@@ -1002,6 +1033,20 @@ namespace Green
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasAll<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<KeyValuePair<TKey, TValue>> comparer, params KeyValuePair<TKey, TValue>[] pairs) =>
       expect.HasAll(pairs.AsEnumerable(), comparer);
+
+    /// <summary>
+    /// Expects the target has all of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="valueComparer">The object that performs value comparisons</param>
+    /// <param name="keyComparer">The object that performs key comparisons</param>
+    /// <param name="pairs">The pairs to compare</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> HasAll<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, params KeyValuePair<TKey, TValue>[] pairs) =>
+      expect.HasAll(pairs.AsEnumerable(), keyComparer, valueComparer);
 
     /// <summary>
     /// Expects the target has all of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -1030,31 +1075,16 @@ namespace Green
       expect.HasAll(pairs.AsEnumerable(), valueComparer);
 
     /// <summary>
-    /// Expects the target has all of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="valueComparer">The object that performs value comparisons</param>
-    /// <param name="keyComparer">The object that performs key comparisons</param>
-    /// <param name="pairs">The pairs to compare</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasAll<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, params KeyValuePair<TKey, TValue>[] pairs) =>
-      expect.HasAll(pairs.AsEnumerable(), keyComparer, valueComparer);
-
-    /// <summary>
     /// Expects the target has all of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasAll<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IssueMany<TKey, TValue> issue, params KeyValuePair<TKey, TValue>[] pairs) =>
-      expect.HasAll(pairs.AsEnumerable(), issue);
+    public static ExpectMany<TKey, TValue> HasAll<TKey, TValue>(this ExpectMany<TKey, TValue> expect, params KeyValuePair<TKey, TValue>[] pairs) =>
+      expect.HasAll(pairs.AsEnumerable());
 
     /// <summary>
     /// Expects the target has all of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -1069,6 +1099,21 @@ namespace Green
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasAll<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<KeyValuePair<TKey, TValue>> comparer, IssueMany<TKey, TValue> issue, params KeyValuePair<TKey, TValue>[] pairs) =>
       expect.HasAll(pairs.AsEnumerable(), comparer, issue);
+
+    /// <summary>
+    /// Expects the target has all of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="keyComparer">The object that performs key comparisons</param>
+    /// <param name="valueComparer">The object that performs value comparisons</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <param name="pairs">The pairs to compare</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> HasAll<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue> issue, params KeyValuePair<TKey, TValue>[] pairs) =>
+      expect.HasAll(pairs.AsEnumerable(), keyComparer, valueComparer, issue);
 
     /// <summary>
     /// Expects the target has all of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -1099,66 +1144,21 @@ namespace Green
       expect.HasAll(pairs.AsEnumerable(), valueComparer, issue);
 
     /// <summary>
-    /// Expects the target has all of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
+    /// Expects the target has all of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="keyComparer">The object that performs key comparisons</param>
-    /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasAll<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue> issue, params KeyValuePair<TKey, TValue>[] pairs) =>
-      expect.HasAll(pairs.AsEnumerable(), keyComparer, valueComparer, issue);
-
-    /// <summary>
-    /// Expects the target's keys to all meet <paramref name="expectKey"/>
-    /// </summary>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="expectKey">The function to invoke with an expected argument</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasAll<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<Expect<TKey>> expectKey) =>
-      expect.That(t => t != null && t.All(pair => expectKey.Invoke(pair.Key)));
-
-    /// <summary>
-    /// Expects the target's values to all meet <paramref name="expectValue"/>
-    /// </summary>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="expectValue">The function to invoke with an expected argument</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasAll<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<Expect<TValue>> expectValue) =>
-      expect.That(t => t != null && t.All(pair => expectValue.Invoke(pair.Value)));
-
-    /// <summary>
-    /// Expects the target's pairs to all meet <paramref name="expectPair"/>
-    /// </summary>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="expectPair">The function to invoke with an expected argument</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasAll<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<Expect<TKey>, Expect<TValue>> expectPair) =>
-      expect.That(t => t != null && t.All(pair => expectPair.Invoke(pair)));
+    public static ExpectMany<TKey, TValue> HasAll<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IssueMany<TKey, TValue> issue, params KeyValuePair<TKey, TValue>[] pairs) =>
+      expect.HasAll(pairs.AsEnumerable(), issue);
 
     //
     // Any (pairs)
     //
-
-    /// <summary>
-    /// Expects the target has any of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="pairs">The pairs to compare</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasAny<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IssueMany<TKey, TValue>? issue = null) =>
-      expect.HasAny(pairs, pairs.GetComparer(), issue);
 
     /// <summary>
     /// Expects the target has any of the items in <paramref name="pairs"/> using <paramref name="comparer"/>
@@ -1172,35 +1172,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasAny<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<KeyValuePair<TKey, TValue>> comparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && pairs != null && t.IntersectsWith(pairs, comparer.ElseDefault()), issue.ElseExpected($"any of {TextMany(pairs)}{comparer.ToSuffix()}"));
-
-    /// <summary>
-    /// Expects the target has any of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="pairs">The pairs to compare</param>
-    /// <param name="keyComparer">The object that performs key comparisons</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasAny<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && pairs != null && t.IntersectsWith(pairs, pairs.GetComparer(keyComparer)), issue.ElseExpected($"any of {TextMany(pairs)}{keyComparer.ToKeySuffix()}"));
-
-    /// <summary>
-    /// Expects the target has any of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="pairs">The pairs to compare</param>
-    /// <param name="valueComparer">The object that performs value comparisons</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasAny<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && pairs != null && t.IntersectsWith(pairs, pairs.GetComparer(valueComparer)), issue.ElseExpected($"any of {TextMany(pairs)}{valueComparer.ToValueSuffix()}"));
+      expect.That(t => t != null && pairs != null && t.IntersectsWith(pairs, comparer.ElseDefault()), issue.Operator(pairs, comparer));
 
     /// <summary>
     /// Expects the target has any of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
@@ -1215,7 +1187,35 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasAny<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && pairs != null && t.IntersectsWith(pairs, pairs.GetComparer(keyComparer, valueComparer)), issue.ElseExpected($"any of {TextMany(pairs)}{keyComparer.ToKeySuffix()}{valueComparer.ToValueSuffix()}"));
+      expect.That(t => t != null && pairs != null && t.IntersectsWith(pairs, PairComparer.For(keyComparer, valueComparer)), issue.Operator(pairs, keyComparer, valueComparer));
+
+    /// <summary>
+    /// Expects the target has any of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="pairs">The pairs to compare</param>
+    /// <param name="keyComparer">The object that performs key comparisons</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> HasAny<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t => t != null && pairs != null && t.IntersectsWith(pairs, PairComparer.For<TKey, TValue>(keyComparer)), issue.Operator(pairs, keyComparer));
+
+    /// <summary>
+    /// Expects the target has any of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="pairs">The pairs to compare</param>
+    /// <param name="valueComparer">The object that performs value comparisons</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> HasAny<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t => t != null && pairs != null && t.IntersectsWith(pairs, PairComparer.For<TKey, TValue>(valueComparer)), issue.Operator(pairs, valueComparer));
 
     /// <summary>
     /// Expects the target has any of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -1224,10 +1224,15 @@ namespace Green
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="pairs">The pairs to compare</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasAny<TKey, TValue>(this ExpectMany<TKey, TValue> expect, params KeyValuePair<TKey, TValue>[] pairs) =>
-      expect.HasAny(pairs.AsEnumerable());
+    public static ExpectMany<TKey, TValue> HasAny<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IssueMany<TKey, TValue>? issue = null) =>
+      expect.HasAny(pairs, PairComparer.For<TKey, TValue>(), issue);
+
+    //
+    // Any (pairs params)
+    //
 
     /// <summary>
     /// Expects the target has any of the items in <paramref name="pairs"/> using <paramref name="comparer"/>
@@ -1241,6 +1246,20 @@ namespace Green
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasAny<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<KeyValuePair<TKey, TValue>> comparer, params KeyValuePair<TKey, TValue>[] pairs) =>
       expect.HasAny(pairs.AsEnumerable(), comparer);
+
+    /// <summary>
+    /// Expects the target has any of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="valueComparer">The object that performs value comparisons</param>
+    /// <param name="keyComparer">The object that performs key comparisons</param>
+    /// <param name="pairs">The pairs to compare</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> HasAny<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, params KeyValuePair<TKey, TValue>[] pairs) =>
+      expect.HasAny(pairs.AsEnumerable(), keyComparer, valueComparer);
 
     /// <summary>
     /// Expects the target has any of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -1269,31 +1288,16 @@ namespace Green
       expect.HasAny(pairs.AsEnumerable(), valueComparer);
 
     /// <summary>
-    /// Expects the target has any of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="valueComparer">The object that performs value comparisons</param>
-    /// <param name="keyComparer">The object that performs key comparisons</param>
-    /// <param name="pairs">The pairs to compare</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasAny<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, params KeyValuePair<TKey, TValue>[] pairs) =>
-      expect.HasAny(pairs.AsEnumerable(), keyComparer, valueComparer);
-
-    /// <summary>
     /// Expects the target has any of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasAny<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IssueMany<TKey, TValue> issue, params KeyValuePair<TKey, TValue>[] pairs) =>
-      expect.HasAny(pairs.AsEnumerable(), issue);
+    public static ExpectMany<TKey, TValue> HasAny<TKey, TValue>(this ExpectMany<TKey, TValue> expect, params KeyValuePair<TKey, TValue>[] pairs) =>
+      expect.HasAny(pairs.AsEnumerable());
 
     /// <summary>
     /// Expects the target has any of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -1308,6 +1312,21 @@ namespace Green
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasAny<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<KeyValuePair<TKey, TValue>> comparer, IssueMany<TKey, TValue> issue, params KeyValuePair<TKey, TValue>[] pairs) =>
       expect.HasAny(pairs.AsEnumerable(), comparer, issue);
+
+    /// <summary>
+    /// Expects the target has any of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="keyComparer">The object that performs key comparisons</param>
+    /// <param name="valueComparer">The object that performs value comparisons</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <param name="pairs">The pairs to compare</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> HasAny<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue> issue, params KeyValuePair<TKey, TValue>[] pairs) =>
+      expect.HasAny(pairs.AsEnumerable(), keyComparer, valueComparer, issue);
 
     /// <summary>
     /// Expects the target has any of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -1338,36 +1357,21 @@ namespace Green
       expect.HasAny(pairs.AsEnumerable(), valueComparer, issue);
 
     /// <summary>
-    /// Expects the target has any of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
+    /// Expects the target has any of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="keyComparer">The object that performs key comparisons</param>
-    /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasAny<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue> issue, params KeyValuePair<TKey, TValue>[] pairs) =>
-      expect.HasAny(pairs.AsEnumerable(), keyComparer, valueComparer, issue);
+    public static ExpectMany<TKey, TValue> HasAny<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IssueMany<TKey, TValue> issue, params KeyValuePair<TKey, TValue>[] pairs) =>
+      expect.HasAny(pairs.AsEnumerable(), issue);
 
     //
     // None (pairs)
     //
-
-    /// <summary>
-    /// Expects the target has none of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="pairs">The pairs to compare</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasNone<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IssueMany<TKey, TValue>? issue = null) =>
-      expect.HasNone(pairs, pairs.GetComparer(), issue);
 
     /// <summary>
     /// Expects the target has none of the items in <paramref name="pairs"/> using <paramref name="comparer"/>
@@ -1381,35 +1385,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasNone<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<KeyValuePair<TKey, TValue>> comparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && pairs != null && !t.IntersectsWith(pairs, comparer.ElseDefault()), issue.ElseExpected($"none of {TextMany(pairs)}{comparer.ToSuffix()}"));
-
-    /// <summary>
-    /// Expects the target has none of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="pairs">The pairs to compare</param>
-    /// <param name="keyComparer">The object that performs key comparisons</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasNone<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && pairs != null && !t.IntersectsWith(pairs, pairs.GetComparer(keyComparer)), issue.ElseExpected($"none of {TextMany(pairs)}{keyComparer.ToKeySuffix()}"));
-
-    /// <summary>
-    /// Expects the target has none of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="pairs">The pairs to compare</param>
-    /// <param name="valueComparer">The object that performs value comparisons</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasNone<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && pairs != null && !t.IntersectsWith(pairs, pairs.GetComparer(valueComparer)), issue.ElseExpected($"none of {TextMany(pairs)}{valueComparer.ToValueSuffix()}"));
+      expect.That(t => t != null && pairs != null && !t.IntersectsWith(pairs, comparer.ElseDefault()), issue.Operator(pairs, comparer));
 
     /// <summary>
     /// Expects the target has none of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
@@ -1424,7 +1400,35 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasNone<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && pairs != null && !t.IntersectsWith(pairs, pairs.GetComparer(keyComparer, valueComparer)), issue.ElseExpected($"none of {TextMany(pairs)}{keyComparer.ToKeySuffix()}{valueComparer.ToValueSuffix()}"));
+      expect.That(t => t != null && pairs != null && !t.IntersectsWith(pairs, PairComparer.For(keyComparer, valueComparer)), issue.Operator(pairs, keyComparer, valueComparer));
+
+    /// <summary>
+    /// Expects the target has none of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="pairs">The pairs to compare</param>
+    /// <param name="keyComparer">The object that performs key comparisons</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> HasNone<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t => t != null && pairs != null && !t.IntersectsWith(pairs, PairComparer.For<TKey, TValue>(keyComparer)), issue.Operator(pairs, keyComparer));
+
+    /// <summary>
+    /// Expects the target has none of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="pairs">The pairs to compare</param>
+    /// <param name="valueComparer">The object that performs value comparisons</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> HasNone<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t => t != null && pairs != null && !t.IntersectsWith(pairs, PairComparer.For<TKey, TValue>(valueComparer)), issue.Operator(pairs, valueComparer));
 
     /// <summary>
     /// Expects the target has none of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -1433,10 +1437,15 @@ namespace Green
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="pairs">The pairs to compare</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasNone<TKey, TValue>(this ExpectMany<TKey, TValue> expect, params KeyValuePair<TKey, TValue>[] pairs) =>
-      expect.HasNone(pairs.AsEnumerable());
+    public static ExpectMany<TKey, TValue> HasNone<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IssueMany<TKey, TValue>? issue = null) =>
+      expect.HasNone(pairs, PairComparer.For<TKey, TValue>(), issue);
+
+    //
+    // None (pairs params)
+    //
 
     /// <summary>
     /// Expects the target has none of the items in <paramref name="pairs"/> using <paramref name="comparer"/>
@@ -1450,6 +1459,20 @@ namespace Green
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasNone<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<KeyValuePair<TKey, TValue>> comparer, params KeyValuePair<TKey, TValue>[] pairs) =>
       expect.HasNone(pairs.AsEnumerable(), comparer);
+
+    /// <summary>
+    /// Expects the target has none of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="valueComparer">The object that performs value comparisons</param>
+    /// <param name="keyComparer">The object that performs key comparisons</param>
+    /// <param name="pairs">The pairs to compare</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> HasNone<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, params KeyValuePair<TKey, TValue>[] pairs) =>
+      expect.HasNone(pairs.AsEnumerable(), keyComparer, valueComparer);
 
     /// <summary>
     /// Expects the target has none of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -1478,20 +1501,6 @@ namespace Green
       expect.HasNone(pairs.AsEnumerable(), valueComparer);
 
     /// <summary>
-    /// Expects the target has none of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="valueComparer">The object that performs value comparisons</param>
-    /// <param name="keyComparer">The object that performs key comparisons</param>
-    /// <param name="pairs">The pairs to compare</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasNone<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, params KeyValuePair<TKey, TValue>[] pairs) =>
-      expect.HasNone(pairs.AsEnumerable(), keyComparer, valueComparer);
-
-    /// <summary>
     /// Expects the target has none of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
@@ -1517,6 +1526,21 @@ namespace Green
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasNone<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<KeyValuePair<TKey, TValue>> comparer, IssueMany<TKey, TValue> issue, params KeyValuePair<TKey, TValue>[] pairs) =>
       expect.HasNone(pairs.AsEnumerable(), comparer, issue);
+
+    /// <summary>
+    /// Expects the target has none of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="keyComparer">The object that performs key comparisons</param>
+    /// <param name="valueComparer">The object that performs value comparisons</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <param name="pairs">The pairs to compare</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> HasNone<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue> issue, params KeyValuePair<TKey, TValue>[] pairs) =>
+      expect.HasNone(pairs.AsEnumerable(), keyComparer, valueComparer, issue);
 
     /// <summary>
     /// Expects the target has none of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -1547,19 +1571,16 @@ namespace Green
       expect.HasNone(pairs.AsEnumerable(), valueComparer, issue);
 
     /// <summary>
-    /// Expects the target has none of the items in <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
+    /// Expects the target has none of the items in <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="keyComparer">The object that performs key comparisons</param>
-    /// <param name="valueComparer">The object that performs value comparisons</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasNone<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue> issue, params KeyValuePair<TKey, TValue>[] pairs) =>
-      expect.HasNone(pairs.AsEnumerable(), keyComparer, valueComparer, issue);
+    public static ExpectMany<TKey, TValue> HasNone<TKey, TValue>(this ExpectMany<TKey, TValue> expect, params KeyValuePair<TKey, TValue>[] pairs) =>
+      expect.HasNone(pairs.AsEnumerable());
 
     //
     // Where (pairs)
@@ -1576,7 +1597,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasAllWhere<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Func<KeyValuePair<TKey, TValue>, bool> predicate, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && predicate != null && t.All(predicate), issue.ElseExpected($"all match predicate {predicate}"));
+      expect.That(t => t != null && predicate != null && t.All(predicate), issue.Operator(predicate));
 
     /// <summary>
     /// Expects the target has all pairs resulting in <see langword="true"/> from <paramref name="predicate"/>
@@ -1589,7 +1610,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasAllWhere<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Func<TKey, TValue, bool> predicate, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && predicate != null && t.All(pair => predicate(pair.Key, pair.Value)), issue.ElseExpected($"all match predicate {predicate}"));
+      expect.That(t => t != null && predicate != null && t.All(pair => predicate(pair.Key, pair.Value)), issue.Operator(predicate));
 
     /// <summary>
     /// Expects the target has any pairs resulting in <see langword="true"/> from <paramref name="predicate"/>
@@ -1602,7 +1623,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasAnyWhere<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Func<KeyValuePair<TKey, TValue>, bool> predicate, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && predicate != null && t.Any(predicate), issue.ElseExpected($"any match predicate {predicate}"));
+      expect.That(t => t != null && predicate != null && t.Any(predicate), issue.Operator(predicate));
 
     /// <summary>
     /// Expects the target has any pairs resulting in <see langword="true"/> from <paramref name="predicate"/>
@@ -1615,7 +1636,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasAnyWhere<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Func<TKey, TValue, bool> predicate, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && predicate != null && t.Any(pair => predicate(pair.Key, pair.Value)), issue.ElseExpected($"any match predicate {predicate}"));
+      expect.That(t => t != null && predicate != null && t.Any(pair => predicate(pair.Key, pair.Value)), issue.Operator(predicate));
 
     /// <summary>
     /// Expects the target has no pairs resulting in <see langword="true"/> from <paramref name="predicate"/>
@@ -1628,7 +1649,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasNoneWhere<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Func<KeyValuePair<TKey, TValue>, bool> predicate, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && predicate != null && !t.Any(predicate), issue.ElseExpected($"none match predicate {predicate}"));
+      expect.That(t => t != null && predicate != null && !t.Any(predicate), issue.Operator(predicate));
 
     /// <summary>
     /// Expects the target has no pairs resulting in <see langword="true"/> from <paramref name="predicate"/>
@@ -1641,7 +1662,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasNoneWhere<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Func<TKey, TValue, bool> predicate, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && predicate != null && !t.Any(pair => predicate(pair.Key, pair.Value)), issue.ElseExpected($"none match predicate {predicate}"));
+      expect.That(t => t != null && predicate != null && !t.Any(pair => predicate(pair.Key, pair.Value)), issue.Operator(predicate));
 
     /// <summary>
     /// Expects the target has <paramref name="count"/> items resulting in <see langword="true"/> from <paramref name="predicate"/>
@@ -1655,7 +1676,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasCountWhere<TKey, TValue>(this ExpectMany<TKey, TValue> expect, int count, Func<KeyValuePair<TKey, TValue>, bool> predicate, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && predicate != null && t.Count(predicate) == count, issue.ElseExpected($"{count} matching predicate {predicate}"));
+      expect.That(t => t != null && predicate != null && t.Count(predicate) == count, issue.Operator(count, predicate));
 
     /// <summary>
     /// Expects the target has <paramref name="count"/> items resulting in <see langword="true"/> from <paramref name="predicate"/>
@@ -1669,24 +1690,11 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasCountWhere<TKey, TValue>(this ExpectMany<TKey, TValue> expect, int count, Func<TKey, TValue, bool> predicate, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && predicate != null && t.Count(pair => predicate(pair.Key, pair.Value)) == count, issue.ElseExpected($"{count} matching predicate {predicate}"));
+      expect.That(t => t != null && predicate != null && t.Count(pair => predicate(pair.Key, pair.Value)) == count, issue.Operator(count, predicate));
 
     //
     // Same (pairs)
     //
-
-    /// <summary>
-    /// Expects the target has the same items as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="pairs">The pairs to compare</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasSame<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IssueMany<TKey, TValue>? issue = null) =>
-      expect.HasSame(pairs, pairs.GetComparer(), issue);
 
     /// <summary>
     /// Expects the target has the same items as <paramref name="pairs"/> using <paramref name="comparer"/>
@@ -1700,35 +1708,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasSame<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<KeyValuePair<TKey, TValue>> comparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && pairs != null && t.OrderBy(pair => pair.Key).SequenceEqual(pairs.OrderBy(pair => pair.Key), comparer.ElseDefault()), issue.ElseExpected($"same items as {TextMany(pairs)}{comparer.ToSuffix()}"));
-
-    /// <summary>
-    /// Expects the target has the same items as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="pairs">The pairs to compare</param>
-    /// <param name="keyComparer">The object that performs key comparisons</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasSame<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && pairs != null && t.OrderBy(pair => pair.Key).SequenceEqual(pairs.OrderBy(pair => pair.Key), pairs.GetComparer(keyComparer)), issue.ElseExpected($"same items as {TextMany(pairs)}{keyComparer.ToKeySuffix()}"));
-
-    /// <summary>
-    /// Expects the target has the same items as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="pairs">The pairs to compare</param>
-    /// <param name="valueComparer">The object that performs value comparisons</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasSame<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && pairs != null && t.OrderBy(pair => pair.Key).SequenceEqual(pairs.OrderBy(pair => pair.Key), pairs.GetComparer(valueComparer)), issue.ElseExpected($"same items as {TextMany(pairs)}{valueComparer.ToValueSuffix()}"));
+      expect.That(t => t != null && pairs != null && t.OrderBy(pair => pair.Key).SequenceEqual(pairs.OrderBy(pair => pair.Key), comparer.ElseDefault()), issue.Operator(pairs, comparer));
 
     /// <summary>
     /// Expects the target has the same items as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
@@ -1743,7 +1723,35 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasSame<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && pairs != null && t.OrderBy(pair => pair.Key).SequenceEqual(pairs.OrderBy(pair => pair.Key), pairs.GetComparer(keyComparer, valueComparer)), issue.ElseExpected($"same items as {TextMany(pairs)}{keyComparer.ToKeySuffix()}{valueComparer.ToValueSuffix()}"));
+      expect.That(t => t != null && pairs != null && t.OrderBy(pair => pair.Key).SequenceEqual(pairs.OrderBy(pair => pair.Key), PairComparer.For(keyComparer, valueComparer)), issue.Operator(pairs, keyComparer, valueComparer));
+
+    /// <summary>
+    /// Expects the target has the same items as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="pairs">The pairs to compare</param>
+    /// <param name="keyComparer">The object that performs key comparisons</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> HasSame<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t => t != null && pairs != null && t.OrderBy(pair => pair.Key).SequenceEqual(pairs.OrderBy(pair => pair.Key), PairComparer.For<TKey, TValue>(keyComparer)), issue.Operator(pairs, keyComparer));
+
+    /// <summary>
+    /// Expects the target has the same items as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="pairs">The pairs to compare</param>
+    /// <param name="valueComparer">The object that performs value comparisons</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> HasSame<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t => t != null && pairs != null && t.OrderBy(pair => pair.Key).SequenceEqual(pairs.OrderBy(pair => pair.Key), PairComparer.For<TKey, TValue>(valueComparer)), issue.Operator(pairs, valueComparer));
 
     /// <summary>
     /// Expects the target has the same items as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -1752,10 +1760,15 @@ namespace Green
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="pairs">The pairs to compare</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasSame<TKey, TValue>(this ExpectMany<TKey, TValue> expect, params KeyValuePair<TKey, TValue>[] pairs) =>
-      expect.HasSame(pairs.AsEnumerable());
+    public static ExpectMany<TKey, TValue> HasSame<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IssueMany<TKey, TValue>? issue = null) =>
+      expect.HasSame(pairs, PairComparer.For<TKey, TValue>(), issue);
+
+    //
+    // Same (pairs params)
+    //
 
     /// <summary>
     /// Expects the target has the same items as <paramref name="pairs"/> using <paramref name="comparer"/>
@@ -1769,6 +1782,20 @@ namespace Green
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasSame<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<KeyValuePair<TKey, TValue>> comparer, params KeyValuePair<TKey, TValue>[] pairs) =>
       expect.HasSame(pairs.AsEnumerable(), comparer);
+
+    /// <summary>
+    /// Expects the target has the same items as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="valueComparer">The object that performs value comparisons</param>
+    /// <param name="keyComparer">The object that performs key comparisons</param>
+    /// <param name="pairs">The pairs to compare</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> HasSame<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, params KeyValuePair<TKey, TValue>[] pairs) =>
+      expect.HasSame(pairs.AsEnumerable(), keyComparer, valueComparer);
 
     /// <summary>
     /// Expects the target has the same items as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -1797,31 +1824,20 @@ namespace Green
       expect.HasSame(pairs.AsEnumerable(), valueComparer);
 
     /// <summary>
-    /// Expects the target has the same items as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="valueComparer">The object that performs value comparisons</param>
-    /// <param name="keyComparer">The object that performs key comparisons</param>
-    /// <param name="pairs">The pairs to compare</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasSame<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, params KeyValuePair<TKey, TValue>[] pairs) =>
-      expect.HasSame(pairs.AsEnumerable(), keyComparer, valueComparer);
-
-    /// <summary>
     /// Expects the target has the same items as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasSame<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IssueMany<TKey, TValue> issue, params KeyValuePair<TKey, TValue>[] pairs) =>
-      expect.HasSame(pairs.AsEnumerable(), issue);
+    public static ExpectMany<TKey, TValue> HasSame<TKey, TValue>(this ExpectMany<TKey, TValue> expect, params KeyValuePair<TKey, TValue>[] pairs) =>
+      expect.HasSame(pairs.AsEnumerable());
+
+    //
+    // Same (pairs params)
+    //
 
     /// <summary>
     /// Expects the target has the same items as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -1836,6 +1852,21 @@ namespace Green
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasSame<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<KeyValuePair<TKey, TValue>> comparer, IssueMany<TKey, TValue> issue, params KeyValuePair<TKey, TValue>[] pairs) =>
       expect.HasSame(pairs.AsEnumerable(), comparer, issue);
+
+    /// <summary>
+    /// Expects the target has the same items as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="keyComparer">The object that performs key comparisons</param>
+    /// <param name="valueComparer">The object that performs value comparisons</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <param name="pairs">The pairs to compare</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> HasSame<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue> issue, params KeyValuePair<TKey, TValue>[] pairs) =>
+      expect.HasSame(pairs.AsEnumerable(), keyComparer, valueComparer, issue);
 
     /// <summary>
     /// Expects the target has the same items as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -1866,36 +1897,21 @@ namespace Green
       expect.HasSame(pairs.AsEnumerable(), valueComparer, issue);
 
     /// <summary>
-    /// Expects the target has the same items as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
+    /// Expects the target has the same items as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="keyComparer">The object that performs key comparisons</param>
-    /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasSame<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue> issue, params KeyValuePair<TKey, TValue>[] pairs) =>
-      expect.HasSame(pairs.AsEnumerable(), keyComparer, valueComparer, issue);
+    public static ExpectMany<TKey, TValue> HasSame<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IssueMany<TKey, TValue> issue, params KeyValuePair<TKey, TValue>[] pairs) =>
+      expect.HasSame(pairs.AsEnumerable(), issue);
 
     //
     // Same in order (pairs)
     //
-
-    /// <summary>
-    /// Expects the target has the same items in the same order as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="pairs">The pairs to compare</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasSameInOrder<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IssueMany<TKey, TValue>? issue = null) =>
-      expect.HasSame(pairs, pairs.GetComparer(), issue);
 
     /// <summary>
     /// Expects the target has the same items in the same order as <paramref name="pairs"/> using <paramref name="comparer"/>
@@ -1909,35 +1925,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasSameInOrder<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<KeyValuePair<TKey, TValue>> comparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && pairs != null && t.SequenceEqual(pairs, comparer.ElseDefault()), issue.ElseExpected($"same items in same order as {TextMany(pairs)}{comparer.ToSuffix()}"));
-
-    /// <summary>
-    /// Expects the target has the same items in the same order as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="pairs">The pairs to compare</param>
-    /// <param name="keyComparer">The object that performs key comparisons</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasSameInOrder<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && pairs != null && t.SequenceEqual(pairs, pairs.GetComparer(keyComparer)), issue.ElseExpected($"same items in same order as {TextMany(pairs)}{keyComparer.ToKeySuffix()}"));
-
-    /// <summary>
-    /// Expects the target has the same items in the same order as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="pairs">The pairs to compare</param>
-    /// <param name="valueComparer">The object that performs value comparisons</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasSameInOrder<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && pairs != null && t.SequenceEqual(pairs, pairs.GetComparer(valueComparer)), issue.ElseExpected($"same items in same order as {TextMany(pairs)}{valueComparer.ToValueSuffix()}"));
+      expect.That(t => t != null && pairs != null && t.SequenceEqual(pairs, comparer.ElseDefault()), issue.Operator(pairs, comparer));
 
     /// <summary>
     /// Expects the target has the same items in the same order as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
@@ -1952,7 +1940,35 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasSameInOrder<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && pairs != null && t.SequenceEqual(pairs, pairs.GetComparer(keyComparer, valueComparer)), issue.ElseExpected($"same items in same order as {TextMany(pairs)}{keyComparer.ToKeySuffix()}{valueComparer.ToValueSuffix()}"));
+      expect.That(t => t != null && pairs != null && t.SequenceEqual(pairs, PairComparer.For(keyComparer, valueComparer)), issue.Operator(pairs, keyComparer, valueComparer));
+
+    /// <summary>
+    /// Expects the target has the same items in the same order as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="pairs">The pairs to compare</param>
+    /// <param name="keyComparer">The object that performs key comparisons</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> HasSameInOrder<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TKey> keyComparer, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t => t != null && pairs != null && t.SequenceEqual(pairs, PairComparer.For<TKey, TValue>(keyComparer)), issue.Operator(pairs, keyComparer));
+
+    /// <summary>
+    /// Expects the target has the same items in the same order as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <paramref name="valueComparer"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="pairs">The pairs to compare</param>
+    /// <param name="valueComparer">The object that performs value comparisons</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> HasSameInOrder<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t => t != null && pairs != null && t.SequenceEqual(pairs, PairComparer.For<TKey, TValue>(valueComparer)), issue.Operator(pairs, valueComparer));
 
     /// <summary>
     /// Expects the target has the same items in the same order as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -1961,10 +1977,15 @@ namespace Green
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="pairs">The pairs to compare</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasSameInOrder<TKey, TValue>(this ExpectMany<TKey, TValue> expect, params KeyValuePair<TKey, TValue>[] pairs) =>
-      expect.HasSameInOrder(pairs.AsEnumerable());
+    public static ExpectMany<TKey, TValue> HasSameInOrder<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<KeyValuePair<TKey, TValue>> pairs, IssueMany<TKey, TValue>? issue = null) =>
+      expect.HasSame(pairs, PairComparer.For<TKey, TValue>(), issue);
+
+    //
+    // Same in order (pairs params)
+    //
 
     /// <summary>
     /// Expects the target has the same items in the same order as <paramref name="pairs"/> using <paramref name="comparer"/>
@@ -1978,6 +1999,20 @@ namespace Green
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasSameInOrder<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<KeyValuePair<TKey, TValue>> comparer, params KeyValuePair<TKey, TValue>[] pairs) =>
       expect.HasSameInOrder(pairs.AsEnumerable(), comparer);
+
+    /// <summary>
+    /// Expects the target has the same items in the same order as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="valueComparer">The object that performs value comparisons</param>
+    /// <param name="keyComparer">The object that performs key comparisons</param>
+    /// <param name="pairs">The pairs to compare</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> HasSameInOrder<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, params KeyValuePair<TKey, TValue>[] pairs) =>
+      expect.HasSameInOrder(pairs.AsEnumerable(), keyComparer, valueComparer);
 
     /// <summary>
     /// Expects the target has the same items in the same order as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -2006,31 +2041,16 @@ namespace Green
       expect.HasSameInOrder(pairs.AsEnumerable(), valueComparer);
 
     /// <summary>
-    /// Expects the target has the same items in the same order as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="valueComparer">The object that performs value comparisons</param>
-    /// <param name="keyComparer">The object that performs key comparisons</param>
-    /// <param name="pairs">The pairs to compare</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasSameInOrder<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, params KeyValuePair<TKey, TValue>[] pairs) =>
-      expect.HasSameInOrder(pairs.AsEnumerable(), keyComparer, valueComparer);
-
-    /// <summary>
     /// Expects the target has the same items in the same order as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasSameInOrder<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IssueMany<TKey, TValue> issue, params KeyValuePair<TKey, TValue>[] pairs) =>
-      expect.HasSameInOrder(pairs.AsEnumerable(), issue);
+    public static ExpectMany<TKey, TValue> HasSameInOrder<TKey, TValue>(this ExpectMany<TKey, TValue> expect, params KeyValuePair<TKey, TValue>[] pairs) =>
+      expect.HasSameInOrder(pairs.AsEnumerable());
 
     /// <summary>
     /// Expects the target has the same items in the same order as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -2045,6 +2065,21 @@ namespace Green
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasSameInOrder<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<KeyValuePair<TKey, TValue>> comparer, IssueMany<TKey, TValue> issue, params KeyValuePair<TKey, TValue>[] pairs) =>
       expect.HasSameInOrder(pairs.AsEnumerable(), comparer, issue);
+
+    /// <summary>
+    /// Expects the target has the same items in the same order as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="keyComparer">The object that performs key comparisons</param>
+    /// <param name="valueComparer">The object that performs value comparisons</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <param name="pairs">The pairs to compare</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> HasSameInOrder<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue> issue, params KeyValuePair<TKey, TValue>[] pairs) =>
+      expect.HasSameInOrder(pairs.AsEnumerable(), keyComparer, valueComparer, issue);
 
     /// <summary>
     /// Expects the target has the same items in the same order as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <see cref="EqualityComparer{TValue}.Default"/>
@@ -2075,19 +2110,17 @@ namespace Green
       expect.HasSameInOrder(pairs.AsEnumerable(), valueComparer, issue);
 
     /// <summary>
-    /// Expects the target has the same items in the same order as <paramref name="pairs"/> using <paramref name="keyComparer"/> and <paramref name="valueComparer"/>
+    /// Expects the target has the same items in the same order as <paramref name="pairs"/> using <see cref="EqualityComparer{TKey}.Default"/> and <see cref="EqualityComparer{TValue}.Default"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="keyComparer">The object that performs key comparisons</param>
-    /// <param name="valueComparer">The object that performs value comparisons</param>
     /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <param name="pairs">The pairs to compare</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasSameInOrder<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer, IssueMany<TKey, TValue> issue, params KeyValuePair<TKey, TValue>[] pairs) =>
-      expect.HasSameInOrder(pairs.AsEnumerable(), keyComparer, valueComparer, issue);
+    public static ExpectMany<TKey, TValue> HasSameInOrder<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IssueMany<TKey, TValue> issue, params KeyValuePair<TKey, TValue>[] pairs) =>
+      expect.HasSameInOrder(pairs.AsEnumerable(), issue);
 
     //
     // Keys
@@ -2106,13 +2139,13 @@ namespace Green
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasKey<TKey, TValue>(this ExpectMany<TKey, TValue> expect, TKey key, IEqualityComparer<TKey> comparer, IssueMany<TKey, TValue>? issue = null) =>
       comparer != null
-        ? expect.That(t => t != null && t.Any(pair => comparer.Equals(pair.Key, key)), issue.ElseExpected($"key {Text(key)}", received: t => $"{TextMany(t.Select(pair => pair.Key))}"))
+        ? expect.That(t => t != null && t.Any(pair => comparer.Equals(pair.Key, key)), issue.Operator(key, comparer))
         : expect.That(t => t != null && t switch
         {
           IDictionary<TKey, TValue> dictionary => dictionary.ContainsKey(key),
           IReadOnlyDictionary<TKey, TValue> dictionary => dictionary.ContainsKey(key),
           _ => t.Any(pair => EqualityComparer<TKey>.Default.Equals(pair.Key, key))
-        }, issue.ElseExpected($"key {Text(key)}", received: t => $"{TextMany(t.Select(pair => pair.Key))}"));
+        }, issue.Operator(key, comparer));
 
     /// <summary>
     /// Expects the target has a key that equals <paramref name="key"/> using <see cref="EqualityComparer{TKey}.Default"/>
@@ -2134,10 +2167,11 @@ namespace Green
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="expectKey">The function to invoke with an expected argument</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasKey<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<Expect<TKey>> expectKey) =>
-      expect.That(t => t != null && expectKey != null && t.All(pair => expectKey.Invoke(pair.Key)));
+    public static ExpectMany<TKey, TValue> HasKey<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<Expect<TKey>> expectKey, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t => t != null && expectKey != null && t.All(pair => expectKey.Invoke(pair.Key)), issue.Operator(expectKey));
 
     /// <summary>
     /// Expects the target has all keys in <paramref name="keys"/> using <paramref name="comparer"/>
@@ -2152,13 +2186,13 @@ namespace Green
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasKeys<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<TKey> keys, IEqualityComparer<TKey> comparer, IssueMany<TKey, TValue>? issue = null) =>
       comparer != null
-        ? expect.That(t => t != null && keys != null && t.Select(pair => pair.Key).IsSupersetOf(keys, comparer), issue.ElseExpected($"keys {TextMany(keys)}", received: t => $"{TextMany(t.Select(pair => pair.Key))}"))
+        ? expect.That(t => t != null && keys != null && t.Select(pair => pair.Key).IsSupersetOf(keys, comparer), issue.Operator(keys, comparer))
         : expect.That(t => t != null && keys != null && t switch
         {
           IDictionary<TKey, TValue> dictionary => keys.All(dictionary.ContainsKey),
           IReadOnlyDictionary<TKey, TValue> dictionary => keys.All(dictionary.ContainsKey),
           _ => t.Select(pair => pair.Key).IsSupersetOf(keys)
-        }, issue.ElseExpected($"keys {TextMany(keys)}", received: t => $"{TextMany(t.Select(pair => pair.Key))}"));
+        }, issue.Operator(keys, comparer));
 
     /// <summary>
     /// Expects the target has all keys in <paramref name="keys"/> using <see cref="EqualityComparer{TKey}.Default"/>
@@ -2241,7 +2275,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasValue<TKey, TValue>(this ExpectMany<TKey, TValue> expect, TValue value, IEqualityComparer<TValue> comparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && t.Any(pair => (comparer ?? EqualityComparer<TValue>.Default).Equals(pair.Value, value)), issue.ElseExpected($"value {Text(value)}", received: t => $"{TextMany(t.Select(pair => pair.Value))}"));
+      expect.That(t => t != null && t.Any(pair => (comparer ?? EqualityComparer<TValue>.Default).Equals(pair.Value, value)), issue.Operator(value, comparer));
 
     /// <summary>
     /// Expects the target has a value that equals <paramref name="value"/> using <see cref="EqualityComparer{TKey}.Default"/>
@@ -2263,10 +2297,11 @@ namespace Green
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="expectValue">The function to invoke with an expected argument</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasValue<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<Expect<TValue>> expectValue) =>
-      expect.That(t => t != null && expectValue != null && t.All(pair => expectValue.Invoke(pair.Value)));
+    public static ExpectMany<TKey, TValue> HasValue<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<Expect<TValue>> expectValue, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t => t != null && expectValue != null && t.All(pair => expectValue.Invoke(pair.Value)), issue.Operator(expectValue));
 
     /// <summary>
     /// Expects the target has all values in <paramref name="values"/> using <paramref name="comparer"/>
@@ -2280,7 +2315,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasValues<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IEnumerable<TValue> values, IEqualityComparer<TValue> comparer, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && values != null && t.Select(pair => pair.Value).IsSupersetOf(values, comparer), issue.ElseExpected($"values {TextMany(values)}{comparer.ToValueSuffix()}", received: t => $"{TextMany(t.Select(pair => pair.Value))}"));
+      expect.That(t => t != null && values != null && t.Select(pair => pair.Value).IsSupersetOf(values, comparer), issue.Operator(values, comparer));
 
     /// <summary>
     /// Expects the target has all keys in <paramref name="values"/> using <see cref="EqualityComparer{TKey}.Default"/>
@@ -2352,7 +2387,7 @@ namespace Green
     //
 
     /// <summary>
-    /// Expects the target's count equals <paramref name="value"/>
+    /// Expects the target's count is <paramref name="value"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -2362,9 +2397,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasCount<TKey, TValue>(this ExpectMany<TKey, TValue> expect, int value, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t =>
-        t != null && Expect(t.GetOrFindCount()).Is(value, count => Expected(count, $"Count == {value}", $"Count == {count}")),
-        issue.ElseExpected("Counts are equal"));
+      expect.That(t => t != null && t.GetOrFindCount() == value, issue.Operator(value));
 
     /// <summary>
     /// Expects the target's count to meet <paramref name="expectValue"/>
@@ -2373,13 +2406,14 @@ namespace Green
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="expectValue">The function to invoke with an expected argument</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> HasCount<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<Expect<int>> expectValue) =>
-      expect.That(t => t != null && expectValue.Invoke(t.GetOrFindCount()));
+    public static ExpectMany<TKey, TValue> HasCount<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<Expect<int>> expectValue, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t => t != null && expectValue.Invoke(t.GetOrFindCount()), issue.Operator(expectValue));
 
     /// <summary>
-    /// Expects the target's count to equal 1
+    /// Expects the target's count is 1
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -2391,7 +2425,7 @@ namespace Green
       expect.HasCount(1, issue);
 
     /// <summary>
-    /// Expects the target's count to equal 2
+    /// Expects the target's count is 2
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -2403,7 +2437,7 @@ namespace Green
       expect.HasCount(2, issue);
 
     /// <summary>
-    /// Expects the target's count to equal 3
+    /// Expects the target's count is 3
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -2415,7 +2449,7 @@ namespace Green
       expect.HasCount(3, issue);
 
     /// <summary>
-    /// Expects the target's count to equal 4
+    /// Expects the target's count is 4
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -2427,7 +2461,7 @@ namespace Green
       expect.HasCount(4, issue);
 
     /// <summary>
-    /// Expects the target's count to equal 5
+    /// Expects the target's count is 5
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -2439,7 +2473,7 @@ namespace Green
       expect.HasCount(5, issue);
 
     /// <summary>
-    /// Expects the target's count to equal 6
+    /// Expects the target's count is 6
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -2451,7 +2485,7 @@ namespace Green
       expect.HasCount(6, issue);
 
     /// <summary>
-    /// Expects the target's count to equal 7
+    /// Expects the target's count is 7
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -2463,7 +2497,7 @@ namespace Green
       expect.HasCount(7, issue);
 
     /// <summary>
-    /// Expects the target's count to equal 8
+    /// Expects the target's count is 8
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -2475,7 +2509,7 @@ namespace Green
       expect.HasCount(8, issue);
 
     /// <summary>
-    /// Expects the target's count to equal 1 and pair to meet <paramref name="expectPair"/>
+    /// Expects the target's count is 1 and pair to meet <paramref name="expectPair"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -2488,7 +2522,7 @@ namespace Green
       expect.HasN(1, issue, items => expectPair?.Invoke(items[0]));
 
     /// <summary>
-    /// Expects the target's count to equal 1 and pair to meet <paramref name="expectPair"/>
+    /// Expects the target's count is 1 and pair to meet <paramref name="expectPair"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -2501,7 +2535,7 @@ namespace Green
       expect.HasN(1, issue, items => expectPair?.Invoke(items[0].Key, items[0].Value));
 
     /// <summary>
-    /// Expects the target's count to equal 2 and to meet <paramref name="expectItems"/>
+    /// Expects the target's count is 2 and to meet <paramref name="expectItems"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -2514,7 +2548,7 @@ namespace Green
       expect.HasN(2, issue, items => expectItems?.Invoke(items[0], items[1]));
 
     /// <summary>
-    /// Expects the target's count to equal 3 and to meet <paramref name="expectItems"/>
+    /// Expects the target's count is 3 and to meet <paramref name="expectItems"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -2527,7 +2561,7 @@ namespace Green
       expect.HasN(3, issue, items => expectItems?.Invoke(items[0], items[1], items[2]));
 
     /// <summary>
-    /// Expects the target's count to equal 4 and to meet <paramref name="expectItems"/>
+    /// Expects the target's count is 4 and to meet <paramref name="expectItems"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -2540,7 +2574,7 @@ namespace Green
       expect.HasN(4, issue, items => expectItems?.Invoke(items[0], items[1], items[2], items[3]));
 
     /// <summary>
-    /// Expects the target's count to equal 5 and to meet <paramref name="expectItems"/>
+    /// Expects the target's count is 5 and to meet <paramref name="expectItems"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -2553,7 +2587,7 @@ namespace Green
       expect.HasN(5, issue, items => expectItems?.Invoke(items[0], items[1], items[2], items[3], items[4]));
 
     /// <summary>
-    /// Expects the target's count to equal 6 and to meet <paramref name="expectItems"/>
+    /// Expects the target's count is 6 and to meet <paramref name="expectItems"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -2566,7 +2600,7 @@ namespace Green
       expect.HasN(6, issue, items => expectItems?.Invoke(items[0], items[1], items[2], items[3], items[4], items[5]));
 
     /// <summary>
-    /// Expects the target's count to equal 7 and to meet <paramref name="expectItems"/>
+    /// Expects the target's count is 7 and to meet <paramref name="expectItems"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -2579,7 +2613,7 @@ namespace Green
       expect.HasN(7, issue, items => expectItems?.Invoke(items[0], items[1], items[2], items[3], items[4], items[5], items[6]));
 
     /// <summary>
-    /// Expects the target's count to equal 8 and to meet <paramref name="expectItems"/>
+    /// Expects the target's count is 8 and to meet <paramref name="expectItems"/>
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
     /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
@@ -2602,7 +2636,7 @@ namespace Green
           expectItems(items);
 
           return true;
-        }, issue.ElseExpected($"Count == {n}", t => $"Count == {t.GetOrFindCount()} ({TextMany(t)})"));
+        }, issue.Operator(n, expectItems));
 
     //
     // Checked arguments

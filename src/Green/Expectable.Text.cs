@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Green.Messages;
-using static Green.Messages.Local;
 
 namespace Green
 {
@@ -19,7 +17,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> Is(this Expect<string> expect, string value, Issue<string>? issue = null) =>
-      expect.That(t => string.Equals(t, value), issue.ElseExpected(Text(value)));
+      expect.That(t => string.Equals(t, value), issue.Operator(value));
 
     /// <summary>
     /// Expects the target equals <paramref name="value"/> using <paramref name="comparison"/>
@@ -31,7 +29,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> Is(this Expect<string> expect, string value, StringComparison comparison, Issue<string>? issue = null) =>
-      expect.That(t => string.Equals(t, value, comparison), issue.ElseExpected($"{Text(value)}{comparison.ToSuffix()}"));
+      expect.That(t => string.Equals(t, value, comparison), issue.Operator(value, comparison));
 
     /// <summary>
     /// Expects the target equals the empty string ("")
@@ -41,7 +39,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> IsEmpty(this Expect<string> expect, Issue<string>? issue = null) =>
-      expect.That(t => t == "", issue.ElseExpected(Text("")));
+      expect.That(t => t == "", issue.Operator());
 
     /// <summary>
     /// Expects the target is whitespace only
@@ -51,7 +49,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> IsWhiteSpace(this Expect<string> expect, Issue<string>? issue = null) =>
-      expect.That(t => t != null && string.IsNullOrWhiteSpace(t), issue.ElseExpected("whitespace"));
+      expect.That(t => t != null && string.IsNullOrWhiteSpace(t), issue.Operator());
 
     /// <summary>
     /// Expects the target is <see langword="null"/> or the empty string ("")
@@ -61,7 +59,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> IsNullOrEmpty(this Expect<string> expect, Issue<string>? issue = null) =>
-      expect.That(string.IsNullOrEmpty, issue.ElseExpected($"{NullText} or {EmptyText}"));
+      expect.That(string.IsNullOrEmpty, issue.Operator());
 
     /// <summary>
     /// Expects the target is <see langword="null"/> or whitespace only
@@ -71,7 +69,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> IsNullOrWhiteSpace(this Expect<string> expect, Issue<string>? issue = null) =>
-      expect.That(string.IsNullOrWhiteSpace, issue.ElseExpected($"{NullText} or whitespace"));
+      expect.That(string.IsNullOrWhiteSpace, issue.Operator());
 
     //
     // Is not
@@ -86,7 +84,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> IsNot(this Expect<string> expect, string value, Issue<string>? issue = null) =>
-      expect.Not(t => string.Equals(t, value), issue.ElseExpected($"not {Text(value)}"));
+      expect.That(t => !string.Equals(t, value), issue.Operator(value));
 
     /// <summary>
     /// Expects the target equals <paramref name="value"/> using <paramref name="comparison"/>
@@ -98,7 +96,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> IsNot(this Expect<string> expect, string value, StringComparison comparison, Issue<string>? issue = null) =>
-      expect.Not(t => string.Equals(t, value, comparison), issue.ElseExpected($"not {Text(value)}{comparison.ToSuffix()}"));
+      expect.That(t => !string.Equals(t, value, comparison), issue.Operator(value, comparison));
 
     /// <summary>
     /// Expects the target does not equal the empty string ("")
@@ -108,7 +106,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> IsNotEmpty(this Expect<string> expect, Issue<string>? issue = null) =>
-      expect.That(t => t != "", issue.ElseExpected($"not {EmptyText}"));
+      expect.That(t => t != "", issue.Operator());
 
     /// <summary>
     /// Expects the target is not whitespace only
@@ -118,7 +116,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> IsNotWhiteSpace(this Expect<string> expect, Issue<string>? issue = null) =>
-      expect.Not(string.IsNullOrWhiteSpace, issue.ElseExpected("not whitespace"));
+      expect.That(t => !string.IsNullOrWhiteSpace(t), issue.Operator());
 
     /// <summary>
     /// Expects the target is <see langword="null"/> or the empty string ("")
@@ -128,7 +126,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> IsNotNullOrEmpty(this Expect<string> expect, Issue<string>? issue = null) =>
-      expect.Not(string.IsNullOrEmpty, issue.ElseExpected($"not {NullText} or {EmptyText}"));
+      expect.That(t => !string.IsNullOrEmpty(t), issue.Operator());
 
     /// <summary>
     /// Expects the target is <see langword="null"/> or whitespace only
@@ -138,7 +136,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> IsNotNullOrWhiteSpace(this Expect<string> expect, Issue<string>? issue = null) =>
-      expect.Not(string.IsNullOrWhiteSpace, issue.ElseExpected($"not {NullText} or whitespace"));
+      expect.That(t => !string.IsNullOrWhiteSpace(t), issue.Operator());
 
     //
     // Has
@@ -153,7 +151,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> HasLength(this Expect<string> expect, int value, Issue<string>? issue = null) =>
-      expect.That(t => t?.Length == value, issue.ElseExpectedHas(nameof(string.Length), value, t => t.Length));
+      expect.That(t => t?.Length == value, issue.Operator(value));
 
     /// <summary>
     /// Expects the target's <see cref="string.Length"/> to meet <paramref name="expectValue"/>
@@ -175,7 +173,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> HasChar(this Expect<string> expect, int index, char value, Issue<string>? issue = null) =>
-      expect.That(t => t != null && index < t.Length && t[index] == value, issue.ElseExpectedHas($"[{index}]", value, t => t[index]));
+      expect.That(t => t != null && index < t.Length && t[index] == value, issue.Operator(index, value));
 
     /// <summary>
     /// Expects the target's character at <paramref name="index"/> to meet <paramref name="expectValue"/>
@@ -201,7 +199,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> StartsWith(this Expect<string> expect, string value, Issue<string>? issue = null) =>
-      expect.That(t => t != null && t.StartsWith(value), issue.ElseExpected($"starts with {Text(value)}"));
+      expect.That(t => t != null && t.StartsWith(value), issue.Operator(value));
 
     /// <summary>
     /// Expects the target starts with <paramref name="value"/> using <paramref name="comparison"/>
@@ -213,7 +211,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> StartsWith(this Expect<string> expect, string value, StringComparison comparison, Issue<string>? issue = null) =>
-      expect.That(t => t != null && t.StartsWith(value, comparison), issue.ElseExpected($"starts with {Text(value)}{comparison.ToSuffix()}"));
+      expect.That(t => t != null && t.StartsWith(value, comparison), issue.Operator(value, comparison));
 
     /// <summary>
     /// Expects the target starts with <paramref name="value"/>
@@ -226,7 +224,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> StartsWith(this Expect<string> expect, string value, bool ignoreCase, CultureInfo culture, Issue<string>? issue = null) =>
-      expect.That(t => t != null && t.StartsWith(value, ignoreCase, culture), issue.ElseExpected($"starts with {Text(value)} (ignore case = {ignoreCase}, culture = {culture})"));
+      expect.That(t => t != null && t.StartsWith(value, ignoreCase, culture), issue.Operator(value, ignoreCase, culture));
 
     /// <summary>
     /// Expects the target ends with <paramref name="value"/>
@@ -237,7 +235,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> EndsWith(this Expect<string> expect, string value, Issue<string>? issue = null) =>
-      expect.That(t => t != null && t.EndsWith(value), issue.ElseExpected($"ends with {Text(value)}"));
+      expect.That(t => t != null && t.EndsWith(value), issue.Operator(value));
 
     /// <summary>
     /// Expects the target ends with <paramref name="value"/> using <paramref name="comparison"/>
@@ -249,7 +247,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> EndsWith(this Expect<string> expect, string value, StringComparison comparison, Issue<string>? issue = null) =>
-      expect.That(t => t != null && t.EndsWith(value, comparison), issue.ElseExpected($"ends with {Text(value)}{comparison.ToSuffix()}"));
+      expect.That(t => t != null && t.EndsWith(value, comparison), issue.Operator(value, comparison));
 
     /// <summary>
     /// Expects the target ends with <paramref name="value"/>
@@ -262,7 +260,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> EndsWith(this Expect<string> expect, string value, bool ignoreCase, CultureInfo culture, Issue<string>? issue = null) =>
-      expect.That(t => t != null && t.EndsWith(value, ignoreCase, culture), issue.ElseExpected($"ends with {Text(value)} (ignore case = {ignoreCase}, culture = {culture})"));
+      expect.That(t => t != null && t.EndsWith(value, ignoreCase, culture), issue.Operator(value, ignoreCase, culture));
 
     /// <summary>
     /// Expects the target contains <paramref name="value"/>
@@ -273,7 +271,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> Contains(this Expect<string> expect, string value, Issue<string>? issue = null) =>
-      expect.That(t => t != null && t.Contains(value), issue.ElseExpected($"contains {Text(value)}"));
+      expect.That(t => t != null && t.Contains(value), issue.Operator(value));
 
     /// <summary>
     /// Expects the target contains <paramref name="value"/>
@@ -284,7 +282,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> Contains(this Expect<string> expect, char value, Issue<string>? issue = null) =>
-      expect.That(t => t != null && t.Contains(value), issue.ElseExpected($"contains {Text(value)}"));
+      expect.That(t => t != null && t.Contains(value), issue.Operator(value));
 
     /// <summary>
     /// Expects the target contains <paramref name="value"/> using <paramref name="comparer"/>
@@ -296,7 +294,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> Contains(this Expect<string> expect, char value, IEqualityComparer<char> comparer, Issue<string>? issue = null) =>
-      expect.That(t => t != null && t.Contains(value, comparer), issue.ElseExpected($"contains {Text(value)} (comparer = {comparer})"));
+      expect.That(t => t != null && t.Contains(value, comparer), issue.Operator(value, comparer));
 
     //
     // Content (not)
@@ -311,7 +309,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> DoesNotStartWith(this Expect<string> expect, string value, Issue<string>? issue = null) =>
-      expect.Not(t => t != null && t.StartsWith(value), issue.ElseExpected($"does not start with {Text(value)}"));
+      expect.That(t => t == null || !t.StartsWith(value), issue.Operator(value));
 
     /// <summary>
     /// Expects the target does not start with <paramref name="value"/> using <paramref name="comparison"/>
@@ -323,7 +321,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> DoesNotStartWith(this Expect<string> expect, string value, StringComparison comparison, Issue<string>? issue = null) =>
-      expect.Not(t => t != null && t.StartsWith(value, comparison), issue.ElseExpected($"does not start with {Text(value)}{comparison.ToSuffix()}"));
+      expect.That(t => t == null || !t.StartsWith(value, comparison), issue.Operator(value, comparison));
 
     /// <summary>
     /// Expects the target does not start with <paramref name="value"/>
@@ -336,7 +334,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> DoesNotStartWith(this Expect<string> expect, string value, bool ignoreCase, CultureInfo culture, Issue<string>? issue = null) =>
-      expect.Not(t => t != null && t.StartsWith(value, ignoreCase, culture), issue.ElseExpected($"does not start with {Text(value)} (ignore case = {ignoreCase}, culture = {culture})"));
+      expect.That(t => t == null || !t.StartsWith(value, ignoreCase, culture), issue.Operator(value, ignoreCase, culture));
 
     /// <summary>
     /// Expects the target does not end with <paramref name="value"/>
@@ -347,7 +345,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> DoesNotEndWith(this Expect<string> expect, string value, Issue<string>? issue = null) =>
-      expect.Not(t => t != null && t.EndsWith(value), issue.ElseExpected($"does not end with {Text(value)}"));
+      expect.That(t => t == null || !t.EndsWith(value), issue.Operator(value));
 
     /// <summary>
     /// Expects the target does not end with <paramref name="value"/> using <paramref name="comparison"/>
@@ -359,7 +357,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> DoesNotEndWith(this Expect<string> expect, string value, StringComparison comparison, Issue<string>? issue = null) =>
-      expect.Not(t => t != null && t.EndsWith(value, comparison), issue.ElseExpected($"does not end with {Text(value)}{comparison.ToSuffix()}"));
+      expect.That(t => t == null || !t.EndsWith(value, comparison), issue.Operator(value, comparison));
 
     /// <summary>
     /// Expects the target does not end with <paramref name="value"/>
@@ -372,7 +370,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> DoesNotEndWith(this Expect<string> expect, string value, bool ignoreCase, CultureInfo culture, Issue<string>? issue = null) =>
-      expect.Not(t => t != null && t.EndsWith(value, ignoreCase, culture), issue.ElseExpected($"does not end with {Text(value)} (ignore case = {ignoreCase}, culture = {culture})"));
+      expect.That(t => t == null || !t.EndsWith(value, ignoreCase, culture), issue.Operator(value, ignoreCase, culture));
 
     /// <summary>
     /// Expects the target does not contain <paramref name="value"/>
@@ -383,7 +381,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> DoesNotContain(this Expect<string> expect, string value, Issue<string>? issue = null) =>
-      expect.Not(t => t != null && t.Contains(value), issue.ElseExpected($"does not contain {Text(value)}"));
+      expect.That(t => t == null || !t.Contains(value), issue.Operator(value));
 
     /// <summary>
     /// Expects the target does not contain <paramref name="value"/>
@@ -394,7 +392,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> DoesNotContain(this Expect<string> expect, char value, Issue<string>? issue = null) =>
-      expect.Not(t => t != null && t.Contains(value), issue.ElseExpected($"does not contain {Text(value)}"));
+      expect.That(t => t == null || !t.Contains(value), issue.Operator(value));
 
     /// <summary>
     /// Expects the target does not contain <paramref name="value"/> using <paramref name="comparer"/>
@@ -406,7 +404,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> DoesNotContain(this Expect<string> expect, char value, IEqualityComparer<char> comparer, Issue<string>? issue = null) =>
-      expect.Not(t => t != null && t.Contains(value, comparer), issue.ElseExpected($"does not contain {Text(value)}{comparer.ToSuffix()}"));
+      expect.That(t => t == null || !t.Contains(value, comparer), issue.Operator(value, comparer));
 
     //
     // Matches
@@ -421,7 +419,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> Matches(this Expect<string> expect, Regex regex, Issue<string>? issue = null) =>
-      expect.That(t => t != null && regex != null && regex.IsMatch(t), issue.ElseExpected($"matches {regex} (options = {regex.Options})"));
+      expect.That(t => t != null && regex != null && regex.IsMatch(t), issue.Operator(regex));
 
     /// <summary>
     /// Expects the target matches <paramref name="regex"/>
@@ -433,7 +431,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> Matches(this Expect<string> expect, string regex, RegexOptions options, Issue<string>? issue = null) =>
-      expect.That(t => t != null && regex != null && Regex.IsMatch(t, regex, options), issue.ElseExpected($"matches {regex} (options = {options})"));
+      expect.That(t => t != null && regex != null && Regex.IsMatch(t, regex, options), issue.Operator(regex, options));
 
     /// <summary>
     /// Expects the target matches <paramref name="regex"/>
@@ -447,7 +445,7 @@ namespace Green
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     /// <exception cref="RegexMatchTimeoutException">Thrown if the match times out</exception>
     public static Expect<string> Matches(this Expect<string> expect, string regex, RegexOptions options, TimeSpan matchTimeout, Issue<string>? issue = null) =>
-      expect.That(t => t != null && regex != null && Regex.IsMatch(t, regex, options, matchTimeout), issue.ElseExpected($"matches {regex} (options = {options}, match timeout = {matchTimeout})"));
+      expect.That(t => t != null && regex != null && Regex.IsMatch(t, regex, options, matchTimeout), issue.Operator(regex, options, matchTimeout));
 
     /// <summary>
     /// Expects the target matches <paramref name="regex"/>
@@ -460,7 +458,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> Matches(this Expect<string> expect, string regex, bool ignoreCase = false, bool singleline = false, bool multiline = false) =>
-      expect.Matches(regex, ToOptions(ignoreCase, singleline, multiline));
+      expect.That(t => t != null && regex != null && Regex.IsMatch(t, regex, ToOptions(ignoreCase, singleline, multiline)), default(Issue<string>).Operator(regex, ignoreCase, singleline, multiline));
 
     /// <summary>
     /// Expects the target matches <paramref name="regex"/>
@@ -474,7 +472,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> Matches(this Expect<string> expect, string regex, Issue<string> issue, bool ignoreCase = false, bool singleline = false, bool multiline = false) =>
-      expect.Matches(regex, ToOptions(ignoreCase, singleline, multiline), issue);
+      expect.That(t => t != null && regex != null && Regex.IsMatch(t, regex, ToOptions(ignoreCase, singleline, multiline)), issue.Operator(regex, ignoreCase, singleline, multiline));
 
     /// <summary>
     /// Expects the target matches <paramref name="regex"/>
@@ -489,7 +487,7 @@ namespace Green
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     /// <exception cref="RegexMatchTimeoutException">Thrown if the match times out</exception>
     public static Expect<string> Matches(this Expect<string> expect, string regex, TimeSpan matchTimeout, bool ignoreCase = false, bool singleline = false, bool multiline = false) =>
-      expect.Matches(regex, ToOptions(ignoreCase, singleline, multiline), matchTimeout);
+      expect.That(t => t != null && regex != null && Regex.IsMatch(t, regex, ToOptions(ignoreCase, singleline, multiline), matchTimeout), default(Issue<string>).Operator(regex, ignoreCase, singleline, multiline));
 
     /// <summary>
     /// Expects the target matches <paramref name="regex"/>
@@ -505,7 +503,7 @@ namespace Green
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     /// <exception cref="RegexMatchTimeoutException">Thrown if the match times out</exception>
     public static Expect<string> Matches(this Expect<string> expect, string regex, TimeSpan matchTimeout, Issue<string> issue, bool ignoreCase = false, bool singleline = false, bool multiline = false) =>
-      expect.Matches(regex, ToOptions(ignoreCase, singleline, multiline), matchTimeout, issue);
+      expect.That(t => t != null && regex != null && Regex.IsMatch(t, regex, ToOptions(ignoreCase, singleline, multiline), matchTimeout), issue.Operator(regex, ignoreCase, singleline, multiline));
 
     /// <summary>
     /// Expects the target matches <paramref name="wildcardPattern"/>
@@ -516,7 +514,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> MatchesWildcard(this Expect<string> expect, string wildcardPattern, bool ignoreCase = false) =>
-      expect.Matches(ToRegex(wildcardPattern), ToOptions(ignoreCase, singleline: true, multiline: false), t => $"matches wildcard {wildcardPattern}");
+      expect.That(t => t != null && wildcardPattern != null && Regex.IsMatch(t, ToRegex(wildcardPattern), ToOptions(ignoreCase, singleline: true, multiline: false)), default(Issue<string>).Operator(wildcardPattern, ignoreCase));
 
     /// <summary>
     /// Expects the target matches <paramref name="wildcardPattern"/>
@@ -528,7 +526,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> MatchesWildcard(this Expect<string> expect, string wildcardPattern, Issue<string> issue, bool ignoreCase = false) =>
-      expect.Matches(ToRegex(wildcardPattern), ToOptions(ignoreCase, singleline: true, multiline: false), issue.ElseExpected($"matches wildcard {wildcardPattern}"));
+      expect.That(t => t != null && wildcardPattern != null && Regex.IsMatch(t, ToRegex(wildcardPattern), ToOptions(ignoreCase, singleline: true, multiline: false)), issue.Operator(wildcardPattern, ignoreCase));
 
     static RegexOptions ToOptions(bool ignoreCase, bool singleline, bool multiline) =>
       RegexOptions.None
@@ -552,7 +550,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> DoesNotMatch(this Expect<string> expect, Regex regex, Issue<string>? issue = null) =>
-      expect.Not(t => t != null && regex != null && regex.IsMatch(t), issue.ElseExpected($"does not match {regex} (options = {regex.Options})"));
+      expect.That(t => t == null || regex == null || !regex.IsMatch(t), issue.Operator(regex));
 
     /// <summary>
     /// Expects the target does not match <paramref name="regex"/>
@@ -564,7 +562,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> DoesNotMatch(this Expect<string> expect, string regex, RegexOptions options, Issue<string>? issue = null) =>
-      expect.Not(t => t != null && regex != null && Regex.IsMatch(t, regex, options), issue.ElseExpected($"does not match {regex} (options = {options})"));
+      expect.That(t => t == null || regex == null || !Regex.IsMatch(t, regex, options), issue.Operator(regex, options));
 
     /// <summary>
     /// Expects the target does not match <paramref name="regex"/>
@@ -578,7 +576,7 @@ namespace Green
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     /// <exception cref="RegexMatchTimeoutException">Thrown if the match times out</exception>
     public static Expect<string> DoesNotMatch(this Expect<string> expect, string regex, RegexOptions options, TimeSpan matchTimeout, Issue<string>? issue = null) =>
-      expect.Not(t => t != null && regex != null && Regex.IsMatch(t, regex, options, matchTimeout), issue.ElseExpected($"does not match {regex} (options = {options}, match timeout = {matchTimeout})"));
+      expect.That(t => t == null || regex == null || !Regex.IsMatch(t, regex, options, matchTimeout), issue.Operator(regex, options, matchTimeout));
 
     /// <summary>
     /// Expects the target does not match <paramref name="regex"/>
@@ -591,7 +589,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> DoesNotMatch(this Expect<string> expect, string regex, bool ignoreCase = false, bool singleline = false, bool multiline = false) =>
-      expect.DoesNotMatch(regex, ToOptions(ignoreCase, singleline, multiline));
+      expect.That(t => t == null || regex == null || !Regex.IsMatch(t, regex, ToOptions(ignoreCase, singleline, multiline)), default(Issue<string>).Operator(regex, ignoreCase, singleline, multiline));
 
     /// <summary>
     /// Expects the target does not match <paramref name="regex"/>
@@ -605,7 +603,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> DoesNotMatch(this Expect<string> expect, string regex, Issue<string> issue, bool ignoreCase = false, bool singleline = false, bool multiline = false) =>
-      expect.DoesNotMatch(regex, ToOptions(ignoreCase, singleline, multiline), issue);
+      expect.That(t => t == null || regex == null || !Regex.IsMatch(t, regex, ToOptions(ignoreCase, singleline, multiline)), issue.Operator(regex, ignoreCase, singleline, multiline));
 
     /// <summary>
     /// Expects the target does not match <paramref name="regex"/>
@@ -620,7 +618,7 @@ namespace Green
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     /// <exception cref="RegexMatchTimeoutException">Thrown if the match times out</exception>
     public static Expect<string> DoesNotMatch(this Expect<string> expect, string regex, TimeSpan matchTimeout, bool ignoreCase = false, bool singleline = false, bool multiline = false) =>
-      expect.DoesNotMatch(regex, ToOptions(ignoreCase, singleline, multiline), matchTimeout);
+      expect.That(t => t == null || regex == null || !Regex.IsMatch(t, regex, ToOptions(ignoreCase, singleline, multiline), matchTimeout), default(Issue<string>).Operator(regex, ignoreCase, singleline, multiline));
 
     /// <summary>
     /// Expects the target does not match <paramref name="regex"/>
@@ -636,7 +634,7 @@ namespace Green
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     /// <exception cref="RegexMatchTimeoutException">Thrown if the match times out</exception>
     public static Expect<string> DoesNotMatch(this Expect<string> expect, string regex, TimeSpan matchTimeout, Issue<string> issue, bool ignoreCase = false, bool singleline = false, bool multiline = false) =>
-      expect.DoesNotMatch(regex, ToOptions(ignoreCase, singleline, multiline), matchTimeout, issue);
+      expect.That(t => t == null || regex == null || !Regex.IsMatch(t, regex, ToOptions(ignoreCase, singleline, multiline), matchTimeout), issue.Operator(regex, ignoreCase, singleline, multiline));
 
     /// <summary>
     /// Expects the target does not match <paramref name="wildcardPattern"/>
@@ -647,7 +645,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> DoesNotMatchWildcard(this Expect<string> expect, string wildcardPattern, bool ignoreCase = false) =>
-      expect.DoesNotMatch(ToRegex(wildcardPattern), ToOptions(ignoreCase, singleline: true, multiline: false), t => $"does not match wildcard {wildcardPattern}");
+      expect.That(t => t == null || wildcardPattern == null || !Regex.IsMatch(t, ToRegex(wildcardPattern), ToOptions(ignoreCase, singleline: true, multiline: false)), default(Issue<string>).Operator(wildcardPattern, ignoreCase));
 
     /// <summary>
     /// Expects the target does not match <paramref name="wildcardPattern"/>
@@ -659,7 +657,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<string> DoesNotMatchWildcard(this Expect<string> expect, string wildcardPattern, Issue<string> issue, bool ignoreCase = false) =>
-      expect.DoesNotMatch(ToRegex(wildcardPattern), ToOptions(ignoreCase, singleline: true, multiline: false), issue.ElseExpected($"does not match wildcard {wildcardPattern}"));
+      expect.That(t => t == null || wildcardPattern == null || !Regex.IsMatch(t, ToRegex(wildcardPattern), ToOptions(ignoreCase, singleline: true, multiline: false)), issue.Operator(wildcardPattern, ignoreCase));
 
     //
     // Char
@@ -673,7 +671,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsControl(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.That(char.IsControl, issue.ElseExpected("control character"));
+      expect.That(char.IsControl, issue.Operator());
 
     /// <summary>
     /// Expects the target is categorized as a digit
@@ -683,7 +681,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsDigit(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.That(char.IsDigit, issue.ElseExpected("digit"));
+      expect.That(char.IsDigit, issue.Operator());
 
     /// <summary>
     /// Expects the target is categorized as a Unicode high surrogate
@@ -693,7 +691,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsHighSurrogate(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.That(char.IsHighSurrogate, issue.ElseExpected("high surrogate"));
+      expect.That(char.IsHighSurrogate, issue.Operator());
 
     /// <summary>
     /// Expects the target is categorized as a Unicode high surrogate pair with <paramref name="lowSurrogate"/>
@@ -704,7 +702,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsHighSurrogatePair(this Expect<char> expect, char lowSurrogate, Issue<char>? issue = null) =>
-      expect.That(t => char.IsSurrogatePair(t, lowSurrogate), issue.ElseExpected($"high surrogate pair with {Text(lowSurrogate)}"));
+      expect.That(t => char.IsSurrogatePair(t, lowSurrogate), issue.Operator(lowSurrogate));
 
     /// <summary>
     /// Expects the target is categorized as a letter
@@ -714,7 +712,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsLetter(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.That(char.IsLetter, issue.ElseExpected("letter"));
+      expect.That(char.IsLetter, issue.Operator());
 
     /// <summary>
     /// Expects the target is categorized as a letter or digit
@@ -724,7 +722,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsLetterOrDigit(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.That(char.IsLetterOrDigit, issue.ElseExpected("letter or digit"));
+      expect.That(char.IsLetterOrDigit, issue.Operator());
 
     /// <summary>
     /// Expects the target is categorized as lowercase
@@ -734,7 +732,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsLower(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.That(char.IsLower, issue.ElseExpected("lowercase"));
+      expect.That(char.IsLower, issue.Operator());
 
     /// <summary>
     /// Expects the target is categorized as a Unicode low surrogate
@@ -744,7 +742,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsLowSurrogate(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.That(char.IsLowSurrogate, issue.ElseExpected("low surrogate"));
+      expect.That(char.IsLowSurrogate, issue.Operator());
 
     /// <summary>
     /// Expects the target is categorized as a low high surrogate pair with <paramref name="highSurrogate"/>
@@ -755,7 +753,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsLowSurrogatePair(this Expect<char> expect, char highSurrogate, Issue<char>? issue = null) =>
-      expect.That(t => char.IsSurrogatePair(highSurrogate, t), issue.ElseExpected($"low surrogate pair with {Text(highSurrogate)}"));
+      expect.That(t => char.IsSurrogatePair(highSurrogate, t), issue.Operator(highSurrogate));
 
     /// <summary>
     /// Expects the target is categorized as a number
@@ -765,7 +763,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsNumber(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.That(char.IsNumber, issue.ElseExpected("number"));
+      expect.That(char.IsNumber, issue.Operator());
 
     /// <summary>
     /// Expects the target is categorized as punctuation
@@ -775,7 +773,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsPunctuation(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.That(char.IsPunctuation, issue.ElseExpected("punctuation"));
+      expect.That(char.IsPunctuation, issue.Operator());
 
     /// <summary>
     /// Expects the target is categorized as a separator
@@ -785,7 +783,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsSeparator(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.That(char.IsSeparator, issue.ElseExpected("separator"));
+      expect.That(char.IsSeparator, issue.Operator());
 
     /// <summary>
     /// Expects the target has a surrogate code unit
@@ -795,7 +793,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsSurrogate(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.That(char.IsSurrogate, issue.ElseExpected("surrogate"));
+      expect.That(char.IsSurrogate, issue.Operator());
 
     /// <summary>
     /// Expects the target is categorized as a symbol
@@ -805,7 +803,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsSymbol(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.That(char.IsSymbol, issue.ElseExpected("symbol"));
+      expect.That(char.IsSymbol, issue.Operator());
 
     /// <summary>
     /// Expects the target is categorized as uppercase
@@ -815,7 +813,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsUpper(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.That(char.IsUpper, issue.ElseExpected("uppercase"));
+      expect.That(char.IsUpper, issue.Operator());
 
     /// <summary>
     /// Expects the target is categorized as white space
@@ -825,7 +823,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsWhiteSpace(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.That(char.IsWhiteSpace, issue.ElseExpected("whitespace"));
+      expect.That(char.IsWhiteSpace, issue.Operator());
 
     //
     // Char (not)
@@ -839,7 +837,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsNotControl(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.Not(char.IsControl, issue.ElseExpected("not control character"));
+      expect.That(t => !char.IsControl(t), issue.Operator());
 
     /// <summary>
     /// Expects the target is not categorized as a digit
@@ -849,7 +847,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsNotDigit(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.Not(char.IsDigit, issue.ElseExpected("not digit"));
+      expect.That(t => !char.IsDigit(t), issue.Operator());
 
     /// <summary>
     /// Expects the target is not categorized as a Unicode high surrogate
@@ -859,7 +857,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsNotHighSurrogate(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.Not(char.IsHighSurrogate, issue.ElseExpected("not high surrogate"));
+      expect.That(t => !char.IsHighSurrogate(t), issue.Operator());
 
     /// <summary>
     /// Expects the target is not categorized as a Unicode high surrogate pair with <paramref name="lowSurrogate"/>
@@ -870,7 +868,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsNotHighSurrogatePair(this Expect<char> expect, char lowSurrogate, Issue<char>? issue = null) =>
-      expect.Not(t => char.IsSurrogatePair(t, lowSurrogate), issue.ElseExpected($"not high surrogate pair with {Text(lowSurrogate)}"));
+      expect.That(t => !char.IsSurrogatePair(t, lowSurrogate), issue.Operator(lowSurrogate));
 
     /// <summary>
     /// Expects the target is not categorized as a letter
@@ -880,7 +878,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsNotLetter(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.Not(char.IsLetter, issue.ElseExpected("not letter"));
+      expect.That(t => !char.IsLetter(t), issue.Operator());
 
     /// <summary>
     /// Expects the target is not categorized as a letter or digit
@@ -890,7 +888,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsNotLetterOrDigit(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.Not(char.IsLetterOrDigit, issue.ElseExpected("not letter or digit"));
+      expect.That(t => !char.IsLetterOrDigit(t), issue.Operator());
 
     /// <summary>
     /// Expects the target is not categorized as lowercase
@@ -900,7 +898,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsNotLower(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.Not(char.IsLower, issue.ElseExpected("not lowercase"));
+      expect.That(t => !char.IsLower(t), issue.Operator());
 
     /// <summary>
     /// Expects the target is not categorized as a Unicode low surrogate
@@ -910,7 +908,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsNotLowSurrogate(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.Not(char.IsLowSurrogate, issue.ElseExpected("not low surrogate"));
+      expect.That(t => !char.IsLowSurrogate(t), issue.Operator());
 
     /// <summary>
     /// Expects the target is not categorized as a low high surrogate pair with <paramref name="highSurrogate"/>
@@ -921,7 +919,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsNotLowSurrogatePair(this Expect<char> expect, char highSurrogate, Issue<char>? issue = null) =>
-      expect.Not(t => char.IsSurrogatePair(highSurrogate, t), issue.ElseExpected($"not low surrogate pair with {Text(highSurrogate)}"));
+      expect.That(t => !char.IsSurrogatePair(highSurrogate, t), issue.Operator(highSurrogate));
 
     /// <summary>
     /// Expects the target is not categorized as a number
@@ -931,7 +929,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsNotNumber(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.Not(char.IsNumber, issue.ElseExpected("not number"));
+      expect.That(t => !char.IsNumber(t), issue.Operator());
 
     /// <summary>
     /// Expects the target is not categorized as punctuation
@@ -941,7 +939,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsNotPunctuation(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.Not(char.IsPunctuation, issue.ElseExpected("not punctuation"));
+      expect.That(t => !char.IsPunctuation(t), issue.Operator());
 
     /// <summary>
     /// Expects the target is not categorized as a separator
@@ -951,7 +949,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsNotSeparator(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.Not(char.IsSeparator, issue.ElseExpected("not separator"));
+      expect.That(t => !char.IsSeparator(t), issue.Operator());
 
     /// <summary>
     /// Expects the target does not have surrogate code unit
@@ -961,7 +959,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsNotSurrogate(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.Not(char.IsSurrogate, issue.ElseExpected("not surrogate"));
+      expect.That(t => !char.IsSurrogate(t), issue.Operator());
 
     /// <summary>
     /// Expects the target is not categorized as a symbol
@@ -971,7 +969,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsNotSymbol(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.Not(char.IsSymbol, issue.ElseExpected("not symbol"));
+      expect.That(t => !char.IsSymbol(t), issue.Operator());
 
     /// <summary>
     /// Expects the target is not categorized as uppercase
@@ -981,7 +979,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsNotUpper(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.Not(char.IsUpper, issue.ElseExpected("not uppercase"));
+      expect.That(t => !char.IsUpper(t), issue.Operator());
 
     /// <summary>
     /// Expects the target is not categorized as white space
@@ -991,7 +989,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<char> IsNotWhiteSpace(this Expect<char> expect, Issue<char>? issue = null) =>
-      expect.Not(char.IsWhiteSpace, issue.ElseExpected("not whitespace"));
+      expect.That(t => !char.IsWhiteSpace(t), issue.Operator());
 
     //
     // Uri
@@ -1006,7 +1004,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<Uri> HasAbsolutePath(this Expect<Uri> expect, string value, Issue<Uri>? issue = null) =>
-      expect.That(t => t?.AbsolutePath == value, issue.ElseExpectedHas(nameof(Uri.AbsolutePath), value, t => t.AbsolutePath));
+      expect.That(t => t?.AbsolutePath == value, issue.Operator(value));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.AbsoluteUri"/> property equals <paramref name="value"/>
@@ -1017,7 +1015,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<Uri> HasAbsoluteUri(this Expect<Uri> expect, string value, Issue<Uri>? issue = null) =>
-      expect.That(t => t?.AbsoluteUri == value, issue.ElseExpectedHas(nameof(Uri.AbsoluteUri), value, t => t.AbsoluteUri));
+      expect.That(t => t?.AbsoluteUri == value, issue.Operator(value));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.Authority"/> property equals <paramref name="value"/>
@@ -1028,7 +1026,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<Uri> HasAuthority(this Expect<Uri> expect, string value, Issue<Uri>? issue = null) =>
-      expect.That(t => t?.Authority == value, issue.ElseExpectedHas(nameof(Uri.Authority), value, t => t.Authority));
+      expect.That(t => t?.Authority == value, issue.Operator(value));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.AbsolutePath"/> property equals <paramref name="value"/>
@@ -1039,7 +1037,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<Uri> HasDnsSafeHost(this Expect<Uri> expect, string value, Issue<Uri>? issue = null) =>
-      expect.That(t => t?.DnsSafeHost == value, issue.ElseExpectedHas(nameof(Uri.DnsSafeHost), value, t => t.DnsSafeHost));
+      expect.That(t => t?.DnsSafeHost == value, issue.Operator(value));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.Fragment"/> property equals <paramref name="value"/>
@@ -1050,7 +1048,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<Uri> HasFragment(this Expect<Uri> expect, string value, Issue<Uri>? issue = null) =>
-      expect.That(t => t?.Fragment == value, issue.ElseExpectedHas(nameof(Uri.Fragment), value, t => t.Fragment));
+      expect.That(t => t?.Fragment == value, issue.Operator(value));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.Host"/> property equals <paramref name="value"/>
@@ -1061,7 +1059,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<Uri> HasHost(this Expect<Uri> expect, string value, Issue<Uri>? issue = null) =>
-      expect.That(t => t?.Host == value, issue.ElseExpectedHas(nameof(Uri.Host), value, t => t.Host));
+      expect.That(t => t?.Host == value, issue.Operator(value));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.HostNameType"/> property equals <paramref name="value"/>
@@ -1072,7 +1070,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<Uri> HasHostNameType(this Expect<Uri> expect, UriHostNameType value, Issue<Uri>? issue = null) =>
-      expect.That(t => t?.HostNameType == value, issue.ElseExpectedHas(nameof(Uri.HostNameType), value, t => t.HostNameType));
+      expect.That(t => t?.HostNameType == value, issue.Operator(value));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.IdnHost"/> property equals <paramref name="value"/>
@@ -1083,7 +1081,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<Uri> HasIdnHost(this Expect<Uri> expect, string value, Issue<Uri>? issue = null) =>
-      expect.That(t => t?.IdnHost == value, issue.ElseExpectedHas(nameof(Uri.IdnHost), value, t => t.IdnHost));
+      expect.That(t => t?.IdnHost == value, issue.Operator(value));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.LocalPath"/> property equals <paramref name="value"/>
@@ -1094,7 +1092,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<Uri> HasLocalPath(this Expect<Uri> expect, string value, Issue<Uri>? issue = null) =>
-      expect.That(t => t?.LocalPath == value, issue.ElseExpectedHas(nameof(Uri.LocalPath), value, t => t.LocalPath));
+      expect.That(t => t?.LocalPath == value, issue.Operator(value));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.OriginalString"/> property equals <paramref name="value"/>
@@ -1105,7 +1103,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<Uri> HasOriginalString(this Expect<Uri> expect, string value, Issue<Uri>? issue = null) =>
-      expect.That(t => t?.OriginalString == value, issue.ElseExpectedHas(nameof(Uri.OriginalString), value, t => t.OriginalString));
+      expect.That(t => t?.OriginalString == value, issue.Operator(value));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.PathAndQuery"/> property equals <paramref name="value"/>
@@ -1116,7 +1114,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<Uri> HasPathAndQuery(this Expect<Uri> expect, string value, Issue<Uri>? issue = null) =>
-      expect.That(t => t?.PathAndQuery == value, issue.ElseExpectedHas(nameof(Uri.PathAndQuery), value, t => t.PathAndQuery));
+      expect.That(t => t?.PathAndQuery == value, issue.Operator(value));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.Port"/> property equals <paramref name="value"/>
@@ -1127,7 +1125,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<Uri> HasPort(this Expect<Uri> expect, int value, Issue<Uri>? issue = null) =>
-      expect.That(t => t?.Port == value, issue.ElseExpectedHas(nameof(Uri.Port), value, t => t.Port));
+      expect.That(t => t?.Port == value, issue.Operator(value));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.Query"/> property equals <paramref name="value"/>
@@ -1138,7 +1136,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<Uri> HasQuery(this Expect<Uri> expect, string value, Issue<Uri>? issue = null) =>
-      expect.That(t => t?.Query == value, issue.ElseExpectedHas(nameof(Uri.Query), value, t => t.Query));
+      expect.That(t => t?.Query == value, issue.Operator(value));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.Scheme"/> property equals <paramref name="value"/>
@@ -1149,7 +1147,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<Uri> HasScheme(this Expect<Uri> expect, string value, Issue<Uri>? issue = null) =>
-      expect.That(t => t?.Scheme == value, issue.ElseExpectedHas(nameof(Uri.Scheme), value, t => t.Scheme));
+      expect.That(t => t?.Scheme == value, issue.Operator(value));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.Segments"/> property equals <paramref name="value"/>
@@ -1160,7 +1158,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<Uri> HasSegments(this Expect<Uri> expect, IEnumerable<string> value, Issue<Uri>? issue = null) =>
-      expect.That(t => ExpectMany.That(t.Segments).HasSameInOrder(value), issue.ElseExpected("has segments"));
+      expect.That(t => ExpectMany.That(t.Segments).HasSameInOrder(value), issue.Operator(value));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.UserInfo"/> property equals <paramref name="value"/>
@@ -1171,7 +1169,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<Uri> HasUserInfo(this Expect<Uri> expect, string value, Issue<Uri>? issue = null) =>
-      expect.That(t => t?.UserInfo == value, issue.ElseExpectedHas(nameof(Uri.UserInfo), value, t => t.UserInfo));
+      expect.That(t => t?.UserInfo == value, issue.Operator(value));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.IsAbsoluteUri"/> property equals <paramref name="value"/>
@@ -1182,7 +1180,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<Uri> IsAbsoluteUri(this Expect<Uri> expect, bool value, Issue<Uri>? issue = null) =>
-      expect.That(t => t?.IsAbsoluteUri == value, issue.ElseExpectedHas(nameof(Uri.IsAbsoluteUri), value, t => t.IsAbsoluteUri));
+      expect.That(t => t?.IsAbsoluteUri == value, issue.Operator(value));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.IsFile"/> property equals <paramref name="value"/>
@@ -1193,7 +1191,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<Uri> IsFile(this Expect<Uri> expect, bool value, Issue<Uri>? issue = null) =>
-      expect.That(t => t?.IsFile == value, issue.ElseExpectedHas(nameof(Uri.IsFile), value, t => t.IsFile));
+      expect.That(t => t?.IsFile == value, issue.Operator(value));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.IsUnc"/> property equals <paramref name="value"/>
@@ -1204,7 +1202,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<Uri> IsUnc(this Expect<Uri> expect, bool value, Issue<Uri>? issue = null) =>
-      expect.That(t => t?.IsUnc == value, issue.ElseExpectedHas(nameof(Uri.IsUnc), value, t => t.IsUnc));
+      expect.That(t => t?.IsUnc == value, issue.Operator(value));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.IsLoopback"/> property equals <paramref name="value"/>
@@ -1215,7 +1213,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<Uri> IsLoopback(this Expect<Uri> expect, bool value, Issue<Uri>? issue = null) =>
-      expect.That(t => t?.IsLoopback == value, issue.ElseExpectedHas(nameof(Uri.IsLoopback), value, t => t.IsLoopback));
+      expect.That(t => t?.IsLoopback == value, issue.Operator(value));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.UserEscaped"/> property equals <paramref name="value"/>
@@ -1226,7 +1224,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<Uri> IsUserEscaped(this Expect<Uri> expect, bool value, Issue<Uri>? issue = null) =>
-      expect.That(t => t?.UserEscaped == value, issue.ElseExpectedHas(nameof(Uri.UserEscaped), value, t => t.UserEscaped));
+      expect.That(t => t?.UserEscaped == value, issue.Operator(value));
 
     //
     // Uri (values)
@@ -1237,209 +1235,175 @@ namespace Green
     /// </summary>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="expectValue">The function to invoke with an expected argument</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static Expect<Uri> HasAbsolutePath(this Expect<Uri> expect, Action<Expect<string>> expectValue) =>
-      expect.That(t => t != null && expectValue.Invoke(t.AbsolutePath));
+    public static Expect<Uri> HasAbsolutePath(this Expect<Uri> expect, Action<Expect<string>> expectValue, Issue<Uri>? issue = null) =>
+      expect.That(t => t != null && expectValue.Invoke(t.AbsolutePath), issue.Operator(expectValue));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.AbsoluteUri"/> property to meet <paramref name="expectValue"/>
     /// </summary>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="expectValue">The function to invoke with an expected argument</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static Expect<Uri> HasAbsoluteUri(this Expect<Uri> expect, Action<Expect<string>> expectValue) =>
-      expect.That(t => t != null && expectValue.Invoke(t.AbsoluteUri));
+    public static Expect<Uri> HasAbsoluteUri(this Expect<Uri> expect, Action<Expect<string>> expectValue, Issue<Uri>? issue = null) =>
+      expect.That(t => t != null && expectValue.Invoke(t.AbsoluteUri), issue.Operator(expectValue));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.Authority"/> property to meet <paramref name="expectValue"/>
     /// </summary>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="expectValue">The function to invoke with an expected argument</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static Expect<Uri> HasAuthority(this Expect<Uri> expect, Action<Expect<string>> expectValue) =>
-      expect.That(t => t != null && expectValue.Invoke(t.Authority));
+    public static Expect<Uri> HasAuthority(this Expect<Uri> expect, Action<Expect<string>> expectValue, Issue<Uri>? issue = null) =>
+      expect.That(t => t != null && expectValue.Invoke(t.Authority), issue.Operator(expectValue));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.DnsSafeHost"/> property to meet <paramref name="expectValue"/>
     /// </summary>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="expectValue">The function to invoke with an expected argument</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static Expect<Uri> HasDnsSafeHost(this Expect<Uri> expect, Action<Expect<string>> expectValue) =>
-      expect.That(t => t != null && expectValue.Invoke(t.DnsSafeHost));
+    public static Expect<Uri> HasDnsSafeHost(this Expect<Uri> expect, Action<Expect<string>> expectValue, Issue<Uri>? issue = null) =>
+      expect.That(t => t != null && expectValue.Invoke(t.DnsSafeHost), issue.Operator(expectValue));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.Fragment"/> property to meet <paramref name="expectValue"/>
     /// </summary>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="expectValue">The function to invoke with an expected argument</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static Expect<Uri> HasFragment(this Expect<Uri> expect, Action<Expect<string>> expectValue) =>
-      expect.That(t => t != null && expectValue.Invoke(t.Fragment));
+    public static Expect<Uri> HasFragment(this Expect<Uri> expect, Action<Expect<string>> expectValue, Issue<Uri>? issue = null) =>
+      expect.That(t => t != null && expectValue.Invoke(t.Fragment), issue.Operator(expectValue));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.Host"/> property to meet <paramref name="expectValue"/>
     /// </summary>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="expectValue">The function to invoke with an expected argument</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static Expect<Uri> HasHost(this Expect<Uri> expect, Action<Expect<string>> expectValue) =>
-      expect.That(t => t != null && expectValue.Invoke(t.Host));
+    public static Expect<Uri> HasHost(this Expect<Uri> expect, Action<Expect<string>> expectValue, Issue<Uri>? issue = null) =>
+      expect.That(t => t != null && expectValue.Invoke(t.Host), issue.Operator(expectValue));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.HostNameType"/> property to meet <paramref name="expectValue"/>
     /// </summary>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="expectValue">The function to invoke with an expected argument</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static Expect<Uri> HasHostNameType(this Expect<Uri> expect, Action<Expect<UriHostNameType>> expectValue) =>
-      expect.That(t => t != null && expectValue.Invoke(t.HostNameType));
+    public static Expect<Uri> HasHostNameType(this Expect<Uri> expect, Action<Expect<UriHostNameType>> expectValue, Issue<Uri>? issue = null) =>
+      expect.That(t => t != null && expectValue.Invoke(t.HostNameType), issue.Operator(expectValue));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.IdnHost"/> property to meet <paramref name="expectValue"/>
     /// </summary>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="expectValue">The function to invoke with an expected argument</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static Expect<Uri> HasIdnHost(this Expect<Uri> expect, Action<Expect<string>> expectValue) =>
-      expect.That(t => t != null && expectValue.Invoke(t.IdnHost));
+    public static Expect<Uri> HasIdnHost(this Expect<Uri> expect, Action<Expect<string>> expectValue, Issue<Uri>? issue = null) =>
+      expect.That(t => t != null && expectValue.Invoke(t.IdnHost), issue.Operator(expectValue));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.LocalPath"/> property to meet <paramref name="expectValue"/>
     /// </summary>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="expectValue">The function to invoke with an expected argument</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static Expect<Uri> HasLocalPath(this Expect<Uri> expect, Action<Expect<string>> expectValue) =>
-      expect.That(t => t != null && expectValue.Invoke(t.LocalPath));
+    public static Expect<Uri> HasLocalPath(this Expect<Uri> expect, Action<Expect<string>> expectValue, Issue<Uri>? issue = null) =>
+      expect.That(t => t != null && expectValue.Invoke(t.LocalPath), issue.Operator(expectValue));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.OriginalString"/> property to meet <paramref name="expectValue"/>
     /// </summary>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="expectValue">The function to invoke with an expected argument</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static Expect<Uri> HasOriginalString(this Expect<Uri> expect, Action<Expect<string>> expectValue) =>
-      expect.That(t => t != null && expectValue.Invoke(t.OriginalString));
+    public static Expect<Uri> HasOriginalString(this Expect<Uri> expect, Action<Expect<string>> expectValue, Issue<Uri>? issue = null) =>
+      expect.That(t => t != null && expectValue.Invoke(t.OriginalString), issue.Operator(expectValue));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.PathAndQuery"/> property to meet <paramref name="expectValue"/>
     /// </summary>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="expectValue">The function to invoke with an expected argument</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static Expect<Uri> HasPathAndQuery(this Expect<Uri> expect, Action<Expect<string>> expectValue) =>
-      expect.That(t => t != null && expectValue.Invoke(t.PathAndQuery));
+    public static Expect<Uri> HasPathAndQuery(this Expect<Uri> expect, Action<Expect<string>> expectValue, Issue<Uri>? issue = null) =>
+      expect.That(t => t != null && expectValue.Invoke(t.PathAndQuery), issue.Operator(expectValue));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.Port"/> property to meet <paramref name="expectValue"/>
     /// </summary>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="expectValue">The function to invoke with an expected argument</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static Expect<Uri> HasPort(this Expect<Uri> expect, Action<Expect<int>> expectValue) =>
-      expect.That(t => t != null && expectValue.Invoke(t.Port));
+    public static Expect<Uri> HasPort(this Expect<Uri> expect, Action<Expect<int>> expectValue, Issue<Uri>? issue = null) =>
+      expect.That(t => t != null && expectValue.Invoke(t.Port), issue.Operator(expectValue));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.Query"/> property to meet <paramref name="expectValue"/>
     /// </summary>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="expectValue">The function to invoke with an expected argument</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static Expect<Uri> HasQuery(this Expect<Uri> expect, Action<Expect<string>> expectValue) =>
-      expect.That(t => t != null && expectValue.Invoke(t.Query));
+    public static Expect<Uri> HasQuery(this Expect<Uri> expect, Action<Expect<string>> expectValue, Issue<Uri>? issue = null) =>
+      expect.That(t => t != null && expectValue.Invoke(t.Query), issue.Operator(expectValue));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.Scheme"/> property to meet <paramref name="expectValue"/>
     /// </summary>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="expectValue">The function to invoke with an expected argument</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static Expect<Uri> HasScheme(this Expect<Uri> expect, Action<Expect<string>> expectValue) =>
-      expect.That(t => t != null && expectValue.Invoke(t.Scheme));
+    public static Expect<Uri> HasScheme(this Expect<Uri> expect, Action<Expect<string>> expectValue, Issue<Uri>? issue = null) =>
+      expect.That(t => t != null && expectValue.Invoke(t.Scheme), issue.Operator(expectValue));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.Segments"/> property to meet <paramref name="expectValue"/>
     /// </summary>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="expectValue">The function to invoke with an expected argument</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static Expect<Uri> HasSegments(this Expect<Uri> expect, Action<ExpectMany<string>> expectValue) =>
-      expect.That(t => t != null && expectValue.Invoke(t.Segments));
+    public static Expect<Uri> HasSegments(this Expect<Uri> expect, Action<ExpectMany<string>> expectValue, Issue<Uri>? issue = null) =>
+      expect.That(t => t != null && expectValue.Invoke(t.Segments), issue.Operator(expectValue));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.UserInfo"/> property to meet <paramref name="expectValue"/>
     /// </summary>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="expectValue">The function to invoke with an expected argument</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static Expect<Uri> HasUserInfo(this Expect<Uri> expect, Action<Expect<string>> expectValue) =>
-      expect.That(t => t != null && expectValue.Invoke(t.UserInfo));
-
-    /// <summary>
-    /// Expects the target's <see cref="Uri.IsAbsoluteUri"/> property to meet <paramref name="expectValue"/>
-    /// </summary>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="expectValue">The function to invoke with an expected argument</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static Expect<Uri> IsAbsoluteUri(this Expect<Uri> expect, Action<Expect<bool>> expectValue) =>
-      expect.That(t => t != null && expectValue.Invoke(t.IsAbsoluteUri));
-
-    /// <summary>
-    /// Expects the target's <see cref="Uri.IsFile"/> property to meet <paramref name="expectValue"/>
-    /// </summary>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="expectValue">The function to invoke with an expected argument</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static Expect<Uri> IsFile(this Expect<Uri> expect, Action<Expect<bool>> expectValue) =>
-      expect.That(t => t != null && expectValue.Invoke(t.IsFile));
-
-    /// <summary>
-    /// Expects the target's <see cref="Uri.IsUnc"/> property to meet <paramref name="expectValue"/>
-    /// </summary>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="expectValue">The function to invoke with an expected argument</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static Expect<Uri> IsUnc(this Expect<Uri> expect, Action<Expect<bool>> expectValue) =>
-      expect.That(t => t != null && expectValue.Invoke(t.IsUnc));
-
-    /// <summary>
-    /// Expects the target's <see cref="Uri.IsLoopback"/> property to meet <paramref name="expectValue"/>
-    /// </summary>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="expectValue">The function to invoke with an expected argument</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static Expect<Uri> IsLoopback(this Expect<Uri> expect, Action<Expect<bool>> expectValue) =>
-      expect.That(t => t != null && expectValue.Invoke(t.IsLoopback));
-
-    /// <summary>
-    /// Expects the target's <see cref="Uri.UserEscaped"/> property to meet <paramref name="expectValue"/>
-    /// </summary>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="expectValue">The function to invoke with an expected argument</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static Expect<Uri> IsUserEscaped(this Expect<Uri> expect, Action<Expect<bool>> expectValue) =>
-      expect.That(t => t != null && expectValue.Invoke(t.UserEscaped));
+    public static Expect<Uri> HasUserInfo(this Expect<Uri> expect, Action<Expect<string>> expectValue, Issue<Uri>? issue = null) =>
+      expect.That(t => t != null && expectValue.Invoke(t.UserInfo), issue.Operator(expectValue));
   }
 }

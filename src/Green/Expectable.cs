@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Green.Messages;
-using static Green.Messages.Local;
 
 namespace Green
 {
@@ -19,7 +17,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<bool> IsTrue(this Expect<bool> expect, Issue<bool>? issue = null) =>
-      expect.That(t => t, issue.ElseExpected("true", received: "false"));
+      expect.That(t => t, issue.Operator());
 
     /// <summary>
     /// Expects the target is <see langword="false"/>
@@ -29,7 +27,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<bool> IsFalse(this Expect<bool> expect, Issue<bool>? issue = null) =>
-      expect.Not(t => t, issue.ElseExpected("false", received: "true"));
+      expect.That(t => !t, issue.Operator());
 
     //
     // Null
@@ -43,7 +41,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<T> IsNull<T>(this Expect<T> expect, Issue<T>? issue = null) where T : class =>
-      expect.That(t => t == null, issue.ElseExpected(NullText));
+      expect.That(t => t == null, issue.Operator());
 
     /// <summary>
     /// Expects the target is <see langword="null"/>
@@ -53,7 +51,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<T?> IsNull<T>(this Expect<T?> expect, Issue<T?>? issue = null) where T : struct =>
-      expect.That(t => t == null, issue.ElseExpected(NullText));
+      expect.That(t => t == null, issue.Operator());
 
     /// <summary>
     /// Expects the target is not <see langword="null"/>
@@ -63,7 +61,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<T> IsNotNull<T>(this Expect<T> expect, Issue<T>? issue = null) where T : class =>
-      expect.Not(t => t == null, issue.ElseExpected($"not {NullText}", received: NullText));
+      expect.That(t => t != null, issue.Operator());
 
     /// <summary>
     /// Expects the target is not <see langword="null"/>
@@ -73,7 +71,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<T?> IsNotNull<T>(this Expect<T?> expect, Issue<T?>? issue = null) where T : struct =>
-      expect.Not(t => t == null, issue.ElseExpected($"not {NullText}", received: NullText));
+      expect.That(t => t != null, issue.Operator());
 
     //
     // Comparisons
@@ -90,7 +88,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<T> Is<T>(this Expect<T> expect, T value, IEqualityComparer<T> comparer, Issue<T>? issue = null) =>
-      expect.That(t => Equals(t, value, comparer), issue.ElseExpected($"{Text(value)}{comparer.ToSuffix()}"));
+      expect.That(t => Equals(t, value, comparer), issue.Operator(value, comparer));
 
     /// <summary>
     /// Expects the target does not equal <paramref name="value"/> using <paramref name="comparer"/>
@@ -103,7 +101,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<T> IsNot<T>(this Expect<T> expect, T value, IEqualityComparer<T> comparer, Issue<T>? issue = null) =>
-      expect.Not(t => Equals(t, value, comparer), issue.ElseExpected($"not {Text(value)}{comparer.ToSuffix()}"));
+      expect.That(t => !Equals(t, value, comparer), issue.Operator(value, comparer));
 
     /// <summary>
     /// Expects the target is less than <paramref name="value"/> using <paramref name="comparer"/>
@@ -116,7 +114,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<T> IsLessThan<T>(this Expect<T> expect, T value, IComparer<T> comparer, Issue<T>? issue = null) =>
-      expect.That(t => Compare(t, value, comparer) < 0, issue.ElseExpected($"less than {Text(value)}{comparer.ToSuffix()}"));
+      expect.That(t => Compare(t, value, comparer) < 0, issue.Operator(value, comparer));
 
     /// <summary>
     /// Expects the target is greater than <paramref name="value"/> using <paramref name="comparer"/>
@@ -129,7 +127,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<T> IsGreaterThan<T>(this Expect<T> expect, T value, IComparer<T> comparer, Issue<T>? issue = null) =>
-      expect.That(t => Compare(t, value, comparer) > 0, issue.ElseExpected($"greater than {Text(value)}{comparer.ToSuffix()}"));
+      expect.That(t => Compare(t, value, comparer) > 0, issue.Operator(value, comparer));
 
     /// <summary>
     /// Expects the target is at least <paramref name="minimum"/> using <paramref name="comparer"/>
@@ -142,7 +140,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<T> IsAtLeast<T>(this Expect<T> expect, T minimum, IComparer<T> comparer, Issue<T>? issue = null) =>
-      expect.That(t => Compare(t, minimum, comparer) >= 0, issue.ElseExpected($"at least {Text(minimum)}{comparer.ToSuffix()}"));
+      expect.That(t => Compare(t, minimum, comparer) >= 0, issue.Operator(minimum, comparer));
 
     /// <summary>
     /// Expects the target is at most <paramref name="maximum"/> using <paramref name="comparer"/>
@@ -155,7 +153,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<T> IsAtMost<T>(this Expect<T> expect, T maximum, IComparer<T> comparer, Issue<T>? issue = null) =>
-      expect.That(t => Compare(t, maximum, comparer) <= 0, issue.ElseExpected($"at most {Text(maximum)}{comparer.ToSuffix()}"));
+      expect.That(t => Compare(t, maximum, comparer) <= 0, issue.Operator(maximum, comparer));
 
     /// <summary>
     /// Expects the target is at least <paramref name="minimum"/> and at most <paramref name="maximum"/> using <paramref name="comparer"/>
@@ -169,14 +167,12 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<T> IsInRange<T>(this Expect<T> expect, T minimum, T maximum, IComparer<T> comparer, Issue<T>? issue = null) =>
-      expect.That(
-        t => Compare(t, minimum, comparer) >= 0 && Compare(t, maximum, comparer) <= 0,
-        issue.ElseExpected($"in range {Text(minimum)}-{Text(maximum)}{comparer.ToSuffix()}"));
+      expect.That(t => Compare(t, minimum, comparer) >= 0 && Compare(t, maximum, comparer) <= 0, issue.Operator(minimum, maximum, comparer));
 
-    static bool Equals<T>(T target, T value, IEqualityComparer<T> comparer) =>
+    static bool Equals<T>(T target, T value, IEqualityComparer<T>? comparer = null) =>
       (comparer ?? EqualityComparer<T>.Default).Equals(target, value);
 
-    static int Compare<T>(T target, T value, IComparer<T> comparer) =>
+    static int Compare<T>(T target, T value, IComparer<T>? comparer = null) =>
       (comparer ?? Comparer<T>.Default).Compare(target, value);
 
     //
@@ -193,7 +189,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<T> Is<T>(this Expect<T> expect, T value, Issue<T>? issue = null) =>
-      expect.Is(value, EqualityComparer<T>.Default, issue);
+      expect.That(t => Equals(t, value), issue.Operator(value));
 
     /// <summary>
     /// Expects the target does not equal <paramref name="value"/> using <see cref="EqualityComparer{T}.Default"/>
@@ -205,7 +201,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<T> IsNot<T>(this Expect<T> expect, T value, Issue<T>? issue = null) =>
-      expect.Is(value, EqualityComparer<T>.Default, issue);
+      expect.That(t => !Equals(t, value), issue.Operator(value));
 
     /// <summary>
     /// Expects the target is less then <paramref name="value"/> using <see cref="EqualityComparer{T}.Default"/>
@@ -217,7 +213,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<T> IsLessThan<T>(this Expect<T> expect, T value, Issue<T>? issue = null) =>
-      expect.IsLessThan(value, Comparer<T>.Default, issue);
+      expect.That(t => Compare(t, value) < 0, issue.Operator(value));
 
     /// <summary>
     /// Expects the target is greater than <paramref name="value"/> using <see cref="EqualityComparer{T}.Default"/>
@@ -229,7 +225,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<T> IsGreaterThan<T>(this Expect<T> expect, T value, Issue<T>? issue = null) =>
-      expect.IsGreaterThan(value, Comparer<T>.Default, issue);
+      expect.That(t => Compare(t, value) > 0, issue.Operator(value));
 
     /// <summary>
     /// Expects the target is at least <paramref name="minimum"/> using <see cref="EqualityComparer{T}.Default"/>
@@ -241,7 +237,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<T> IsAtLeast<T>(this Expect<T> expect, T minimum, Issue<T>? issue = null) =>
-      expect.IsAtLeast(minimum, Comparer<T>.Default, issue);
+      expect.That(t => Compare(t, minimum) >= 0, issue.Operator(minimum));
 
     /// <summary>
     /// Expects the target is at most <paramref name="maximum"/> using <see cref="EqualityComparer{T}.Default"/>
@@ -253,7 +249,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<T> IsAtMost<T>(this Expect<T> expect, T maximum, Issue<T>? issue = null) =>
-      expect.IsAtMost(maximum, Comparer<T>.Default, issue);
+      expect.That(t => Compare(t, maximum) <= 0, issue.Operator(maximum));
 
     /// <summary>
     /// Expects the target is at least <paramref name="minimum"/> and at most <paramref name="maximum"/> using <see cref="EqualityComparer{T}.Default"/>
@@ -266,7 +262,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<T> IsInRange<T>(this Expect<T> expect, T minimum, T maximum, Issue<T>? issue = null) =>
-      expect.IsInRange(minimum, maximum, Comparer<T>.Default, issue);
+      expect.That(t => Compare(t, minimum) >= 0 && Compare(t, maximum) <= 0, issue.Operator(minimum, maximum));
 
     //
     // In
@@ -283,7 +279,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<T> IsIn<T>(this Expect<T> expect, IEnumerable<T> values, IEqualityComparer<T> comparer, Issue<T>? issue = null) =>
-      expect.That(t => values != null && values.Contains(t, comparer), issue.ElseExpected($"in {TextMany(values)}{comparer.ToSuffix()}"));
+      expect.That(t => values != null && values.Contains(t, comparer), issue.Operator(values, comparer));
 
     /// <summary>
     /// Expects <paramref name="values"/> contains the target using <see cref="EqualityComparer{T}.Default"/>
@@ -360,7 +356,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<T> IsNotIn<T>(this Expect<T> expect, IEnumerable<T> values, IEqualityComparer<T> comparer, Issue<T>? issue = null) =>
-      expect.That(t => values != null && values.Contains(t, comparer), issue.ElseExpected($"not in {TextMany(values)}{comparer.ToSuffix()}"));
+      expect.That(t => values != null && values.Contains(t, comparer), issue.Operator(values, comparer));
 
     /// <summary>
     /// Expects <paramref name="values"/> does not contain the target using <see cref="EqualityComparer{T}.Default"/>
@@ -435,7 +431,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<Type> IsAssignableFrom(this Expect<Type> expect, Type type, Issue<Type>? issue = null) =>
-      expect.That(t => t != null && type != null && t.IsAssignableFrom(type), issue.ElseExpected($"assignable from {type}"));
+      expect.That(t => t != null && type != null && t.IsAssignableFrom(type), issue.Operator(type));
 
     /// <summary>
     /// Expects the target type is assignable to <paramref name="type"/>, that is, if it can appear on the right-hand side of an assignment with <paramref name="type"/> on the left
@@ -446,7 +442,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<Type> IsAssignableTo(this Expect<Type> expect, Type type, Issue<Type>? issue = null) =>
-      expect.That(t => t != null && type != null && type.IsAssignableFrom(t), issue.ElseExpected($"assignable to {type}"));
+      expect.That(t => t != null && type != null && type.IsAssignableFrom(t), issue.Operator(type));
 
     /// <summary>
     /// Expects the target type is assignable to <typeparamref name="T"/>, that is, if it can appear on the right-hand side of an assignment with <typeparamref name="T"/> on the left
@@ -477,20 +473,5 @@ namespace Green
 
       return true;
     }
-
-    static string? ToSuffix<T>(this IComparer<T> comparer) =>
-      comparer == null ? null : $" (comparer = {comparer})";
-
-    static string? ToSuffix<T>(this IEqualityComparer<T> comparer) =>
-      comparer == null ? null : $" (comparer = {comparer})";
-
-    static string? ToKeySuffix<T>(this IEqualityComparer<T> comparer) =>
-      comparer == null ? null : $" (key comparer = {comparer})";
-
-    static string? ToValueSuffix<T>(this IEqualityComparer<T> comparer) =>
-      comparer == null ? null : $" (value comparer = {comparer})";
-
-    static string? ToSuffix(this StringComparison comparison) =>
-      $" (comparison = {comparison})";
   }
 }

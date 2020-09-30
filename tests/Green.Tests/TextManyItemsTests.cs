@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace Green.Messages
+namespace Green
 {
   public class TextManyItemsTests
   {

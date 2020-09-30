@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Xunit;
 
-namespace Green.Messages
+namespace Green
 {
   public class TextManyPairsTests
   {

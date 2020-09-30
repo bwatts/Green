@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using Green.Messages;
 
 namespace Green
 {
@@ -31,83 +30,57 @@ namespace Green
     /// Throws <see cref="ExpectException"/> if <paramref name="target"/> does not throw <typeparamref name="TException"/>
     /// </summary>
     /// <typeparam name="TException">The type of exception to expect</typeparam>
-    /// <param name="target">The action expected to throw <typeparamref name="TException"/></param>
+    /// <param name="target">The action that is expected to throw <typeparamref name="TException"/></param>
     /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <exception cref="ExpectException">Thrown if <paramref name="target"/> does not throw <typeparamref name="TException"/></exception>
     public static void Throws<TException>(Action target, Issue<Action>? issue = null) where TException : Exception
     {
       try
       {
-        target?.Invoke();
+        target.Invoke();
       }
       catch(TException)
       {
         return;
       }
-      catch(Exception exception)
+      catch(Exception inner)
       {
-        issue = issue.ElseExpected($"Exception of type {typeof(TException)}", received: exception.GetType().ToString());
-
-        throw new ExpectException(issue(target), exception);
+        throw issue.ToThrowsException(target, typeof(TException), inner);
       }
 
-      issue = issue.ElseExpected($"Exception of type {typeof(TException)}", received: "no exception");
-
-      throw new ExpectException(issue(target!));
+      throw issue.ToThrowsException(target, typeof(TException));
     }
 
     /// <summary>
     /// Throws <see cref="ExpectException"/> if <paramref name="target"/> does not throw <typeparamref name="TException"/>
     /// </summary>
     /// <typeparam name="TException">The type of exception to expect</typeparam>
-    /// <param name="target">The function expected to throw <typeparamref name="TException"/></param>
+    /// <param name="target">The function that is expected to throw <typeparamref name="TException"/></param>
     /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <exception cref="ExpectException">Thrown if <paramref name="target"/> does not throw <typeparamref name="TException"/></exception>
     public static void Throws<TException>(Func<object> target, Issue<Func<object>>? issue = null) where TException : Exception
     {
       try
       {
-        target?.Invoke();
+        target.Invoke();
       }
       catch(TException)
       {
         return;
       }
-      catch(Exception exception)
+      catch(Exception inner)
       {
-        issue = issue.ElseExpected($"Exception of type {typeof(TException)}", received: exception.GetType().ToString());
-
-        throw new ExpectException(issue(target), exception);
+        throw issue.ToThrowsException(target, typeof(TException), inner);
       }
 
-      issue = issue.ElseExpected($"Exception of type {typeof(TException)}", received: "no exception");
-
-      throw new ExpectException(issue(target!));
+      throw issue.ToThrowsException(target, typeof(TException));
     }
-
-    /// <summary>
-    /// Throws <see cref="ExpectException"/> if <paramref name="target"/> does not throw an exception
-    /// </summary>
-    /// <param name="target">The action expected to throw an exception</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <exception cref="ExpectException">Thrown if <paramref name="target"/> does not throw an exception</exception>
-    public static void Throws(Action target, Issue<Action>? issue = null) =>
-      Throws<Exception>(target, issue);
-
-    /// <summary>
-    /// Throws <see cref="ExpectException"/> if <paramref name="target"/> does not throw an exception
-    /// </summary>
-    /// <param name="target">The function expected to throw an exception</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <exception cref="ExpectException">Thrown if <paramref name="target"/> does not throw an exception</exception>
-    public static void Throws(Func<object> target, Issue<Func<object>>? issue = null) =>
-      Throws<Exception>(target, issue);
 
     /// <summary>
     /// Throws <see cref="ExpectException"/> if <paramref name="target"/> does not throw <typeparamref name="TException"/>
     /// </summary>
     /// <typeparam name="TException">The type of exception to expect</typeparam>
-    /// <param name="target">The function expected to throw <typeparamref name="TException"/></param>
+    /// <param name="target">The function that is expected to throw <typeparamref name="TException"/></param>
     /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <exception cref="ExpectException">Thrown if <paramref name="target"/> does not throw <typeparamref name="TException"/></exception>
     /// <returns>An asynchronous invocation of <paramref name="target"/></returns>
@@ -121,22 +94,36 @@ namespace Green
       {
         return;
       }
-      catch(Exception exception)
+      catch(Exception inner)
       {
-        issue = issue.ElseExpected($"Exception of type {typeof(TException)}", received: exception.GetType().ToString());
-
-        throw new ExpectException(issue(target), exception);
+        throw issue.ToThrowsException(target, typeof(TException), inner);
       }
 
-      issue = issue.ElseExpected($"Exception of type {typeof(TException)}", received: "no exception");
-
-      throw new ExpectException(issue(target!));
+      throw issue.ToThrowsException(target, typeof(TException));
     }
 
     /// <summary>
     /// Throws <see cref="ExpectException"/> if <paramref name="target"/> does not throw an exception
     /// </summary>
-    /// <param name="target">The function expected to throw an exception</param>
+    /// <param name="target">The action that is expected to throw an exception</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <exception cref="ExpectException">Thrown if <paramref name="target"/> does not throw an exception</exception>
+    public static void Throws(Action target, Issue<Action>? issue = null) =>
+      Throws<Exception>(target, issue);
+
+    /// <summary>
+    /// Throws <see cref="ExpectException"/> if <paramref name="target"/> does not throw an exception
+    /// </summary>
+    /// <param name="target">The function that is expected to throw an exception</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <exception cref="ExpectException">Thrown if <paramref name="target"/> does not throw an exception</exception>
+    public static void Throws(Func<object> target, Issue<Func<object>>? issue = null) =>
+      Throws<Exception>(target, issue);
+
+    /// <summary>
+    /// Throws <see cref="ExpectException"/> if <paramref name="target"/> does not throw an exception
+    /// </summary>
+    /// <param name="target">The function that is expected to throw an exception</param>
     /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <exception cref="ExpectException">Thrown if <paramref name="target"/> does not throw an exception</exception>
     /// <returns>An asynchronous invocation of <paramref name="target"/></returns>
@@ -170,20 +157,7 @@ namespace Green
     /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if <paramref name="check"/> returns <see langword="false"/></exception>
-    public Expect<T> That(Func<T, bool> check, Issue<T>? issue = null) =>
-      Is(true, check, issue);
-
-    /// <summary>
-    /// Throws <see cref="ExpectException"/> if <paramref name="check"/> returns <see langword="true"/>
-    /// </summary>
-    /// <param name="check">The function to apply to the target value</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if <paramref name="check"/> returns <see langword="false"/></exception>
-    public Expect<T> Not(Func<T, bool> check, Issue<T>? issue = null) =>
-      Is(false, check, issue);
-
-    Expect<T> Is(bool expectedCheckResult, Func<T, bool> check, Issue<T>? issue)
+    public Expect<T> That(Func<T, bool> check, Issue<T>? issue = null)
     {
       if(check != null)
       {
@@ -191,16 +165,16 @@ namespace Green
 
         try
         {
-          result = check(Target) == expectedCheckResult;
+          result = check(Target);
         }
-        catch(ExpectException error)
+        catch(Exception inner)
         {
-          issue.Throw(Target, error);
+          throw issue.ToException(Target, _expectedResult, inner);
         }
 
         if(result != _expectedResult)
         {
-          issue.Throw(Target);
+          throw issue.ToException(Target, _expectedResult);
         }
       }
 
@@ -208,13 +182,13 @@ namespace Green
     }
 
     /// <summary>
-    /// Returns <see langword="true"/> to enable further expectations
+    /// Returns <see langword="true"/> to enable further expectations in expressions
     /// </summary>
     public static implicit operator bool(Expect<T> _) =>
       true;
 
     /// <summary>
-    /// Returns <see langword="true"/> to enable further expectations
+    /// Returns <see langword="true"/> to enable further expectations in expressions
     /// </summary>
     public static implicit operator bool?(Expect<T> _) =>
       true;

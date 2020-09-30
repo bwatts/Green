@@ -2,7 +2,7 @@ using System;
 using System.Globalization;
 using Xunit;
 
-namespace Green.Messages
+namespace Green
 {
   public class TextValueTests
   {
@@ -115,19 +115,6 @@ namespace Green.Messages
     }
 
     [Fact]
-    public void Converts_ToText()
-    {
-      // Arrange
-      var text = Text.Of(0);
-
-      // Act
-      Text result = text;
-
-      // Assert
-      Assert.Equal("0", result.ToString());
-    }
-
-    [Fact]
     public void Converts_ToString()
     {
       // Arrange
@@ -146,10 +133,10 @@ namespace Green.Messages
 
     class FakeFormattable : IFormattable
     {
-      internal string Format;
-      internal IFormatProvider Provider;
+      internal string? Format;
+      internal IFormatProvider? Provider;
 
-      public string ToString(string format, IFormatProvider formatProvider)
+      public string ToString(string? format, IFormatProvider? formatProvider)
       {
         Format = format;
         Provider = formatProvider;
