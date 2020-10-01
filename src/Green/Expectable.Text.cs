@@ -1158,7 +1158,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static Expect<Uri> HasSegments(this Expect<Uri> expect, IEnumerable<string> value, Issue<Uri>? issue = null) =>
-      expect.That(t => ExpectMany.That(t.Segments).HasSameInOrder(value), issue.Operator(value));
+      expect.That(t => Expect.Many(t.Segments).HasSameInOrder(value), issue.Operator(value));
 
     /// <summary>
     /// Expects the target's <see cref="Uri.UserInfo"/> property equals <paramref name="value"/>

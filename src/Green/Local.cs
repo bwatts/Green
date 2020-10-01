@@ -45,7 +45,7 @@ namespace Green
     /// <param name="target">The sequence to which the check applies</param>
     /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
     public static CheckMany<T> CheckMany<T>(IEnumerable<T> target) =>
-      Green.CheckMany.That(target);
+      Green.Check.Many(target);
 
     /// <summary>
     /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
@@ -55,7 +55,7 @@ namespace Green
     /// <param name="target">The sequence to which the check applies</param>
     /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
     public static CheckMany<T> CheckManyNot<T>(IEnumerable<T> target) =>
-      Green.CheckMany.Not(target);
+      Green.Check.ManyNot(target);
 
     /// <summary>
     /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
@@ -66,7 +66,7 @@ namespace Green
     /// <param name="target">The dictionary to which the check applies</param>
     /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
     public static CheckMany<TKey, TValue> CheckMany<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> target) =>
-      Green.CheckMany.That(target);
+      Green.Check.Many(target);
 
     /// <summary>
     /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
@@ -77,7 +77,7 @@ namespace Green
     /// <param name="target">The dictionary to which the check applies</param>
     /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
     public static CheckMany<TKey, TValue> CheckManyNot<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> target) =>
-      Green.CheckMany.Not(target);
+      Green.Check.ManyNot(target);
 
     //
     // Expect
@@ -111,7 +111,7 @@ namespace Green
     /// <param name="target">The expected sequence</param>
     /// <returns>An expectation applied to <paramref name="target"/></returns>
     public static ExpectMany<T> ExpectMany<T>(IEnumerable<T> target) =>
-      Green.ExpectMany.That(target);
+      Green.Expect.Many(target);
 
     /// <summary>
     /// Starts a query of <paramref name="target"/> that throws <see cref="ExpectException"/> if any subseqeuent
@@ -121,7 +121,7 @@ namespace Green
     /// <param name="target">The expected sequence</param>
     /// <returns>An expectation applied to <paramref name="target"/></returns>
     public static ExpectMany<T> ExpectManyNot<T>(IEnumerable<T> target) =>
-      Green.ExpectMany.Not(target);
+      Green.Expect.ManyNot(target);
 
     /// <summary>
     /// Starts a query of <paramref name="target"/> that throws <see cref="ExpectException"/> if any subseqeuent
@@ -132,7 +132,7 @@ namespace Green
     /// <param name="target">The expected dictionary</param>
     /// <returns>An expectation applied to <paramref name="target"/></returns>
     public static ExpectMany<TKey, TValue> ExpectMany<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> target) =>
-      Green.ExpectMany.That(target);
+      Green.Expect.Many(target);
 
     /// <summary>
     /// Starts a query of <paramref name="target"/> that throws <see cref="ExpectException"/> if any subseqeuent
@@ -143,7 +143,7 @@ namespace Green
     /// <param name="target">The expected dictionary</param>
     /// <returns>An expectation applied to <paramref name="target"/></returns>
     public static ExpectMany<TKey, TValue> ExpectManyNot<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> target) =>
-      Green.ExpectMany.Not(target);
+      Green.Expect.ManyNot(target);
 
     //
     // Throws

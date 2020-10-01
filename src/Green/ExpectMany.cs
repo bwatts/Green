@@ -4,46 +4,6 @@ using System.Collections.Generic;
 namespace Green
 {
   /// <summary>
-  /// Applies queries to target sequences that throw <see cref="ExpectException"/> if not met
-  /// </summary>
-  public static class ExpectMany
-  {
-    /// <summary>
-    /// Starts a query of <paramref name="target"/> that throws <see cref="ExpectException"/> if any subseqeuent operator returns <see langword="false"/>
-    /// </summary>
-    /// <typeparam name="T">The type of expected sequence</typeparam>
-    /// <param name="target">The expected sequence</param>
-    /// <returns>An expectation applied to <paramref name="target"/></returns>
-    public static ExpectMany<T> That<T>(IEnumerable<T> target) => new ExpectMany<T>(target, true);
-
-    /// <summary>
-    /// Starts a query of <paramref name="target"/> that throws <see cref="ExpectException"/> if any subseqeuent operator returns <see langword="true"/>
-    /// </summary>
-    /// <typeparam name="T">The type of expected sequence</typeparam>
-    /// <param name="target">The expected sequence</param>
-    /// <returns>An expectation applied to <paramref name="target"/></returns>
-    public static ExpectMany<T> Not<T>(IEnumerable<T> target) => new ExpectMany<T>(target, false);
-
-    /// <summary>
-    /// Starts a query of <paramref name="target"/> that throws <see cref="ExpectException"/> if any subseqeuent operator returns <see langword="false"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the expected dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the expected dictionary</typeparam>
-    /// <param name="target">The expected dictionary</param>
-    /// <returns>An expectation applied to <paramref name="target"/></returns>
-    public static ExpectMany<TKey, TValue> That<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> target) => new ExpectMany<TKey, TValue>(target, true);
-
-    /// <summary>
-    /// Starts a query of <paramref name="target"/> that throws <see cref="ExpectException"/> if any subseqeuent operator returns <see langword="true"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the expected dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the expected dictionary</typeparam>
-    /// <param name="target">The expected dictionary</param>
-    /// <returns>An expectation applied to <paramref name="target"/></returns>
-    public static ExpectMany<TKey, TValue> Not<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> target) => new ExpectMany<TKey, TValue>(target, false);
-  }
-
-  /// <summary>
   /// A query targeting a sequence with items of type <typeparamref name="T"/> that throws <see cref="ExpectException"/> if not met
   /// </summary>
   /// <typeparam name="T">The type of items in the target sequence</typeparam>

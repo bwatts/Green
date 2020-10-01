@@ -271,7 +271,7 @@ namespace Green
       // Act
       try
       {
-        ExpectMany.That(_targetItems).Test();
+        Expect.Many(_targetItems).Test();
       }
       catch(Exception x)
       {
@@ -294,7 +294,7 @@ namespace Green
       // Act
       try
       {
-        ExpectMany.That(_targetItems).TestWithArg(2);
+        Expect.Many(_targetItems).TestWithArg(2);
       }
       catch(Exception x)
       {
@@ -317,7 +317,7 @@ namespace Green
       // Act
       try
       {
-        ExpectMany.That(_targetItems).TestWithArgs(10, 20);
+        Expect.Many(_targetItems).TestWithArgs(10, 20);
       }
       catch(Exception x)
       {
@@ -344,7 +344,7 @@ namespace Green
       // Act
       try
       {
-        ExpectMany.That(_targetPairs).Test();
+        Expect.Many(_targetPairs).Test();
       }
       catch(Exception x)
       {
@@ -370,7 +370,7 @@ namespace Green
       // Act
       try
       {
-        ExpectMany.That(_targetPairs).TestWithArg(2);
+        Expect.Many(_targetPairs).TestWithArg(2);
       }
       catch(Exception x)
       {
@@ -396,7 +396,7 @@ namespace Green
       // Act
       try
       {
-        ExpectMany.That(_targetPairs).TestWithArgs(10, 20);
+        Expect.Many(_targetPairs).TestWithArgs(10, 20);
       }
       catch(Exception x)
       {

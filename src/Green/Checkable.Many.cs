@@ -1930,7 +1930,7 @@ namespace Green
     /// <param name="target">The value of the checked argument</param>
     /// <returns>The result of calling <paramref name="checkPairs"/> with a checked argument</returns>
     public static bool Invoke<T>(this Func<CheckMany<T>, bool> checkPairs, IEnumerable<T> target) =>
-      checkPairs != null && checkPairs(CheckMany.That(target));
+      checkPairs != null && checkPairs(Check.Many(target));
 
     /// <summary>
     /// Calls the specified function with a <see cref="CheckMany{TKey, TValue}"/> referencing <paramref name="target"/>
@@ -1941,7 +1941,7 @@ namespace Green
     /// <param name="target">The value of the checked argument</param>
     /// <returns>The result of calling <paramref name="checkPairs"/> with a checked argument</returns>
     public static bool Invoke<TKey, TValue>(this Func<CheckMany<TKey, TValue>, bool> checkPairs, IEnumerable<KeyValuePair<TKey, TValue>> target) =>
-      checkPairs != null && checkPairs(CheckMany.That(target));
+      checkPairs != null && checkPairs(Check.Many(target));
 
     /// <summary>
     /// Calls the specified function with a <see cref="Check{TKey}"/> referencing <paramref name="target"/>.Key and

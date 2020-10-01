@@ -884,7 +884,7 @@ namespace Green
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<Uri> HasSegments(this Check<Uri> check, string[] value) =>
-      check.That(t => CheckMany.That(t.Segments).HasSameInOrder(value));
+      check.That(t => Check.Many(t.Segments).HasSameInOrder(value));
 
     /// <summary>
     /// Checks if the target's <see cref="Uri.UserInfo"/> property equals <paramref name="value"/>

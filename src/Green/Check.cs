@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Green
 {
@@ -27,12 +28,74 @@ namespace Green
     public static Check<T> Not<T>(T target) =>
       new Check<T>(target, false);
 
+    /// <summary>
+    /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
+    /// <see langword="true"/> if all subsequent operators return <see langword="true"/>
+    /// </summary>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
+    /// <param name="target">The sequence to which the check applies</param>
+    /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
+    public static CheckMany<T> Many<T>(IEnumerable<T> target) =>
+      new CheckMany<T>(target, true);
+
+    /// <summary>
+    /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
+    /// <see langword="true"/> if all subsequent operators return <see langword="false"/>
+    /// </summary>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
+    /// <param name="target">The sequence to which the check applies</param>
+    /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
+    public static CheckMany<T> ManyNot<T>(IEnumerable<T> target) =>
+      new CheckMany<T>(target, false);
+
+    /// <summary>
+    /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
+    /// <see langword="true"/> if all subsequent operators return <see langword="true"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="target">The dictionary to which the check applies</param>
+    /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
+    public static CheckMany<TKey, TValue> Many<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> target) =>
+      new CheckMany<TKey, TValue>(target, true);
+
+    /// <summary>
+    /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
+    /// <see langword="true"/> if all subsequent operators are <see langword="false"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="target">The dictionary to which the check applies</param>
+    /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
+    public static CheckMany<TKey, TValue> ManyNot<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> target) =>
+      new CheckMany<TKey, TValue>(target, false);
+
     internal interface ICheck<T>
     {
       T Target { get; }
 
       Check<T> That(Func<T, bool> next);
       Check<T> Not(Func<T, bool> next);
+
+      bool Apply();
+    }
+
+    internal interface ICheckMany<T>
+    {
+      IEnumerable<T> Target { get; }
+
+      CheckMany<T> That(Func<IEnumerable<T>, bool> next);
+      CheckMany<T> Not(Func<IEnumerable<T>, bool> next);
+
+      bool Apply();
+    }
+
+    internal interface ICheckMany<TKey, TValue>
+    {
+      IEnumerable<KeyValuePair<TKey, TValue>> Target { get; }
+
+      CheckMany<TKey, TValue> That(Func<IEnumerable<KeyValuePair<TKey, TValue>>, bool> next);
+      CheckMany<TKey, TValue> Not(Func<IEnumerable<KeyValuePair<TKey, TValue>>, bool> next);
 
       bool Apply();
     }

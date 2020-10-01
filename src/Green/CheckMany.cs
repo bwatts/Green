@@ -4,82 +4,14 @@ using System.Collections.Generic;
 namespace Green
 {
   /// <summary>
-  /// Applies <see langword="bool"/>-valued queries to target sequences and dictionaries
-  /// </summary>
-  public static class CheckMany
-  {
-    /// <summary>
-    /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
-    /// <see langword="true"/> if all subsequent operators return <see langword="true"/>
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="target">The sequence to which the check applies</param>
-    /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
-    public static CheckMany<T> That<T>(IEnumerable<T> target) =>
-      new CheckMany<T>(target, true);
-
-    /// <summary>
-    /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
-    /// <see langword="true"/> if all subsequent operators return <see langword="false"/>
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="target">The sequence to which the check applies</param>
-    /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
-    public static CheckMany<T> Not<T>(IEnumerable<T> target) =>
-      new CheckMany<T>(target, false);
-
-    /// <summary>
-    /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
-    /// <see langword="true"/> if all subsequent operators return <see langword="true"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="target">The dictionary to which the check applies</param>
-    /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
-    public static CheckMany<TKey, TValue> That<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> target) =>
-      new CheckMany<TKey, TValue>(target, true);
-
-    /// <summary>
-    /// Starts a <see langword="bool"/>-valued query of <paramref name="target"/> that returns
-    /// <see langword="true"/> if all subsequent operators are <see langword="false"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="target">The dictionary to which the check applies</param>
-    /// <returns>A <see langword="bool"/>-valued query applied to <paramref name="target"/></returns>
-    public static CheckMany<TKey, TValue> Not<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> target) =>
-      new CheckMany<TKey, TValue>(target, false);
-
-    internal interface ICheckMany<T>
-    {
-      IEnumerable<T> Target { get; }
-
-      CheckMany<T> That(Func<IEnumerable<T>, bool> next);
-      CheckMany<T> Not(Func<IEnumerable<T>, bool> next);
-
-      bool Apply();
-    }
-
-    internal interface ICheckMany<TKey, TValue>
-    {
-      IEnumerable<KeyValuePair<TKey, TValue>> Target { get; }
-
-      CheckMany<TKey, TValue> That(Func<IEnumerable<KeyValuePair<TKey, TValue>>, bool> next);
-      CheckMany<TKey, TValue> Not(Func<IEnumerable<KeyValuePair<TKey, TValue>>, bool> next);
-
-      bool Apply();
-    }
-  }
-
-  /// <summary>
   /// A <see langword="bool"/>-valued query targeting a sequence with items of type <typeparamref name="T"/>.
   /// Implicitly converts to <see langword="bool"/>.
   /// </summary>
   /// <typeparam name="T">The type of items in the target sequence</typeparam>
-  public struct CheckMany<T> : CheckMany.ICheckMany<T>
+  public struct CheckMany<T> : Check.ICheckMany<T>
   {
     readonly bool _expectedResult;
-    readonly CheckMany.ICheckMany<T>? _previous;
+    readonly Check.ICheckMany<T>? _previous;
     readonly Func<IEnumerable<T>, bool>? _next;
     readonly bool _expectedNext;
 
@@ -196,10 +128,10 @@ namespace Green
   /// </summary>
   /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
   /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-  public struct CheckMany<TKey, TValue> : CheckMany.ICheckMany<TKey, TValue>
+  public struct CheckMany<TKey, TValue> : Check.ICheckMany<TKey, TValue>
   {
     readonly bool _expectedResult;
-    readonly CheckMany.ICheckMany<TKey, TValue>? _previous;
+    readonly Check.ICheckMany<TKey, TValue>? _previous;
     readonly Func<IEnumerable<KeyValuePair<TKey, TValue>>, bool>? _next;
     readonly bool _expectedNext;
 

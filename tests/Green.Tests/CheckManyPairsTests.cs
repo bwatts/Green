@@ -12,7 +12,7 @@ namespace Green
     public void StaticThat_SetsTarget()
     {
       // Act
-      var check = CheckMany.That(_target);
+      var check = Check.Many(_target);
 
       // Assert
       Assert.Equal(_target, check.Target);
@@ -22,7 +22,7 @@ namespace Green
     public void StaticThat_DefaultsToTrue()
     {
       // Arrage
-      var check = CheckMany.That(_target);
+      var check = Check.Many(_target);
 
       // Act
       var result = check.Apply();
@@ -35,7 +35,7 @@ namespace Green
     public void StaticNot_SetsTarget()
     {
       // Act
-      var check = CheckMany.That(_target);
+      var check = Check.Many(_target);
 
       // Assert
       Assert.Equal(_target, check.Target);
@@ -45,7 +45,7 @@ namespace Green
     public void StaticNot_DefaultsToTrue()
     {
       // Arrage
-      var check = CheckMany.Not(_target);
+      var check = Check.ManyNot(_target);
 
       // Act
       var result = check.Apply();
@@ -59,7 +59,7 @@ namespace Green
     {
       // Arrage
       var applied = false;
-      var check = CheckMany.That(_target).That(_ => applied = true);
+      var check = Check.Many(_target).That(_ => applied = true);
 
       // Act
       bool result = check;
@@ -74,7 +74,7 @@ namespace Green
     {
       // Arrage
       var applied = false;
-      var check = CheckMany.That(_target).That(_ => applied = true);
+      var check = Check.Many(_target).That(_ => applied = true);
 
       // Act
       bool? result = check;
@@ -92,7 +92,7 @@ namespace Green
     public void That_PassesTarget()
     {
       // Arrange
-      var check = CheckMany.That(_target);
+      var check = Check.Many(_target);
 
       // Act
       var nextCheck = check.That(_ => true);
@@ -106,7 +106,7 @@ namespace Green
     {
       // Arrange
       var applied = false;
-      var check = CheckMany.That(_target).That(_ => { applied = true; return true; });
+      var check = Check.Many(_target).That(_ => { applied = true; return true; });
 
       // Act
       check.Apply();
@@ -121,7 +121,7 @@ namespace Green
       // Arrange
       var previousApplied = false;
       var nextApplied = false;
-      var check = CheckMany.That(_target)
+      var check = Check.Many(_target)
         .That(_ => { previousApplied = !nextApplied; return true; })
         .That(_ => { nextApplied = true; return true; });
 
@@ -139,7 +139,7 @@ namespace Green
       // Arrange
       var previousApplied = false;
       var nextApplied = false;
-      var check = CheckMany.That(_target)
+      var check = Check.Many(_target)
         .That(_ => { previousApplied = !nextApplied; return false; })
         .That(_ => { nextApplied = true; return true; });
 
@@ -159,7 +159,7 @@ namespace Green
     public void Not_PassesTarget()
     {
       // Arrange
-      var check = CheckMany.That(_target);
+      var check = Check.Many(_target);
 
       // Act
       var nextCheck = check.Not(_ => true);
@@ -173,7 +173,7 @@ namespace Green
     {
       // Arrange
       var applied = false;
-      var check = CheckMany.That(_target).Not(_ => { applied = true; return true; });
+      var check = Check.Many(_target).Not(_ => { applied = true; return true; });
 
       // Act
       check.Apply();
@@ -188,7 +188,7 @@ namespace Green
       // Arrange
       var previousApplied = false;
       var nextApplied = false;
-      var check = CheckMany.That(_target)
+      var check = Check.Many(_target)
         .Not(_ => { previousApplied = !nextApplied; return false; })
         .Not(_ => { nextApplied = true; return false; });
 
@@ -206,7 +206,7 @@ namespace Green
       // Arrange
       var previousApplied = false;
       var nextApplied = false;
-      var check = CheckMany.That(_target)
+      var check = Check.Many(_target)
         .Not(_ => { previousApplied = !nextApplied; return true; })
         .Not(_ => { nextApplied = true; return false; });
 
@@ -222,7 +222,7 @@ namespace Green
     public void UnaryNot_PassesTarget()
     {
       // Arrange
-      var check = CheckMany.That(_target);
+      var check = Check.Many(_target);
 
       // Act
       var nextCheck = check.Not();
@@ -235,7 +235,7 @@ namespace Green
     public void UnaryNot_DefaultsToTrue()
     {
       // Arrange
-      var check = CheckMany.That(_target).Not();
+      var check = Check.Many(_target).Not();
 
       // Act
       var result = check.Apply();
@@ -248,7 +248,7 @@ namespace Green
     public void UnaryNot_NegatesResult()
     {
       // Arrange
-      var check = CheckMany.That(_target).That(_ => true).Not();
+      var check = Check.Many(_target).That(_ => true).Not();
 
       // Act
       var result = check.Apply();

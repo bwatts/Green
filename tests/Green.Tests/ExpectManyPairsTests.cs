@@ -12,7 +12,7 @@ namespace Green
     public void StaticThat_SetsTarget()
     {
       // Act
-      var expect = ExpectMany.That(_target);
+      var expect = Expect.Many(_target);
 
       // Assert
       Assert.Equal(_target, expect.Target);
@@ -29,7 +29,7 @@ namespace Green
     public void StaticNot_SetsTarget()
     {
       // Act
-      var check = ExpectMany.Not(_target);
+      var check = Expect.ManyNot(_target);
 
       // Assert
       Assert.Equal(_target, check.Target);
@@ -46,7 +46,7 @@ namespace Green
     public void Converts_ToBoolean()
     {
       // Arrage
-      var expect = ExpectMany.That(_target);
+      var expect = Expect.Many(_target);
 
       // Act
       bool result = expect;
@@ -59,7 +59,7 @@ namespace Green
     public void Converts_ToBoolean_Nullable()
     {
       // Arrage
-      var expect = ExpectMany.That(_target);
+      var expect = Expect.Many(_target);
 
       // Act
       bool? result = expect;
@@ -72,7 +72,7 @@ namespace Green
     public void That_ReturnsSame()
     {
       // Arrange
-      var expect = ExpectMany.That(_target);
+      var expect = Expect.Many(_target);
 
       // Act
       var nextExpect = expect.That(_ => true);
@@ -85,7 +85,7 @@ namespace Green
     public void That_Throws_IfFalse()
     {
       // Arrange
-      var expect = ExpectMany.That(_target);
+      var expect = Expect.Many(_target);
 
       // Act
       Assert.Throws<ExpectException>(() => expect.That(_ => false));
@@ -95,7 +95,7 @@ namespace Green
     public void Not_ReturnsSame()
     {
       // Arrange
-      var expect = ExpectMany.That(_target);
+      var expect = Expect.Many(_target);
 
       // Act
       var nextExpect = expect.Not(_ => false);
@@ -108,7 +108,7 @@ namespace Green
     public void Not_Throws_IfTrue()
     {
       // Arrange
-      var expect = ExpectMany.That(_target);
+      var expect = Expect.Many(_target);
 
       // Act
       Assert.Throws<ExpectException>(() => expect.Not(_ => true));

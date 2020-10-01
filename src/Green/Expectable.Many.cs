@@ -2652,7 +2652,7 @@ namespace Green
     /// <exception cref="ExpectException">Thrown if <paramref name="expectItems"/> throws for <paramref name="target"/></exception>
     public static bool Invoke<T>(this Action<ExpectMany<T>> expectItems, IEnumerable<T> target)
     {
-      expectItems?.Invoke(ExpectMany.That(target));
+      expectItems?.Invoke(Expect.Many(target));
       return false;
     }
 
@@ -2667,7 +2667,7 @@ namespace Green
     /// <exception cref="ExpectException">Thrown if <paramref name="expectPairs"/> throws for <paramref name="target"/></exception>
     public static bool Invoke<TKey, TValue>(this Action<ExpectMany<TKey, TValue>> expectPairs, IEnumerable<KeyValuePair<TKey, TValue>> target)
     {
-      expectPairs?.Invoke(ExpectMany.That(target));
+      expectPairs?.Invoke(Expect.Many(target));
       return true;
     }
 
