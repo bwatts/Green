@@ -351,6 +351,130 @@ namespace Green
       expect.That(t => t != double.MaxValue, issue.Operator());
 
     //
+    // Int16
+    //
+
+    /// <summary>
+    /// Expects the target is less than zero
+    /// </summary>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static Expect<short> IsNegative(this Expect<short> expect, Issue<short>? issue = null) =>
+      expect.That(t => t < 0, issue.Operator());
+
+    /// <summary>
+    /// Expects the target is less than or equal to zero
+    /// </summary>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static Expect<short> IsNotPositive(this Expect<short> expect, Issue<short>? issue = null) =>
+      expect.That(t => t <= 0, issue.Operator());
+
+    /// <summary>
+    /// Expects the target is zero
+    /// </summary>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static Expect<short> IsZero(this Expect<short> expect, Issue<short>? issue = null) =>
+      expect.That(t => t == 0, issue.Operator());
+
+    /// <summary>
+    /// Expects the target is greater than or equal to zero
+    /// </summary>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static Expect<short> IsNotNegative(this Expect<short> expect, Issue<short>? issue = null) =>
+      expect.That(t => t >= 0, issue.Operator());
+
+    /// <summary>
+    /// Expects the target is greater than zero
+    /// </summary>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static Expect<short> IsPositive(this Expect<short> expect, Issue<short>? issue = null) =>
+      expect.That(t => t > 0, issue.Operator());
+
+    /// <summary>
+    /// Expects the target is is divisible by 2
+    /// </summary>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static Expect<short> IsEven(this Expect<short> expect, Issue<short>? issue = null) =>
+      expect.That(t => t % 2 == 0, issue.Operator());
+
+    /// <summary>
+    /// Expects the target is not divisible by 2
+    /// </summary>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static Expect<short> IsOdd(this Expect<short> expect, Issue<short>? issue = null) =>
+      expect.That(t => t % 2 != 0, issue.Operator());
+
+    /// <summary>
+    /// Expects the target is in the range 0-100
+    /// </summary>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static Expect<short> IsPercentage(this Expect<short> expect, Issue<short>? issue = null) =>
+      expect.That(t => t >= 0 && t <= 100, issue.Operator());
+
+    /// <summary>
+    /// Expects the target is <see cref="short.MinValue"/>
+    /// </summary>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static Expect<short> IsMinValue(this Expect<short> expect, Issue<short>? issue = null) =>
+      expect.That(t => t == short.MinValue, issue.Operator());
+
+    /// <summary>
+    /// Expects the target is <see cref="short.MaxValue"/>
+    /// </summary>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static Expect<short> IsMaxValue(this Expect<short> expect, Issue<short>? issue = null) =>
+      expect.That(t => t == short.MaxValue, issue.Operator());
+
+    /// <summary>
+    /// Expects the target is not <see cref="short.MinValue"/>
+    /// </summary>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static Expect<short> IsNotMinValue(this Expect<short> expect, Issue<short>? issue = null) =>
+      expect.That(t => t != short.MinValue, issue.Operator());
+
+    /// <summary>
+    /// Expects the target is not <see cref="short.MaxValue"/>
+    /// </summary>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static Expect<short> IsNotMaxValue(this Expect<short> expect, Issue<short>? issue = null) =>
+      expect.That(t => t != short.MaxValue, issue.Operator());
+
+    //
     // Int32
     //
 
