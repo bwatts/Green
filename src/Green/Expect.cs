@@ -135,10 +135,10 @@ namespace Green
       }
       catch(Exception inner)
       {
-        throw issue.ToThrowsException(target, typeof(TException), inner);
+        throw issue.ToThrowsAsyncException(target, typeof(TException), inner);
       }
 
-      throw issue.ToThrowsException(target, typeof(TException));
+      throw issue.ToThrowsAsyncException(target, typeof(TException));
     }
 
     /// <summary>

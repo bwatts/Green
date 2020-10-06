@@ -37,11 +37,7 @@ namespace Green
     /// <param name="inner">The exception that caused the issue, if any</param>
     /// <returns>An instance of <see cref="ExpectException"/> with the result of applying <paramref name="issue"/> to <paramref name="target"/></returns>
     public static ExpectException ToException<T>(this Issue<T>? issue, T target, bool expectedResult = true, Exception? inner = null) =>
-      (issue?.Invoke(target) ?? IssueResult.Default()).ToException(
-        $@"Unexpected value of type {target?.GetType() ?? typeof(T)}",
-        Text.Of(target),
-        expectedResult,
-        inner);
+      (issue?.Invoke(target) ?? IssueResult.Default()).ToException(Text.Of(target), expectedResult, inner);
 
     /// <summary>
     /// Creates an instance of <see cref="ExpectException"/> with the result of applying <paramref name="issue"/> to <paramref name="target"/>
@@ -53,11 +49,7 @@ namespace Green
     /// <param name="inner">The exception that caused the issue, if any</param>
     /// <returns>An instance of <see cref="ExpectException"/> with the result of applying <paramref name="issue"/> to <paramref name="target"/></returns>
     public static ExpectException ToException<T>(this IssueMany<T>? issue, IEnumerable<T> target, bool expectedResult = true, Exception? inner = null) =>
-      (issue?.Invoke(target) ?? IssueResult.Default()).ToException(
-        $@"Unexpected sequence of type {target?.GetType() ?? typeof(IEnumerable<T>)} with items of type {typeof(T)}",
-        Text.Many(target),
-        expectedResult,
-        inner);
+      (issue?.Invoke(target) ?? IssueResult.Default()).ToException(Text.Of(target), expectedResult, inner);
 
     /// <summary>
     /// Creates an instance of <see cref="ExpectException"/> with the result of applying <paramref name="issue"/> to <paramref name="target"/>
@@ -70,11 +62,7 @@ namespace Green
     /// <param name="inner">The exception that caused the issue, if any</param>
     /// <returns>An instance of <see cref="ExpectException"/> with the result of applying <paramref name="issue"/> to <paramref name="target"/></returns>
     public static ExpectException ToException<TKey, TValue>(this IssueMany<TKey, TValue>? issue, IEnumerable<KeyValuePair<TKey, TValue>> target, bool expectedResult = true, Exception? inner = null) =>
-      (issue?.Invoke(target) ?? IssueResult.Default()).ToException(
-        $@"Unexpected dictionary of type {target?.GetType() ?? typeof(IEnumerable<KeyValuePair<TKey, TValue>>)} with keys of type {typeof(TKey)} and values of type {typeof(TValue)}",
-        Text.Many(target),
-        expectedResult,
-        inner);
+      (issue?.Invoke(target) ?? IssueResult.Default()).ToException(Text.Of(target), expectedResult, inner);
 
     /// <summary>
     /// Creates an instance of <see cref="ExpectException"/> with the result of applying <paramref name="issue"/> to <paramref name="target"/>
@@ -82,15 +70,23 @@ namespace Green
     /// <typeparam name="TDelegate">The type of delegate expected to throw an exception</typeparam>
     /// <param name="issue">The issue to apply to the target delegate</param>
     /// <param name="target">The target value with the issue</param>
-    /// <param name="expectedExceptionType">The type of exception that <paramref name="target"/> was expected to throw</param>
+    /// <param name="exceptionType">The type of exception that <paramref name="target"/> was expected to throw</param>
     /// <param name="inner">The exception that caused the issue, if any</param>
     /// <returns>An instance of <see cref="ExpectException"/> with the result of applying <paramref name="issue"/> to <paramref name="target"/></returns>
-    public static ExpectException ToThrowsException<TDelegate>(this Issue<TDelegate>? issue, TDelegate target, Type expectedExceptionType, Exception? inner = null) =>
-      (issue?.Invoke(target) ?? IssueResult.Default()).ToException(
-        $@"Expected delegate of type {target?.GetType() ?? typeof(TDelegate)} to throw an exception of type {expectedExceptionType}",
-        Text.Of(target),
-        true,
-        inner);
+    public static ExpectException ToThrowsException<TDelegate>(this Issue<TDelegate>? issue, TDelegate target, Type exceptionType, Exception? inner = null) where TDelegate : Delegate =>
+      (issue?.Invoke(target) ?? IssueResult.Default()).ToThrowsException(Text.Of(target), exceptionType, inner);
+
+    /// <summary>
+    /// Creates an instance of <see cref="ExpectException"/> with the result of applying <paramref name="issue"/> to <paramref name="target"/>
+    /// </summary>
+    /// <typeparam name="TDelegate">The type of delegate expected to throw an exception</typeparam>
+    /// <param name="issue">The issue to apply to the target delegate</param>
+    /// <param name="target">The target value with the issue</param>
+    /// <param name="exceptionType">The type of exception that <paramref name="target"/> was expected to throw</param>
+    /// <param name="inner">The exception that caused the issue, if any</param>
+    /// <returns>An instance of <see cref="ExpectException"/> with the result of applying <paramref name="issue"/> to <paramref name="target"/></returns>
+    public static ExpectException ToThrowsAsyncException<TDelegate>(this Issue<TDelegate>? issue, TDelegate target, Type exceptionType, Exception? inner = null) where TDelegate : Delegate =>
+      (issue?.Invoke(target) ?? IssueResult.Default()).ToThrowsAsyncException(Text.Of(target), exceptionType, inner);
 
     //
     // Operators

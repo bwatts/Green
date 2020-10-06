@@ -5,8 +5,7 @@ namespace Green
 {
   public class IssueResultTests
   {
-    readonly string _userMessage = "UserMessage";
-    readonly string _title = "Title";
+    readonly string _message = "Message";
     readonly string _target = "Target";
     readonly bool _expectedResult = true;
     readonly string _stackTrace = "at ABC.cs line 7";
@@ -18,11 +17,11 @@ namespace Green
     public void Implicit()
     {
       // Act
-      IssueResult result = _userMessage;
+      IssueResult result = _message;
 
       // Assert
-      Assert.Equal(_userMessage, result.UserMessage);
-      Assert.True(!string.IsNullOrEmpty(result.StackTrace));
+      Assert.Equal(_message, result.Message);
+      Assert.False(string.IsNullOrEmpty(result.StackTrace));
       Assert.Null(result.Method);
       Assert.Null(result.Outer);
     }
@@ -31,32 +30,28 @@ namespace Green
     public void Implicit_ToException()
     {
       // Arrange
-      IssueResult result = _userMessage;
+      IssueResult result = _message;
 
       // Act
-      var exception = result.ToException(_title, _target, _expectedResult);
+      var exception = result.ToException(_target, _expectedResult);
 
       // Assert
-      Assert.Equal($@"{_title}: {_userMessage}
-
->> {_target}", exception.Message);
-      Assert.True(!string.IsNullOrEmpty(result.StackTrace));
+      Assert.Equal($"{_message}: {_target}", exception.Message);
+      Assert.False(string.IsNullOrEmpty(result.StackTrace));
     }
 
     [Fact]
     public void Implicit_ToException_ExpectedFalse()
     {
       // Arrange
-      IssueResult result = _userMessage;
+      IssueResult result = _message;
 
       // Act
-      var exception = result.ToException(_title, _target, false, _inner);
+      var exception = result.ToException(_target, false, _inner);
 
       // Assert
-      Assert.Equal($@"{_title}: {_userMessage}
-
->> {_target}", exception.Message);
-      Assert.True(!string.IsNullOrEmpty(result.StackTrace));
+      Assert.Equal($"{_message}: {_target}", exception.Message);
+      Assert.False(string.IsNullOrEmpty(result.StackTrace));
       Assert.Equal(_inner, exception.InnerException);
     }
 
@@ -64,16 +59,14 @@ namespace Green
     public void Implicit_ToException_WithInner()
     {
       // Arrange
-      IssueResult result = _userMessage;
+      IssueResult result = _message;
 
       // Act
-      var exception = result.ToException(_title, _target, _expectedResult, _inner);
+      var exception = result.ToException(_target, _expectedResult, _inner);
 
       // Assert
-      Assert.Equal($@"{_title}: {_userMessage}
-
->> {_target}", exception.Message);
-      Assert.True(!string.IsNullOrEmpty(result.StackTrace));
+      Assert.Equal($"{_message}: {_target}", exception.Message);
+      Assert.False(string.IsNullOrEmpty(result.StackTrace));
       Assert.Equal(_inner, exception.InnerException);
     }
 
@@ -88,8 +81,8 @@ namespace Green
       var result = IssueResult.Default();
 
       // Assert
-      Assert.Equal("", result.UserMessage);
-      Assert.True(!string.IsNullOrEmpty(result.StackTrace));
+      Assert.Equal("", result.Message);
+      Assert.False(string.IsNullOrEmpty(result.StackTrace));
       Assert.Null(result.Method);
       Assert.Null(result.Outer);
     }
@@ -104,8 +97,8 @@ namespace Green
       var result = IssueResult.Default(outer);
 
       // Assert
-      Assert.Equal("", result.UserMessage);
-      Assert.True(!string.IsNullOrEmpty(result.StackTrace));
+      Assert.Equal("", result.Message);
+      Assert.False(string.IsNullOrEmpty(result.StackTrace));
       Assert.Null(result.Method);
       Assert.Equal(outer, result.Outer);
     }
@@ -117,7 +110,7 @@ namespace Green
       var result = IssueResult.Default(_stackTrace);
 
       // Assert
-      Assert.Equal("", result.UserMessage);
+      Assert.Equal("", result.Message);
       Assert.Equal(_stackTrace, result.StackTrace);
       Assert.Null(result.Method);
       Assert.Null(result.Outer);
@@ -133,7 +126,7 @@ namespace Green
       var result = IssueResult.Default(_stackTrace, outer);
 
       // Assert
-      Assert.Equal("", result.UserMessage);
+      Assert.Equal("", result.Message);
       Assert.Equal(_stackTrace, result.StackTrace);
       Assert.Null(result.Method);
       Assert.Equal(outer, result.Outer);
@@ -146,13 +139,11 @@ namespace Green
       var result = IssueResult.Default();
 
       // Act
-      var exception = result.ToException(_title, _target, _expectedResult);
+      var exception = result.ToException(_target, _expectedResult);
 
       // Assert
-      Assert.Equal($@"{_title}
-
->> {_target}", exception.Message);
-      Assert.True(!string.IsNullOrEmpty(result.StackTrace));
+      Assert.Equal($"Unexpected value: {_target}", exception.Message);
+      Assert.False(string.IsNullOrEmpty(result.StackTrace));
       Assert.Null(exception.InnerException);
     }
 
@@ -163,13 +154,11 @@ namespace Green
       var result = IssueResult.Default();
 
       // Act
-      var exception = result.ToException(_title, _target, false);
+      var exception = result.ToException(_target, false);
 
       // Assert
-      Assert.Equal($@"{_title}
-
->> {_target}", exception.Message);
-      Assert.True(!string.IsNullOrEmpty(result.StackTrace));
+      Assert.Equal($"Unexpected value: {_target}", exception.Message);
+      Assert.False(string.IsNullOrEmpty(result.StackTrace));
       Assert.Null(exception.InnerException);
     }
 
@@ -180,13 +169,11 @@ namespace Green
       var result = IssueResult.Default();
 
       // Act
-      var exception = result.ToException(_title, _target, _expectedResult, _inner);
+      var exception = result.ToException(_target, _expectedResult, _inner);
 
       // Assert
-      Assert.Equal($@"{_title}
-
->> {_target}", exception.Message);
-      Assert.True(!string.IsNullOrEmpty(result.StackTrace));
+      Assert.Equal($"Unexpected value: {_target}", exception.Message);
+      Assert.False(string.IsNullOrEmpty(result.StackTrace));
       Assert.Equal(_inner, exception.InnerException);
     }
 
@@ -197,13 +184,12 @@ namespace Green
       var result = IssueResult.Default(_stackTrace);
 
       // Act
-      var exception = result.ToException(_title, _target, true);
+      var exception = result.ToException(_target, true);
 
       // Assert
-      Assert.Equal($@"{_title}
-
->> {_target}", exception.Message);
+      Assert.Equal($"Unexpected value: {_target}", exception.Message);
       Assert.Equal(_stackTrace, exception.StackTrace);
+      Assert.Null(exception.InnerException);
     }
 
     [Fact]
@@ -213,14 +199,75 @@ namespace Green
       var result = IssueResult.Default(_stackTrace);
 
       // Act
-      var exception = result.ToException(_title, _target, _expectedResult, _inner);
+      var exception = result.ToException(_target, _expectedResult, _inner);
 
       // Assert
-      Assert.Equal($@"{_title}
-
->> {_target}", exception.Message);
+      Assert.Equal($"Unexpected value: {_target}", exception.Message);
       Assert.Equal(_stackTrace, exception.StackTrace);
       Assert.Equal(_inner, exception.InnerException);
+    }
+
+    [Fact]
+    public void Default_ToException_WithInner_WithOuter()
+    {
+      // Arrange
+      var outer = "Outer";
+      var result = IssueResult.Default((IssueResult) outer);
+
+      // Act
+      var exception = result.ToException(_target, _expectedResult, _inner);
+
+      // Assert
+      Assert.Equal($"Outer: {_target}", exception.Message);
+      Assert.False(string.IsNullOrEmpty(exception.StackTrace));
+
+      var inner = exception.InnerException;
+      Assert.NotNull(inner);
+      Assert.Equal($"Unexpected value: {_target}", inner!.Message);
+      Assert.False(string.IsNullOrEmpty(inner!.StackTrace));
+      Assert.Equal(_inner, inner!.InnerException);
+    }
+
+    [Fact]
+    public void Default_ToException_WithStackTrace_WithOuter()
+    {
+      // Arrange
+      var outer = "Outer";
+      var result = IssueResult.Default(_stackTrace, outer);
+
+      // Act
+      var exception = result.ToException(_target, _expectedResult);
+
+      // Assert
+      Assert.Equal($"Outer: {_target}", exception.Message);
+      Assert.False(string.IsNullOrEmpty(exception!.StackTrace));
+
+      var inner = exception.InnerException;
+      Assert.NotNull(inner);
+      Assert.Equal($"Unexpected value: {_target}", inner!.Message);
+      Assert.Equal(_stackTrace, inner!.StackTrace);
+      Assert.Null(inner!.InnerException);
+    }
+
+    [Fact]
+    public void Default_ToException_WithInner_WithStackTrace_WithOuter()
+    {
+      // Arrange
+      var outer = "Outer";
+      var result = IssueResult.Default(_stackTrace, outer);
+
+      // Act
+      var exception = result.ToException(_target, _expectedResult, _inner);
+
+      // Assert
+      Assert.Equal($"Outer: {_target}", exception.Message);
+      Assert.False(string.IsNullOrEmpty(exception!.StackTrace));
+
+      var inner = exception.InnerException;
+      Assert.NotNull(inner);
+      Assert.Equal($"Unexpected value: {_target}", inner!.Message);
+      Assert.Equal(_stackTrace, inner!.StackTrace);
+      Assert.Equal(_inner, inner!.InnerException);
     }
 
     //
@@ -234,7 +281,7 @@ namespace Green
       var result = IssueResult.Operator(_stackTrace, _method, _args);
 
       // Assert
-      Assert.Equal("", result.UserMessage);
+      Assert.Equal("", result.Message);
       Assert.Equal(_stackTrace, result.StackTrace);
       Assert.NotNull(result.Method);
       Assert.Equal(_method, result.Method!.Name);
@@ -251,7 +298,7 @@ namespace Green
       var result = IssueResult.Operator(_stackTrace, _method, _args, outer);
 
       // Assert
-      Assert.Equal("", result.UserMessage);
+      Assert.Equal("", result.Message);
       Assert.Equal(_stackTrace, result.StackTrace);
       Assert.NotNull(result.Method);
       Assert.Equal(_method, result.Method!.Name);
@@ -261,13 +308,62 @@ namespace Green
     }
 
     [Fact]
+    public void Operator_ToException()
+    {
+      // Arrange
+      var result = IssueResult.Operator(_stackTrace, _method, _args);
+
+      // Act
+      var exception = result.ToException(_target, _expectedResult);
+
+      // Assert
+      Assert.Equal($"Unexpected value: Expect({_target}).{_method}({_args})", exception.Message);
+      Assert.Equal(_stackTrace, exception.StackTrace);
+      Assert.Null(exception.InnerException);
+    }
+
+    [Fact]
+    public void Operator_ToException_ExpectedFalse()
+    {
+      // Arrange
+      var result = IssueResult.Operator(_stackTrace, _method, _args);
+
+      // Act
+      var exception = result.ToException(_target, false);
+
+      // Assert
+      Assert.Equal($"Unexpected value: ExpectNot({_target}).{_method}({_args})", exception.Message);
+      Assert.Equal(_stackTrace, exception.StackTrace);
+      Assert.Null(exception.InnerException);
+    }
+
+    [Fact]
+    public void Operator_ToException_WithInner()
+    {
+      // Arrange
+      var result = IssueResult.Operator(_stackTrace, _method, _args);
+
+      // Act
+      var exception = result.ToException(_target, _expectedResult, _inner);
+
+      // Assert
+      Assert.Equal($"Unexpected value: Expect({_target}).{_method}({_args})", exception.Message);
+      Assert.Equal(_stackTrace, exception.StackTrace);
+      Assert.Equal(_inner, exception.InnerException);
+    }
+
+    //
+    // OperatorMany
+    //
+
+    [Fact]
     public void OperatorMany()
     {
       // Act
       var result = IssueResult.OperatorMany(_stackTrace, _method, _args);
 
       // Assert
-      Assert.Equal("", result.UserMessage);
+      Assert.Equal("", result.Message);
       Assert.Equal(_stackTrace, result.StackTrace);
       Assert.NotNull(result.Method);
       Assert.Equal(_method, result.Method!.Name);
@@ -284,7 +380,7 @@ namespace Green
       var result = IssueResult.OperatorMany(_stackTrace, _method, _args, outer);
 
       // Assert
-      Assert.Equal("", result.UserMessage);
+      Assert.Equal("", result.Message);
       Assert.Equal(_stackTrace, result.StackTrace);
       Assert.NotNull(result.Method);
       Assert.Equal(_method, result.Method!.Name);
@@ -294,73 +390,16 @@ namespace Green
     }
 
     [Fact]
-    public void Operator_ToException()
-    {
-      // Arrange
-      var result = IssueResult.Operator(_stackTrace, _method, _args);
-
-      // Act
-      var exception = result.ToException(_title, _target, _expectedResult);
-
-      // Assert
-      Assert.Equal($@"{_title}
-
->> Expect({_target}).{_method}({_args})", exception.Message);
-      Assert.Equal(_stackTrace, exception.StackTrace);
-      Assert.Null(exception.InnerException);
-    }
-
-    [Fact]
-    public void Operator_ToException_ExpectedFalse()
-    {
-      // Arrange
-      var result = IssueResult.Operator(_stackTrace, _method, _args);
-
-      // Act
-      var exception = result.ToException(_title, _target, false);
-
-      // Assert
-      Assert.Equal($@"{_title}
-
->> ExpectNot({_target}).{_method}({_args})", exception.Message);
-      Assert.Equal(_stackTrace, exception.StackTrace);
-      Assert.Null(exception.InnerException);
-    }
-
-    [Fact]
-    public void Operator_ToException_WithInner()
-    {
-      // Arrange
-      var result = IssueResult.Operator(_stackTrace, _method, _args);
-
-      // Act
-      var exception = result.ToException(_title, _target, _expectedResult, _inner);
-
-      // Assert
-      Assert.Equal($@"{_title}
-
->> Expect({_target}).{_method}({_args})", exception.Message);
-      Assert.Equal(_stackTrace, exception.StackTrace);
-      Assert.Equal(_inner, exception.InnerException);
-    }
-
-    //
-    // OperatorMany
-    //
-
-    [Fact]
     public void OperatorMany_ToException()
     {
       // Arrange
       var result = IssueResult.OperatorMany(_stackTrace, _method, _args);
 
       // Act
-      var exception = result.ToException(_title, _target, _expectedResult);
+      var exception = result.ToException(_target, _expectedResult);
 
       // Assert
-      Assert.Equal($@"{_title}
-
->> ExpectMany({_target}).{_method}({_args})", exception.Message);
+      Assert.Equal($"Unexpected value: ExpectMany({_target}).{_method}({_args})", exception.Message);
       Assert.Equal(_stackTrace, exception.StackTrace);
       Assert.Null(exception.InnerException);
     }
@@ -372,12 +411,10 @@ namespace Green
       var result = IssueResult.OperatorMany(_stackTrace, _method, _args);
 
       // Act
-      var exception = result.ToException(_title, _target, false);
+      var exception = result.ToException(_target, false);
 
       // Assert
-      Assert.Equal($@"{_title}
-
->> ExpectManyNot({_target}).{_method}({_args})", exception.Message);
+      Assert.Equal($"Unexpected value: ExpectManyNot({_target}).{_method}({_args})", exception.Message);
       Assert.Equal(_stackTrace, exception.StackTrace);
       Assert.Null(exception.InnerException);
     }
@@ -389,12 +426,10 @@ namespace Green
       var result = IssueResult.OperatorMany(_stackTrace, _method, _args);
 
       // Act
-      var exception = result.ToException(_title, _target, _expectedResult, _inner);
+      var exception = result.ToException(_target, _expectedResult, _inner);
 
       // Assert
-      Assert.Equal($@"{_title}
-
->> ExpectMany({_target}).{_method}({_args})", exception.Message);
+      Assert.Equal($"Unexpected value: ExpectMany({_target}).{_method}({_args})", exception.Message);
       Assert.Equal(_stackTrace, exception.StackTrace);
       Assert.Equal(_inner, exception.InnerException);
     }

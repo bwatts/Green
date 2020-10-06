@@ -426,6 +426,17 @@ namespace Green
     /// </summary>
     /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
     /// <param name="regex">The regular expression to match</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static Expect<string> Matches(this Expect<string> expect, string regex, Issue<string>? issue = null) =>
+      expect.That(t => t != null && regex != null && Regex.IsMatch(t, regex), issue.Operator(regex));
+
+    /// <summary>
+    /// Expects the target matches <paramref name="regex"/>
+    /// </summary>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="regex">The regular expression to match</param>
     /// <param name="options">The options to use for the match</param>
     /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
     /// <returns><see langword="this"/> to enable further expectations</returns>

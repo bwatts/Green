@@ -19,9 +19,6 @@ namespace Green
   [1] = ""A"",
   [2] = ""B""
 }";
-    readonly string _targetTitle = "Unexpected value of type System.Int32";
-    readonly string _targetItemsTitle = "Unexpected sequence of type System.Int32[] with items of type System.Int32";
-    readonly string _targetPairsTitle = "Unexpected dictionary of type System.Collections.Generic.KeyValuePair`2[System.Int32,System.String][] with keys of type System.Int32 and values of type System.String";
     readonly Exception _inner = new Exception();
 
     [Fact]
@@ -34,10 +31,8 @@ namespace Green
       var exception = issue.ToException(_target);
 
       // Assert
-      Assert.Equal($@"{_targetTitle}
-
->> {_targetText}", exception.Message);
-      Assert.True(!string.IsNullOrEmpty(exception.StackTrace));
+      Assert.Equal($@"Unexpected value: {_targetText}", exception.Message);
+      Assert.False(string.IsNullOrEmpty(exception.StackTrace));
       Assert.Null(exception.InnerException);
     }
 
@@ -51,10 +46,8 @@ namespace Green
       var exception = issue.ToException(_target, false);
 
       // Assert
-      Assert.Equal($@"{_targetTitle}
-
->> {_targetText}", exception.Message);
-      Assert.True(!string.IsNullOrEmpty(exception.StackTrace));
+      Assert.Equal($@"Unexpected value: {_targetText}", exception.Message);
+      Assert.False(string.IsNullOrEmpty(exception.StackTrace));
       Assert.Null(exception.InnerException);
     }
 
@@ -68,10 +61,8 @@ namespace Green
       var exception = issue.ToException(_target, inner: _inner);
 
       // Assert
-      Assert.Equal($@"{_targetTitle}
-
->> {_targetText}", exception.Message);
-      Assert.True(!string.IsNullOrEmpty(exception.StackTrace));
+      Assert.Equal($@"Unexpected value: {_targetText}", exception.Message);
+      Assert.False(string.IsNullOrEmpty(exception.StackTrace));
       Assert.Equal(_inner, exception.InnerException);
     }
 
@@ -89,10 +80,8 @@ namespace Green
       var exception = issue.ToException(_targetItems);
 
       // Assert
-      Assert.Equal($@"{_targetItemsTitle}
-
->> {_targetItemsText}", exception.Message);
-      Assert.True(!string.IsNullOrEmpty(exception.StackTrace));
+      Assert.Equal($@"Unexpected value: {_targetItemsText}", exception.Message);
+      Assert.False(string.IsNullOrEmpty(exception.StackTrace));
       Assert.Null(exception.InnerException);
     }
 
@@ -106,10 +95,8 @@ namespace Green
       var exception = issue.ToException(_targetItems, false);
 
       // Assert
-      Assert.Equal($@"{_targetItemsTitle}
-
->> {_targetItemsText}", exception.Message);
-      Assert.True(!string.IsNullOrEmpty(exception.StackTrace));
+      Assert.Equal($@"Unexpected value: {_targetItemsText}", exception.Message);
+      Assert.False(string.IsNullOrEmpty(exception.StackTrace));
       Assert.Null(exception.InnerException);
     }
 
@@ -123,10 +110,8 @@ namespace Green
       var exception = issue.ToException(_targetItems, inner: _inner);
 
       // Assert
-      Assert.Equal($@"{_targetItemsTitle}
-
->> {_targetItemsText}", exception.Message);
-      Assert.True(!string.IsNullOrEmpty(exception.StackTrace));
+      Assert.Equal($@"Unexpected value: {_targetItemsText}", exception.Message);
+      Assert.False(string.IsNullOrEmpty(exception.StackTrace));
       Assert.Equal(_inner, exception.InnerException);
     }
 
@@ -144,10 +129,8 @@ namespace Green
       var exception = issue.ToException(_targetPairs);
 
       // Assert
-      Assert.Equal($@"{_targetPairsTitle}
-
->> {_targetPairsText}", exception.Message);
-      Assert.True(!string.IsNullOrEmpty(exception.StackTrace));
+      Assert.Equal($@"Unexpected value: {_targetPairsText}", exception.Message);
+      Assert.False(string.IsNullOrEmpty(exception.StackTrace));
       Assert.Null(exception.InnerException);
     }
 
@@ -161,10 +144,8 @@ namespace Green
       var exception = issue.ToException(_targetPairs, false);
 
       // Assert
-      Assert.Equal($@"{_targetPairsTitle}
-
->> {_targetPairsText}", exception.Message);
-      Assert.True(!string.IsNullOrEmpty(exception.StackTrace));
+      Assert.Equal($@"Unexpected value: {_targetPairsText}", exception.Message);
+      Assert.False(string.IsNullOrEmpty(exception.StackTrace));
       Assert.Null(exception.InnerException);
     }
 
@@ -178,10 +159,8 @@ namespace Green
       var exception = issue.ToException(_targetPairs, inner: _inner);
 
       // Assert
-      Assert.Equal($@"{_targetPairsTitle}
-
->> {_targetPairsText}", exception.Message);
-      Assert.True(!string.IsNullOrEmpty(exception.StackTrace));
+      Assert.Equal($@"Unexpected value: {_targetPairsText}", exception.Message);
+      Assert.False(string.IsNullOrEmpty(exception.StackTrace));
       Assert.Equal(_inner, exception.InnerException);
     }
 
@@ -207,9 +186,7 @@ namespace Green
 
       // Assert
       Assert.NotNull(exception);
-      Assert.Equal($@"Unexpected value of type System.Int32
-
->> Expect(1).Test()", exception!.Message);
+      Assert.Equal($@"Unexpected value: Expect(1).Test()", exception!.Message);
     }
 
     [Fact]
@@ -230,9 +207,7 @@ namespace Green
 
       // Assert
       Assert.NotNull(exception);
-      Assert.Equal($@"Unexpected value of type System.Int32
-
->> Expect({_targetText}).TestWithArg(arg: 2)", exception!.Message);
+      Assert.Equal($@"Unexpected value: Expect({_targetText}).TestWithArg(arg: 2)", exception!.Message);
     }
 
     [Fact]
@@ -253,9 +228,7 @@ namespace Green
 
       // Assert
       Assert.NotNull(exception);
-      Assert.Equal(@"Unexpected value of type System.Int32
-
->> Expect(1).TestWithArgs(arg0: 10, arg1: 20)", exception!.Message);
+      Assert.Equal(@"Unexpected value: Expect(1).TestWithArgs(arg0: 10, arg1: 20)", exception!.Message);
     }
 
     //
@@ -280,9 +253,7 @@ namespace Green
 
       // Assert
       Assert.NotNull(exception);
-      Assert.Equal(@"Unexpected sequence of type System.Int32[] with items of type System.Int32
-
->> ExpectMany([1, 2]).Test()", exception!.Message);
+      Assert.Equal(@"Unexpected value: ExpectMany([1, 2]).Test()", exception!.Message);
     }
 
     [Fact]
@@ -303,9 +274,7 @@ namespace Green
 
       // Assert
       Assert.NotNull(exception);
-      Assert.Equal(@"Unexpected sequence of type System.Int32[] with items of type System.Int32
-
->> ExpectMany([1, 2]).TestWithArg(arg: 2)", exception!.Message);
+      Assert.Equal(@"Unexpected value: ExpectMany([1, 2]).TestWithArg(arg: 2)", exception!.Message);
     }
 
     [Fact]
@@ -326,9 +295,7 @@ namespace Green
 
       // Assert
       Assert.NotNull(exception);
-      Assert.Equal(@"Unexpected sequence of type System.Int32[] with items of type System.Int32
-
->> ExpectMany([1, 2]).TestWithArgs(arg0: 10, arg1: 20)", exception!.Message);
+      Assert.Equal(@"Unexpected value: ExpectMany([1, 2]).TestWithArgs(arg0: 10, arg1: 20)", exception!.Message);
     }
 
     //
@@ -353,9 +320,7 @@ namespace Green
 
       // Assert
       Assert.NotNull(exception);
-      Assert.Equal(@"Unexpected dictionary of type System.Collections.Generic.KeyValuePair`2[System.Int32,System.String][] with keys of type System.Int32 and values of type System.String
-
->> ExpectMany({
+      Assert.Equal(@"Unexpected value: ExpectMany({
   [1] = ""A"",
   [2] = ""B""
 }).Test()", exception!.Message);
@@ -379,9 +344,7 @@ namespace Green
 
       // Assert
       Assert.NotNull(exception);
-      Assert.Equal(@"Unexpected dictionary of type System.Collections.Generic.KeyValuePair`2[System.Int32,System.String][] with keys of type System.Int32 and values of type System.String
-
->> ExpectMany({
+      Assert.Equal(@"Unexpected value: ExpectMany({
   [1] = ""A"",
   [2] = ""B""
 }).TestWithArg(arg: 2)", exception!.Message);
@@ -405,9 +368,7 @@ namespace Green
 
       // Assert
       Assert.NotNull(exception);
-      Assert.Equal(@"Unexpected dictionary of type System.Collections.Generic.KeyValuePair`2[System.Int32,System.String][] with keys of type System.Int32 and values of type System.String
-
->> ExpectMany({
+      Assert.Equal(@"Unexpected value: ExpectMany({
   [1] = ""A"",
   [2] = ""B""
 }).TestWithArgs(arg0: 10, arg1: 20)", exception!.Message);

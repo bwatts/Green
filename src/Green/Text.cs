@@ -1,147 +1,152 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Linq;
+using System.Reflection;
+using System.Text;
 
 namespace Green
 {
-  /// <summary>
-  /// Formats text for use in expectation messages
-  /// </summary>
-  public static class Text
+  internal static class Text
   {
-    /// <summary>
-    /// Gets text for <paramref name="value"/> that defers formatting until requested
-    /// </summary>
-    /// <typeparam name="T">The type of value to format</typeparam>
-    /// <param name="value">The value to format</param>
-    /// <returns>Text for <paramref name="value"/> that defers formatting until requested</returns>
-    public static Text<T> Of<T>(T value) =>
-      new Text<T>(value);
+    internal static string Of(object? value) =>
+      value == null || value is string ? OfValue(value) : OfObject(value);
 
-    /// <summary>
-    /// Gets text for <paramref name="pair"/> that defers formatting until requested
-    /// </summary>
-    /// <typeparam name="TKey">The type of key in the pair to format</typeparam>
-    /// <typeparam name="TValue">The type of value in the pair to format</typeparam>
-    /// <param name="pair">The pair to format</param>
-    /// <returns>Text for <paramref name="pair"/> that defers formatting until requested</returns>
-    public static Text<TKey, TValue> Pair<TKey, TValue>(KeyValuePair<TKey, TValue> pair) =>
-      new Text<TKey, TValue>(pair);
-
-    /// <summary>
-    /// Gets text for <paramref name="key"/> and <paramref name="value"/> that defers formatting until requested
-    /// </summary>
-    /// <typeparam name="TKey">The type of key in the pair to format</typeparam>
-    /// <typeparam name="TValue">The type of value in the pair to format</typeparam>
-    /// <param name="key">The key in the pair to format</param>
-    /// <param name="value">The key in the pair to format</param>
-    /// <returns>Text for <paramref name="key"/> and <paramref name="value"/> that defers formatting until requested</returns>
-    public static Text<TKey, TValue> Pair<TKey, TValue>(TKey key, TValue value) =>
-      Pair(new KeyValuePair<TKey, TValue>(key, value));
-
-    /// <summary>
-    /// Gets text for <paramref name="items"/> that defers formatting until requested
-    /// </summary>
-    /// <typeparam name="T">The type of items in the sequence to format</typeparam>
-    /// <param name="items">The sequence to format</param>
-    /// <returns>Text for <paramref name="items"/> that defers formatting until requested</returns>
-    public static TextMany<T> Many<T>(IEnumerable<T>? items) =>
-      new TextMany<T>(items);
-
-    /// <summary>
-    /// Gets text for <paramref name="pairs"/> that defers formatting until requested
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the dictionary to format</typeparam>
-    /// <typeparam name="TValue">The type of values in the dictionary to format</typeparam>
-    /// <param name="pairs">The dictionary to format</param>
-    /// <returns>Text for <paramref name="pairs"/> that defers formatting until requested</returns>
-    public static TextMany<TKey, TValue> Many<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>>? pairs) =>
-      new TextMany<TKey, TValue>(pairs);
-  }
-
-  /// <summary>
-  /// A value of type <typeparamref name="T"/> that defers formatting until requested
-  /// </summary>
-  /// <typeparam name="T">The type of value to format</typeparam>
-  public struct Text<T> : IFormattable
-  {
-    readonly T _value;
-
-    internal Text(T value)
-    {
-      _value = value;
-    }
-
-    /// <summary>
-    /// Formats the value using <see cref="CultureInfo.CurrentCulture"/>
-    /// </summary>
-    /// <returns>The result of formatting the value</returns>
-    public override string ToString() =>
-      ToString(null, CultureInfo.CurrentCulture);
-
-    /// <summary>
-    /// Formats the value by passing <paramref name="format"/> and <paramref name="formatProvider"/> to its <see cref="IFormattable"/> implementation, if any
-    /// </summary>
-    /// <param name="format">The format string to pass to <see cref="IFormattable.ToString(string, IFormatProvider)"/>, if implemented</param>
-    /// <param name="formatProvider">The format provider to pass to <see cref="IFormattable.ToString(string, IFormatProvider)"/>, if implemented</param>
-    /// <returns>The result of formatting the value</returns>
-    public string ToString(string? format, IFormatProvider? formatProvider) =>
-      _value switch
+    static string OfValue(object? value) =>
+      value switch
       {
         null => "<null>",
         string s => $"\"{s}\"",
         char c when char.IsControl(c) || char.IsHighSurrogate(c) || char.IsLowSurrogate(c) => @$"\u{(int) c:X4}",
         char c => $"'{c}'",
         bool b => b.ToString().ToLowerInvariant(),
-        IFormattable formattable => formattable.ToString(format, formatProvider),
-        _ => _value.ToString() ?? ""
+        Delegate d => (d.Method.DeclaringType.Name.Contains("<") ? "" : d.Method.DeclaringType.Name + ".") + d.Method.Name,
+        _ => value.ToString() ?? ""
       };
 
-    /// <summary>
-    /// Implicitly gets the <see cref="string"/> value of <paramref name="text"/>
-    /// </summary>
-    /// <param name="text">The text to implicitly convert</param>
-    /// <returns>The <see cref="string"/> value of <paramref name="text"/></returns>
-    public static implicit operator string(Text<T> text) =>
-      text.ToString();
-  }
-
-  /// <summary>
-  /// A pair with keys of type <typeparamref name="TKey"/> and values of type <typeparamref name="TValue"/> that defers formatting until requested
-  /// </summary>
-  /// <typeparam name="TKey">The type of key in the pair to format</typeparam>
-  /// <typeparam name="TValue">The type of value in the pair to format</typeparam>
-  public struct Text<TKey, TValue> : IFormattable
-  {
-    readonly KeyValuePair<TKey, TValue> _pair;
-
-    internal Text(KeyValuePair<TKey, TValue> pair)
+    static string OfObject(object value)
     {
-      _pair = pair;
+      var type = value.GetType();
+
+      return type.TryOfPair(value) ?? type.TryOfMany(value) ?? OfValue(value);
     }
 
-    /// <summary>
-    /// Formats the pair using <see cref="CultureInfo.CurrentCulture"/>
-    /// </summary>
-    /// <returns>The result of formatting the value</returns>
-    public override string ToString() =>
-      ToString(null, CultureInfo.CurrentCulture);
+    static string? TryOfPair(this Type type, object value) =>
+      type.IsPair(out var keyType, out var valueType) ? Format.Pair(value, keyType!, valueType!) : null;
 
-    /// <summary>
-    /// Formats the pair by passing <paramref name="format"/> and <paramref name="formatProvider"/> to it keys' and values'  <see cref="IFormattable"/> implementations, if any
-    /// </summary>
-    /// <param name="format">The format string to pass to <see cref="IFormattable.ToString(string, IFormatProvider)"/>, if implemented</param>
-    /// <param name="formatProvider">The format provider to pass to <see cref="IFormattable.ToString(string, IFormatProvider)"/>, if implemented</param>
-    /// <returns>The result of formatting the pair</returns>
-    public string ToString(string? format, IFormatProvider? formatProvider) =>
-      $"[{Text.Of(_pair.Key).ToString(format, formatProvider)}] = {Text.Of(_pair.Value).ToString(format, formatProvider)}";
+    static string? TryOfMany(this Type type, object value)
+    {
+      var enumerableArgs =
+        from i in type.GetInterfaces()
+        where i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEnumerable<>)
+        select i.GetGenericArguments().Single();
 
-    /// <summary>
-    /// Implicitly gets the <see cref="string"/> value of <paramref name="text"/>
-    /// </summary>
-    /// <param name="text">The text to implicitly convert</param>
-    /// <returns>The <see cref="string"/> value of <paramref name="text"/></returns>
-    public static implicit operator string(Text<TKey, TValue> text) =>
-      text.ToString();
+      var itemType = default(Type);
+
+      foreach(var enumerableArg in enumerableArgs)
+      {
+        if(enumerableArg.IsPair(out var keyType, out var valueType))
+        {
+          return Format.Pairs(value, keyType!, valueType!);
+        }
+
+        itemType ??= enumerableArg;
+      }
+
+      return itemType != null ? Format.Items(value, itemType) : null;
+    }
+
+    static bool IsPair(this Type type, out Type? keyType, out Type? valueType)
+    {
+      if(type.IsGenericType && type.GetGenericTypeDefinition() == typeof(KeyValuePair<,>))
+      {
+        var typeArgs = type.GetGenericArguments();
+
+        keyType = typeArgs[0];
+        valueType = typeArgs[1];
+        return true;
+      }
+
+      keyType = null;
+      valueType = null;
+      return false;
+    }
+
+    static class Format
+    {
+      static readonly MethodInfo _pair = typeof(Format).GetMethod(nameof(FormatPair), BindingFlags.Static | BindingFlags.NonPublic);
+      static readonly MethodInfo _pairs = typeof(Format).GetMethod(nameof(FormatPairs), BindingFlags.Static | BindingFlags.NonPublic);
+      static readonly MethodInfo _items = typeof(Format).GetMethod(nameof(FormatItems), BindingFlags.Static | BindingFlags.NonPublic);
+
+      internal static string Pair(object value, Type keyType, Type valueType) =>
+       (string) _pair.MakeGenericMethod(keyType, valueType).Invoke(null, new[] { value });
+
+      internal static string Pairs(object value, Type keyType, Type valueType) =>
+        (string) _pairs.MakeGenericMethod(keyType, valueType).Invoke(null, new[] { value });
+
+      internal static string Items(object value, Type itemType) =>
+        (string) _items.MakeGenericMethod(itemType).Invoke(null, new[] { value });
+
+      static string FormatPair<TKey, TValue>(KeyValuePair<TKey, TValue> pair) =>
+        $"[{Of(pair.Key)}] = {Of(pair.Value)}";
+
+      static string FormatPairs<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>>? pairs)
+      {
+        var text = new StringBuilder("{");
+
+        foreach(var pair in pairs ?? Enumerable.Empty<KeyValuePair<TKey, TValue>>())
+        {
+          if(text.Length > 1)
+          {
+            text.Append(",");
+          }
+
+          text.AppendLine().Append("  ").Append(Of(pair));
+        }
+
+        if(text.Length > 1)
+        {
+          text.AppendLine();
+        }
+
+        return text.Append("}").ToString();
+      }
+
+      static string FormatItems<T>(IEnumerable<T>? items)
+      {
+        var values = new List<string>();
+        var totalLength = 0;
+
+        foreach(var item in items ?? Enumerable.Empty<T>())
+        {
+          var value = Of(item);
+
+          values.Add(value);
+          totalLength += value.Length;
+        }
+
+        if(totalLength <= 60)
+        {
+          return $"[{string.Join(", ", values)}]";
+        }
+
+        var text = new StringBuilder();
+
+        foreach(var value in values)
+        {
+          if(text.Length == 0)
+          {
+            text.AppendLine("[");
+          }
+          else
+          {
+            text.AppendLine(",");
+          }
+
+          text.Append("  ").Append(value);
+        }
+
+        return text.AppendLine().Append("]").ToString();
+      }
+    }
   }
 }

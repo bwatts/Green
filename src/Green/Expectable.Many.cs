@@ -569,7 +569,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> Has1<T>(this ExpectMany<T> expect, IssueMany<T>? issue = null) =>
-      expect.HasCount(1, issue);
+      expect.That(t => t != null && t.GetOrFindCount() == 1, issue);
 
     /// <summary>
     /// Expects the target's count is 2
@@ -580,7 +580,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> Has2<T>(this ExpectMany<T> expect, IssueMany<T>? issue = null) =>
-      expect.HasCount(2, issue);
+      expect.That(t => t != null && t.GetOrFindCount() == 2, issue);
 
     /// <summary>
     /// Expects the target's count is 3
@@ -591,7 +591,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> Has3<T>(this ExpectMany<T> expect, IssueMany<T>? issue = null) =>
-      expect.HasCount(3, issue);
+      expect.That(t => t != null && t.GetOrFindCount() == 3, issue);
 
     /// <summary>
     /// Expects the target's count is 4
@@ -602,7 +602,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> Has4<T>(this ExpectMany<T> expect, IssueMany<T>? issue = null) =>
-      expect.HasCount(4, issue);
+      expect.That(t => t != null && t.GetOrFindCount() == 4, issue);
 
     /// <summary>
     /// Expects the target's count is 5
@@ -613,7 +613,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> Has5<T>(this ExpectMany<T> expect, IssueMany<T>? issue = null) =>
-      expect.HasCount(5, issue);
+      expect.That(t => t != null && t.GetOrFindCount() == 5, issue);
 
     /// <summary>
     /// Expects the target's count is 6
@@ -624,7 +624,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> Has6<T>(this ExpectMany<T> expect, IssueMany<T>? issue = null) =>
-      expect.HasCount(6, issue);
+      expect.That(t => t != null && t.GetOrFindCount() == 6, issue);
 
     /// <summary>
     /// Expects the target's count is 7
@@ -635,7 +635,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> Has7<T>(this ExpectMany<T> expect, IssueMany<T>? issue = null) =>
-      expect.HasCount(7, issue);
+      expect.That(t => t != null && t.GetOrFindCount() == 7, issue);
 
     /// <summary>
     /// Expects the target's count is 8
@@ -646,7 +646,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> Has8<T>(this ExpectMany<T> expect, IssueMany<T>? issue = null) =>
-      expect.HasCount(8, issue);
+      expect.That(t => t != null && t.GetOrFindCount() == 8, issue);
 
     /// <summary>
     /// Expects the target's count is 1 and item to meet <paramref name="expectItem"/>
@@ -658,7 +658,17 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> Has1<T>(this ExpectMany<T> expect, Action<T> expectItem, IssueMany<T>? issue = null) =>
-      expect.HasN(1, issue, items => expectItem?.Invoke(items[0]));
+      expect.That(t =>
+      {
+        if(!t.TryCountItems(1, out var items))
+        {
+          return false;
+        }
+
+        expectItem?.Invoke(items[0]);
+
+        return true;
+      }, issue.Operator(expectItem));
 
     /// <summary>
     /// Expects the target's count is 2 and items to meet <paramref name="expectItems"/>
@@ -670,7 +680,17 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> Has2<T>(this ExpectMany<T> expect, Action<T, T> expectItems, IssueMany<T>? issue = null) =>
-      expect.HasN(2, issue, items => expectItems?.Invoke(items[0], items[1]));
+      expect.That(t =>
+      {
+        if(!t.TryCountItems(2, out var items))
+        {
+          return false;
+        }
+
+        expectItems?.Invoke(items[0], items[1]);
+
+        return true;
+      }, issue.Operator(expectItems));
 
     /// <summary>
     /// Expects the target's count is 3 and items to meet <paramref name="expectItems"/>
@@ -682,7 +702,17 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> Has3<T>(this ExpectMany<T> expect, Action<T, T, T> expectItems, IssueMany<T>? issue = null) =>
-      expect.HasN(3, issue, items => expectItems?.Invoke(items[0], items[1], items[2]));
+      expect.That(t =>
+      {
+        if(!t.TryCountItems(3, out var items))
+        {
+          return false;
+        }
+
+        expectItems?.Invoke(items[0], items[1], items[2]);
+
+        return true;
+      }, issue.Operator(expectItems));
 
     /// <summary>
     /// Expects the target's count is 4 and items to meet <paramref name="expectItems"/>
@@ -694,7 +724,17 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> Has4<T>(this ExpectMany<T> expect, Action<T, T, T, T> expectItems, IssueMany<T>? issue = null) =>
-      expect.HasN(4, issue, items => expectItems?.Invoke(items[0], items[1], items[2], items[3]));
+      expect.That(t =>
+      {
+        if(!t.TryCountItems(4, out var items))
+        {
+          return false;
+        }
+
+        expectItems?.Invoke(items[0], items[1], items[2], items[3]);
+
+        return true;
+      }, issue.Operator(expectItems));
 
     /// <summary>
     /// Expects the target's count is 5 and items to meet <paramref name="expectItems"/>
@@ -706,7 +746,17 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> Has5<T>(this ExpectMany<T> expect, Action<T, T, T, T, T> expectItems, IssueMany<T>? issue = null) =>
-      expect.HasN(5, issue, items => expectItems?.Invoke(items[0], items[1], items[2], items[3], items[4]));
+      expect.That(t =>
+      {
+        if(!t.TryCountItems(5, out var items))
+        {
+          return false;
+        }
+
+        expectItems?.Invoke(items[0], items[1], items[2], items[3], items[4]);
+
+        return true;
+      }, issue.Operator(expectItems));
 
     /// <summary>
     /// Expects the target's count is 6 and items to meet <paramref name="expectItems"/>
@@ -718,7 +768,17 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> Has6<T>(this ExpectMany<T> expect, Action<T, T, T, T, T, T> expectItems, IssueMany<T>? issue = null) =>
-      expect.HasN(6, issue, items => expectItems?.Invoke(items[0], items[1], items[2], items[3], items[4], items[5]));
+      expect.That(t =>
+      {
+        if(!t.TryCountItems(6, out var items))
+        {
+          return false;
+        }
+
+        expectItems?.Invoke(items[0], items[1], items[2], items[3], items[4], items[5]);
+
+        return true;
+      }, issue.Operator(expectItems));
 
     /// <summary>
     /// Expects the target's count is 7 and items to meet <paramref name="expectItems"/>
@@ -730,7 +790,17 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> Has7<T>(this ExpectMany<T> expect, Action<T, T, T, T, T, T, T> expectItems, IssueMany<T>? issue = null) =>
-      expect.HasN(7, issue, items => expectItems?.Invoke(items[0], items[1], items[2], items[3], items[4], items[5], items[6]));
+      expect.That(t =>
+      {
+        if(!t.TryCountItems(7, out var items))
+        {
+          return false;
+        }
+
+        expectItems?.Invoke(items[0], items[1], items[2], items[3], items[4], items[5], items[6]);
+
+        return true;
+      }, issue.Operator(expectItems));
 
     /// <summary>
     /// Expects the target's count is 8 and items to meet <paramref name="expectItems"/>
@@ -742,20 +812,17 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<T> Has8<T>(this ExpectMany<T> expect, Action<T, T, T, T, T, T, T, T> expectItems, IssueMany<T>? issue = null) =>
-      expect.HasN(8, issue, items => expectItems?.Invoke(items[0], items[1], items[2], items[3], items[4], items[5], items[6], items[7]));
-
-    static ExpectMany<T> HasN<T>(this ExpectMany<T> expect, int n, IssueMany<T>? issue, Action<IList<T>> expectItems) =>
-        expect.That(t =>
+      expect.That(t =>
+      {
+        if(!t.TryCountItems(8, out var items))
         {
-          if(!t.TryCountItems(n, out var items))
-          {
-            return false;
-          }
+          return false;
+        }
 
-          expectItems(items);
+        expectItems?.Invoke(items[0], items[1], items[2], items[3], items[4], items[5], items[6], items[7]);
 
-          return true;
-        }, issue.Operator(n, expectItems));
+        return true;
+      }, issue.Operator(expectItems));
 
     //
     // Has (pairs)
@@ -2410,7 +2477,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> HasCount<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<Expect<int>> expectValue, IssueMany<TKey, TValue>? issue = null) =>
-      expect.That(t => t != null && expectValue.Invoke(t.GetOrFindCount()), issue.Operator(expectValue));
+      expect.That(t => t != null && t.GetOrFindCount() == 1, issue.Operator());
 
     /// <summary>
     /// Expects the target's count is 1
@@ -2422,7 +2489,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> Has1<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IssueMany<TKey, TValue>? issue = null) =>
-      expect.HasCount(1, issue);
+      expect.That(t => t != null && t.GetOrFindCount() == 2, issue.Operator());
 
     /// <summary>
     /// Expects the target's count is 2
@@ -2434,7 +2501,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> Has2<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IssueMany<TKey, TValue>? issue = null) =>
-      expect.HasCount(2, issue);
+      expect.That(t => t != null && t.GetOrFindCount() == 2, issue.Operator());
 
     /// <summary>
     /// Expects the target's count is 3
@@ -2446,7 +2513,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> Has3<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IssueMany<TKey, TValue>? issue = null) =>
-      expect.HasCount(3, issue);
+      expect.That(t => t != null && t.GetOrFindCount() == 3, issue.Operator());
 
     /// <summary>
     /// Expects the target's count is 4
@@ -2458,7 +2525,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> Has4<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IssueMany<TKey, TValue>? issue = null) =>
-      expect.HasCount(4, issue);
+      expect.That(t => t != null && t.GetOrFindCount() == 4, issue.Operator());
 
     /// <summary>
     /// Expects the target's count is 5
@@ -2470,7 +2537,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> Has5<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IssueMany<TKey, TValue>? issue = null) =>
-      expect.HasCount(5, issue);
+      expect.That(t => t != null && t.GetOrFindCount() == 5, issue.Operator());
 
     /// <summary>
     /// Expects the target's count is 6
@@ -2482,7 +2549,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> Has6<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IssueMany<TKey, TValue>? issue = null) =>
-      expect.HasCount(6, issue);
+      expect.That(t => t != null && t.GetOrFindCount() == 6, issue.Operator());
 
     /// <summary>
     /// Expects the target's count is 7
@@ -2494,7 +2561,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> Has7<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IssueMany<TKey, TValue>? issue = null) =>
-      expect.HasCount(7, issue);
+      expect.That(t => t != null && t.GetOrFindCount() == 7, issue.Operator());
 
     /// <summary>
     /// Expects the target's count is 8
@@ -2506,7 +2573,7 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> Has8<TKey, TValue>(this ExpectMany<TKey, TValue> expect, IssueMany<TKey, TValue>? issue = null) =>
-      expect.HasCount(8, issue);
+      expect.That(t => t != null && t.GetOrFindCount() == 8, issue.Operator());
 
     /// <summary>
     /// Expects the target's count is 1 and pair to meet <paramref name="expectPair"/>
@@ -2519,7 +2586,17 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> Has1<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<KeyValuePair<TKey, TValue>> expectPair, IssueMany<TKey, TValue>? issue = null) =>
-      expect.HasN(1, issue, items => expectPair?.Invoke(items[0]));
+      expect.That(t =>
+      {
+        if(!t.TryCountItems(1, out var items))
+        {
+          return false;
+        }
+
+        expectPair?.Invoke(items[0]);
+
+        return true;
+      }, issue.Operator(expectPair));
 
     /// <summary>
     /// Expects the target's count is 1 and pair to meet <paramref name="expectPair"/>
@@ -2532,111 +2609,178 @@ namespace Green
     /// <returns><see langword="this"/> to enable further expectations</returns>
     /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
     public static ExpectMany<TKey, TValue> Has1<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<TKey, TValue> expectPair, IssueMany<TKey, TValue>? issue = null) =>
-      expect.HasN(1, issue, items => expectPair?.Invoke(items[0].Key, items[0].Value));
-
-    /// <summary>
-    /// Expects the target's count is 2 and to meet <paramref name="expectItems"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="expectItems">The function the items are expected to meet</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> Has2<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>> expectItems, IssueMany<TKey, TValue>? issue = null) =>
-      expect.HasN(2, issue, items => expectItems?.Invoke(items[0], items[1]));
-
-    /// <summary>
-    /// Expects the target's count is 3 and to meet <paramref name="expectItems"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="expectItems">The function the items are expected to meet</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> Has3<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>> expectItems, IssueMany<TKey, TValue>? issue = null) =>
-      expect.HasN(3, issue, items => expectItems?.Invoke(items[0], items[1], items[2]));
-
-    /// <summary>
-    /// Expects the target's count is 4 and to meet <paramref name="expectItems"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="expectItems">The function the items are expected to meet</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> Has4<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>> expectItems, IssueMany<TKey, TValue>? issue = null) =>
-      expect.HasN(4, issue, items => expectItems?.Invoke(items[0], items[1], items[2], items[3]));
-
-    /// <summary>
-    /// Expects the target's count is 5 and to meet <paramref name="expectItems"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="expectItems">The function the items are expected to meet</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> Has5<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>> expectItems, IssueMany<TKey, TValue>? issue = null) =>
-      expect.HasN(5, issue, items => expectItems?.Invoke(items[0], items[1], items[2], items[3], items[4]));
-
-    /// <summary>
-    /// Expects the target's count is 6 and to meet <paramref name="expectItems"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="expectItems">The function the items are expected to meet</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> Has6<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>> expectItems, IssueMany<TKey, TValue>? issue = null) =>
-      expect.HasN(6, issue, items => expectItems?.Invoke(items[0], items[1], items[2], items[3], items[4], items[5]));
-
-    /// <summary>
-    /// Expects the target's count is 7 and to meet <paramref name="expectItems"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="expectItems">The function the items are expected to meet</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> Has7<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>> expectItems, IssueMany<TKey, TValue>? issue = null) =>
-      expect.HasN(7, issue, items => expectItems?.Invoke(items[0], items[1], items[2], items[3], items[4], items[5], items[6]));
-
-    /// <summary>
-    /// Expects the target's count is 8 and to meet <paramref name="expectItems"/>
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
-    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
-    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
-    /// <param name="expectItems">The function the items are expected to meet</param>
-    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
-    /// <returns><see langword="this"/> to enable further expectations</returns>
-    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
-    public static ExpectMany<TKey, TValue> Has8<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>> expectItems, IssueMany<TKey, TValue>? issue = null) =>
-      expect.HasN(8, issue, items => expectItems?.Invoke(items[0], items[1], items[2], items[3], items[4], items[5], items[6], items[7]));
-
-    static ExpectMany<TKey, TValue> HasN<TKey, TValue>(this ExpectMany<TKey, TValue> expect, int n, IssueMany<TKey, TValue>? issue, Action<IList<KeyValuePair<TKey, TValue>>> expectItems) =>
-        expect.That(t =>
+      expect.That(t =>
+      {
+        if(!t.TryCountItems(1, out var items))
         {
-          if(!t.TryCountItems(n, out var items))
-          {
-            return false;
-          }
+          return false;
+        }
 
-          expectItems(items);
+        expectPair?.Invoke(items[0].Key, items[0].Value);
 
-          return true;
-        }, issue.Operator(n, expectItems));
+        return true;
+      }, issue.Operator(expectPair));
+
+    /// <summary>
+    /// Expects the target's count is 2 and to meet <paramref name="expectPairs"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="expectPairs">The function the pairs are expected to meet</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> Has2<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>> expectPairs, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t =>
+      {
+        if(!t.TryCountItems(2, out var items))
+        {
+          return false;
+        }
+
+        expectPairs?.Invoke(items[0], items[1]);
+
+        return true;
+      }, issue.Operator(expectPairs));
+
+    /// <summary>
+    /// Expects the target's count is 3 and to meet <paramref name="expectPairs"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="expectPairs">The function the pairs are expected to meet</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> Has3<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>> expectPairs, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t =>
+      {
+        if(!t.TryCountItems(3, out var items))
+        {
+          return false;
+        }
+
+        expectPairs?.Invoke(items[0], items[1], items[2]);
+
+        return true;
+      }, issue.Operator(expectPairs));
+
+    /// <summary>
+    /// Expects the target's count is 4 and to meet <paramref name="expectPairs"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="expectPairs">The function the pairs are expected to meet</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> Has4<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>> expectPairs, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t =>
+      {
+        if(!t.TryCountItems(4, out var items))
+        {
+          return false;
+        }
+
+        expectPairs?.Invoke(items[0], items[1], items[2], items[3]);
+
+        return true;
+      }, issue.Operator(expectPairs));
+
+    /// <summary>
+    /// Expects the target's count is 5 and to meet <paramref name="expectPairs"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="expectPairs">The function the pairs are expected to meet</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> Has5<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>> expectPairs, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t =>
+      {
+        if(!t.TryCountItems(5, out var items))
+        {
+          return false;
+        }
+
+        expectPairs?.Invoke(items[0], items[1], items[2], items[3], items[4]);
+
+        return true;
+      }, issue.Operator(expectPairs));
+
+    /// <summary>
+    /// Expects the target's count is 6 and to meet <paramref name="expectPairs"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="expectPairs">The function the pairs are expected to meet</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> Has6<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>> expectPairs, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t =>
+      {
+        if(!t.TryCountItems(6, out var items))
+        {
+          return false;
+        }
+
+        expectPairs?.Invoke(items[0], items[1], items[2], items[3], items[4], items[5]);
+
+        return true;
+      }, issue.Operator(expectPairs));
+
+    /// <summary>
+    /// Expects the target's count is 7 and to meet <paramref name="expectPairs"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="expectPairs">The function the pairs are expected to meet</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> Has7<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>> expectPairs, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t =>
+      {
+        if(!t.TryCountItems(7, out var items))
+        {
+          return false;
+        }
+
+        expectPairs?.Invoke(items[0], items[1], items[2], items[3], items[4], items[5], items[6]);
+
+        return true;
+      }, issue.Operator(expectPairs));
+
+    /// <summary>
+    /// Expects the target's count is 8 and to meet <paramref name="expectPairs"/>
+    /// </summary>
+    /// <typeparam name="TKey">The type of keys in the target dictionary</typeparam>
+    /// <typeparam name="TValue">The type of values in the target dictionary</typeparam>
+    /// <param name="expect">The query that throws <see cref="ExpectException"/> if not met</param>
+    /// <param name="expectPairs">The function the pairs are expected to meet</param>
+    /// <param name="issue">The function that provides a message if the expectation is not met, else <see langword="null"/> for the default format</param>
+    /// <returns><see langword="this"/> to enable further expectations</returns>
+    /// <exception cref="ExpectException">Thrown if the expectation is not met</exception>
+    public static ExpectMany<TKey, TValue> Has8<TKey, TValue>(this ExpectMany<TKey, TValue> expect, Action<KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>, KeyValuePair<TKey, TValue>> expectPairs, IssueMany<TKey, TValue>? issue = null) =>
+      expect.That(t =>
+      {
+        if(!t.TryCountItems(1, out var items))
+        {
+          return false;
+        }
+
+        expectPairs?.Invoke(items[0], items[1], items[2], items[3], items[4], items[5], items[6], items[7]);
+
+        return true;
+      }, issue.Operator(expectPairs));
 
     //
     // Checked arguments

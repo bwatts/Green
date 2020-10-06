@@ -207,58 +207,5 @@ namespace Green
     /// <returns>An asynchronous invocation of <paramref name="target"/></returns>
     public static Task ThrowsAsync(Func<Task> target, Issue<Func<Task>>? issue = null) =>
       Green.Expect.ThrowsAsync(target, issue);
-
-    //
-    // Text
-    //
-
-    /// <summary>
-    /// Gets text for <paramref name="value"/> that defers formatting until requested
-    /// </summary>
-    /// <typeparam name="T">The type of value to format</typeparam>
-    /// <param name="value">The value to format</param>
-    /// <returns>Text for <paramref name="value"/> that defers formatting until requested</returns>
-    public static Text<T> Text<T>(T value) =>
-      Green.Text.Of(value);
-
-    /// <summary>
-    /// Gets text for <paramref name="pair"/> that defers formatting until requested
-    /// </summary>
-    /// <typeparam name="TKey">The type of key in the pair to format</typeparam>
-    /// <typeparam name="TValue">The type of value in the pair to format</typeparam>
-    /// <param name="pair">The pair to format</param>
-    /// <returns>Text for <paramref name="pair"/> that defers formatting until requested</returns>
-    public static Text<TKey, TValue> TextPair<TKey, TValue>(KeyValuePair<TKey, TValue> pair) =>
-      Green.Text.Pair(pair);
-
-    /// <summary>
-    /// Gets text for <paramref name="key"/> and <paramref name="value"/> that defers formatting until requested
-    /// </summary>
-    /// <typeparam name="TKey">The type of key in the pair to format</typeparam>
-    /// <typeparam name="TValue">The type of value in the pair to format</typeparam>
-    /// <param name="key">The key in the pair to format</param>
-    /// <param name="value">The key in the pair to format</param>
-    /// <returns>Text for <paramref name="key"/> and <paramref name="value"/> that defers formatting until requested</returns>
-    public static Text<TKey, TValue> TextPair<TKey, TValue>(TKey key, TValue value) =>
-      Green.Text.Pair(key, value);
-
-    /// <summary>
-    /// Gets text for <paramref name="items"/> that defers formatting until requested
-    /// </summary>
-    /// <typeparam name="T">The type of items in the sequence to format</typeparam>
-    /// <param name="items">The sequence to format</param>
-    /// <returns>Text for <paramref name="items"/> that defers formatting until requested</returns>
-    public static TextMany<T> Many<T>(IEnumerable<T> items) =>
-      Green.Text.Many(items);
-
-    /// <summary>
-    /// Gets text for <paramref name="pairs"/> that defers formatting until requested
-    /// </summary>
-    /// <typeparam name="TKey">The type of keys in the dictionary to format</typeparam>
-    /// <typeparam name="TValue">The type of values in the dictionary to format</typeparam>
-    /// <param name="pairs">The dictionary to format</param>
-    /// <returns>Text for <paramref name="pairs"/> that defers formatting until requested</returns>
-    public static TextMany<TKey, TValue> Many<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> pairs) =>
-      Green.Text.Many(pairs);
   }
 }
