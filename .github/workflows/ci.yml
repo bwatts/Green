@@ -1,0 +1,37 @@
+name: Build->Test->Pack->Publish
+
+on:
+  push:
+    branches:
+    - main
+    - release-*
+    tags:
+    - '*.*.*'
+  pull_request:
+
+env:
+  DOTNET_NOLOGO: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.402'
+
+    - name: Build
+      run: dotnet build --configuration Release --nologo
+
+    - name: Test
+      run: dotnet test --configuration Release --no-build --nologo
+
+    - name: Pack
+      run: dotnet pack src/Green/Green.csproj --output pack-output --configuration Release
+
+    - name: Push
+      run: dotnet nuget push pack-output/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}

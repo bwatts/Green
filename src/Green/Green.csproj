@@ -5,7 +5,24 @@
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageId>Green</PackageId>
+    <Authors>Green Contributors</Authors>
+    <Company>Green</Company>
+    <Product>Green</Product>
+    <Version>1.0.0-beta.1</Version>
+    <Copyright>2020 Green Contributors</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageProjectUrl>https://github.com/bwatts/Green</PackageProjectUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageTags>green;dotnet;dotnet-core;csharp;utilities;validation;assertions;testing</PackageTags>
+    <RepositoryUrl>https://github.com/bwatts/Green</RepositoryUrl>
+    <Description>A .NET library focused on applying Boolean functions to target data</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../../icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
