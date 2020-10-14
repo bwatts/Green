@@ -2,9 +2,9 @@
 
 <br/>
 
-Green is a [.NET library](https://www.nuget.org/packages/Green) focused on applying **Boolean functions** to target data.
+Green is a standalone [.NET Standard 2.1 library](https://www.nuget.org/packages/Green) focused on **applying Boolean functions to target data**.
 
-Ask better questions with [checks](#checks) and [expectations](#expectations)!
+Ask better questions with [checks](#21-checks) and [expectations](#22-expectations)!
 
 ## Purpose
 
@@ -45,7 +45,7 @@ That said, expectations are really useful in tests.
 
 ### 1.1. Install
 
-Green is a [.NET Standard 2.0 package](https://www.nuget.org/packages/Green) available on NuGet:
+Green is a [.NET Standard 2.1 package](https://www.nuget.org/packages/Green) available on NuGet:
 
 ```bash
 dotnet add package Green
