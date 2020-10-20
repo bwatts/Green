@@ -10,7 +10,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasDate(this Check<DateTime> check, DateTime value) =>
+    public static Check<DateTime> Date(this Check<DateTime> check, DateTime value) =>
       check.That(t => t.Date == value);
 
     /// <summary>
@@ -19,7 +19,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasDay(this Check<DateTime> check, int value) =>
+    public static Check<DateTime> Day(this Check<DateTime> check, int value) =>
       check.That(t => t.Day == value);
 
     /// <summary>
@@ -28,7 +28,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasDayOfWeek(this Check<DateTime> check, DayOfWeek value) =>
+    public static Check<DateTime> DayOfWeek(this Check<DateTime> check, DayOfWeek value) =>
       check.That(t => t.DayOfWeek == value);
 
     /// <summary>
@@ -37,7 +37,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasDayOfYear(this Check<DateTime> check, int value) =>
+    public static Check<DateTime> DayOfYear(this Check<DateTime> check, int value) =>
       check.That(t => t.DayOfYear == value);
 
     /// <summary>
@@ -46,7 +46,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasHour(this Check<DateTime> check, int value) =>
+    public static Check<DateTime> Hour(this Check<DateTime> check, int value) =>
       check.That(t => t.Hour == value);
 
     /// <summary>
@@ -55,7 +55,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasKind(this Check<DateTime> check, DateTimeKind value) =>
+    public static Check<DateTime> Kind(this Check<DateTime> check, DateTimeKind value) =>
       check.That(t => t.Kind == value);
 
     /// <summary>
@@ -64,7 +64,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasMillisecond(this Check<DateTime> check, int value) =>
+    public static Check<DateTime> Millisecond(this Check<DateTime> check, int value) =>
       check.That(t => t.Millisecond == value);
 
     /// <summary>
@@ -73,7 +73,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasMinute(this Check<DateTime> check, int value) =>
+    public static Check<DateTime> Minute(this Check<DateTime> check, int value) =>
       check.That(t => t.Minute == value);
 
     /// <summary>
@@ -82,7 +82,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasMonth(this Check<DateTime> check, int value) =>
+    public static Check<DateTime> Month(this Check<DateTime> check, int value) =>
       check.That(t => t.Month == value);
 
     /// <summary>
@@ -91,7 +91,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasSecond(this Check<DateTime> check, int value) =>
+    public static Check<DateTime> Second(this Check<DateTime> check, int value) =>
       check.That(t => t.Second == value);
 
     /// <summary>
@@ -100,7 +100,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasTicks(this Check<DateTime> check, long value) =>
+    public static Check<DateTime> Ticks(this Check<DateTime> check, long value) =>
       check.That(t => t.Ticks == value);
 
     /// <summary>
@@ -109,7 +109,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasTimeOfDay(this Check<DateTime> check, TimeSpan value) =>
+    public static Check<DateTime> TimeOfDay(this Check<DateTime> check, TimeSpan value) =>
       check.That(t => t.TimeOfDay == value);
 
     /// <summary>
@@ -118,32 +118,56 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasYear(this Check<DateTime> check, int value) =>
+    public static Check<DateTime> Year(this Check<DateTime> check, int value) =>
       check.That(t => t.Year == value);
 
     /// <summary>
-    /// Checks if the target falls on a leap year
+    /// Checks if the target is a leap year
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> IsLeapYear(this Check<DateTime> check) =>
-      check.That(t => DateTime.IsLeapYear(t.Year));
+    public static Check<DateTime> LeapYear(this Check<DateTime> check) =>
+      check.That(t => System.DateTime.IsLeapYear(t.Year));
 
     /// <summary>
     /// Checks if the target is a weekday
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> IsWeekday(this Check<DateTime> check) =>
-      check.That(t => t.DayOfWeek != DayOfWeek.Saturday && t.DayOfWeek != DayOfWeek.Sunday);
+    public static Check<DateTime> Weekday(this Check<DateTime> check) =>
+      check.That(t => t.DayOfWeek != System.DayOfWeek.Saturday && t.DayOfWeek != System.DayOfWeek.Sunday);
 
     /// <summary>
     /// Checks if the target is a weekend day
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> IsWeekend(this Check<DateTime> check) =>
-      check.That(t => t.DayOfWeek == DayOfWeek.Saturday || t.DayOfWeek == DayOfWeek.Sunday);
+    public static Check<DateTime> Weekend(this Check<DateTime> check) =>
+      check.That(t => t.DayOfWeek == System.DayOfWeek.Saturday || t.DayOfWeek == System.DayOfWeek.Sunday);
+
+    /// <summary>
+    /// Checks if the target is not a leap year
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<DateTime> NotLeapYear(this Check<DateTime> check) =>
+      check.Not(t => System.DateTime.IsLeapYear(t.Year));
+
+    /// <summary>
+    /// Checks if the target is a not weekday
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<DateTime> NotWeekday(this Check<DateTime> check) =>
+      check.Not(t => t.DayOfWeek != System.DayOfWeek.Saturday && t.DayOfWeek != System.DayOfWeek.Sunday);
+
+    /// <summary>
+    /// Checks if the target is not a weekend day
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<DateTime> NotWeekend(this Check<DateTime> check) =>
+      check.Not(t => t.DayOfWeek == System.DayOfWeek.Saturday || t.DayOfWeek == System.DayOfWeek.Sunday);
 
     //
     // DateTime (values)
@@ -155,7 +179,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasDate(this Check<DateTime> check, Func<Check<DateTime>, bool> checkValue) =>
+    public static Check<DateTime> Date(this Check<DateTime> check, Func<Check<DateTime>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Date));
 
     /// <summary>
@@ -164,7 +188,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasDay(this Check<DateTime> check, Func<Check<int>, bool> checkValue) =>
+    public static Check<DateTime> Day(this Check<DateTime> check, Func<Check<int>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Day));
 
     /// <summary>
@@ -173,7 +197,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasDayOfWeek(this Check<DateTime> check, Func<Check<DayOfWeek>, bool> checkValue) =>
+    public static Check<DateTime> DayOfWeek(this Check<DateTime> check, Func<Check<DayOfWeek>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.DayOfWeek));
 
     /// <summary>
@@ -182,7 +206,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasDayOfYear(this Check<DateTime> check, Func<Check<int>, bool> checkValue) =>
+    public static Check<DateTime> DayOfYear(this Check<DateTime> check, Func<Check<int>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.DayOfYear));
 
     /// <summary>
@@ -191,7 +215,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasHour(this Check<DateTime> check, Func<Check<int>, bool> checkValue) =>
+    public static Check<DateTime> Hour(this Check<DateTime> check, Func<Check<int>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Hour));
 
     /// <summary>
@@ -200,7 +224,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasKind(this Check<DateTime> check, Func<Check<DateTimeKind>, bool> checkValue) =>
+    public static Check<DateTime> Kind(this Check<DateTime> check, Func<Check<DateTimeKind>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Kind));
 
     /// <summary>
@@ -209,7 +233,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasMillisecond(this Check<DateTime> check, Func<Check<int>, bool> checkValue) =>
+    public static Check<DateTime> Millisecond(this Check<DateTime> check, Func<Check<int>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Millisecond));
 
     /// <summary>
@@ -218,7 +242,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasMinute(this Check<DateTime> check, Func<Check<int>, bool> checkValue) =>
+    public static Check<DateTime> Minute(this Check<DateTime> check, Func<Check<int>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Minute));
 
     /// <summary>
@@ -227,7 +251,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasMonth(this Check<DateTime> check, Func<Check<int>, bool> checkValue) =>
+    public static Check<DateTime> Month(this Check<DateTime> check, Func<Check<int>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Month));
 
     /// <summary>
@@ -236,7 +260,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasSecond(this Check<DateTime> check, Func<Check<int>, bool> checkValue) =>
+    public static Check<DateTime> Second(this Check<DateTime> check, Func<Check<int>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Second));
 
     /// <summary>
@@ -245,7 +269,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasTicks(this Check<DateTime> check, Func<Check<long>, bool> checkValue) =>
+    public static Check<DateTime> Ticks(this Check<DateTime> check, Func<Check<long>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Ticks));
 
     /// <summary>
@@ -254,7 +278,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasTimeOfDay(this Check<DateTime> check, Func<Check<TimeSpan>, bool> checkValue) =>
+    public static Check<DateTime> TimeOfDay(this Check<DateTime> check, Func<Check<TimeSpan>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.TimeOfDay));
 
     /// <summary>
@@ -263,7 +287,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTime> HasYear(this Check<DateTime> check, Func<Check<int>, bool> checkValue) =>
+    public static Check<DateTime> Year(this Check<DateTime> check, Func<Check<int>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Year));
 
     //
@@ -276,7 +300,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasDate(this Check<DateTimeOffset> check, DateTime value) =>
+    public static Check<DateTimeOffset> Date(this Check<DateTimeOffset> check, DateTime value) =>
       check.That(t => t.Date == value);
 
     /// <summary>
@@ -285,7 +309,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasDateTime(this Check<DateTimeOffset> check, DateTime value) =>
+    public static Check<DateTimeOffset> DateTime(this Check<DateTimeOffset> check, DateTime value) =>
       check.That(t => t.DateTime == value);
 
     /// <summary>
@@ -294,7 +318,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasDay(this Check<DateTimeOffset> check, int value) =>
+    public static Check<DateTimeOffset> Day(this Check<DateTimeOffset> check, int value) =>
       check.That(t => t.Day == value);
 
     /// <summary>
@@ -303,7 +327,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasDayOfWeek(this Check<DateTimeOffset> check, DayOfWeek value) =>
+    public static Check<DateTimeOffset> DayOfWeek(this Check<DateTimeOffset> check, DayOfWeek value) =>
       check.That(t => t.DayOfWeek == value);
 
     /// <summary>
@@ -312,7 +336,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasDayOfYear(this Check<DateTimeOffset> check, int value) =>
+    public static Check<DateTimeOffset> DayOfYear(this Check<DateTimeOffset> check, int value) =>
       check.That(t => t.DayOfYear == value);
 
     /// <summary>
@@ -321,7 +345,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasHour(this Check<DateTimeOffset> check, int value) =>
+    public static Check<DateTimeOffset> Hour(this Check<DateTimeOffset> check, int value) =>
       check.That(t => t.Hour == value);
 
     /// <summary>
@@ -330,7 +354,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasLocalDateTime(this Check<DateTimeOffset> check, DateTime value) =>
+    public static Check<DateTimeOffset> LocalDateTime(this Check<DateTimeOffset> check, DateTime value) =>
       check.That(t => t.LocalDateTime == value);
 
     /// <summary>
@@ -339,7 +363,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasMillisecond(this Check<DateTimeOffset> check, int value) =>
+    public static Check<DateTimeOffset> Millisecond(this Check<DateTimeOffset> check, int value) =>
       check.That(t => t.Millisecond == value);
 
     /// <summary>
@@ -348,7 +372,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasMinute(this Check<DateTimeOffset> check, int value) =>
+    public static Check<DateTimeOffset> Minute(this Check<DateTimeOffset> check, int value) =>
       check.That(t => t.Minute == value);
 
     /// <summary>
@@ -357,7 +381,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasMonth(this Check<DateTimeOffset> check, int value) =>
+    public static Check<DateTimeOffset> Month(this Check<DateTimeOffset> check, int value) =>
       check.That(t => t.Month == value);
 
     /// <summary>
@@ -366,7 +390,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasOffset(this Check<DateTimeOffset> check, TimeSpan value) =>
+    public static Check<DateTimeOffset> Offset(this Check<DateTimeOffset> check, TimeSpan value) =>
       check.That(t => t.Offset == value);
 
     /// <summary>
@@ -375,7 +399,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasSecond(this Check<DateTimeOffset> check, int value) =>
+    public static Check<DateTimeOffset> Second(this Check<DateTimeOffset> check, int value) =>
       check.That(t => t.Second == value);
 
     /// <summary>
@@ -384,7 +408,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasTicks(this Check<DateTimeOffset> check, long value) =>
+    public static Check<DateTimeOffset> Ticks(this Check<DateTimeOffset> check, long value) =>
       check.That(t => t.Ticks == value);
 
     /// <summary>
@@ -393,7 +417,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasTimeOfDay(this Check<DateTimeOffset> check, TimeSpan value) =>
+    public static Check<DateTimeOffset> TimeOfDay(this Check<DateTimeOffset> check, TimeSpan value) =>
       check.That(t => t.TimeOfDay == value);
 
     /// <summary>
@@ -402,7 +426,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasUtcDateTime(this Check<DateTimeOffset> check, DateTime value) =>
+    public static Check<DateTimeOffset> UtcDateTime(this Check<DateTimeOffset> check, DateTime value) =>
       check.That(t => t.UtcDateTime == value);
 
     /// <summary>
@@ -411,7 +435,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasUtcTicks(this Check<DateTimeOffset> check, long value) =>
+    public static Check<DateTimeOffset> UtcTicks(this Check<DateTimeOffset> check, long value) =>
       check.That(t => t.UtcTicks == value);
 
     /// <summary>
@@ -420,32 +444,56 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasYear(this Check<DateTimeOffset> check, int value) =>
+    public static Check<DateTimeOffset> Year(this Check<DateTimeOffset> check, int value) =>
       check.That(t => t.Year == value);
 
     /// <summary>
-    /// Checks if the target falls on a leap year
+    /// Checks if the target is a leap year
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> IsLeapYear(this Check<DateTimeOffset> check) =>
-      check.That(t => t != null && DateTime.IsLeapYear(t.Year));
+    public static Check<DateTimeOffset> LeapYear(this Check<DateTimeOffset> check) =>
+      check.That(t => t != null && System.DateTime.IsLeapYear(t.Year));
 
     /// <summary>
     /// Checks if the target is a weekday
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> IsWeekday(this Check<DateTimeOffset> check) =>
-      check.That(t => t.DayOfWeek != DayOfWeek.Saturday && t.DayOfWeek != DayOfWeek.Sunday);
+    public static Check<DateTimeOffset> Weekday(this Check<DateTimeOffset> check) =>
+      check.That(t => t.DayOfWeek != System.DayOfWeek.Saturday && t.DayOfWeek != System.DayOfWeek.Sunday);
 
     /// <summary>
     /// Checks if the target is a weekend
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> IsWeekend(this Check<DateTimeOffset> check) =>
-      check.That(t => t.DayOfWeek == DayOfWeek.Saturday || t.DayOfWeek == DayOfWeek.Sunday);
+    public static Check<DateTimeOffset> Weekend(this Check<DateTimeOffset> check) =>
+      check.That(t => t.DayOfWeek == System.DayOfWeek.Saturday || t.DayOfWeek == System.DayOfWeek.Sunday);
+
+    /// <summary>
+    /// Checks if the target is not a leap year
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<DateTimeOffset> NotLeapYear(this Check<DateTimeOffset> check) =>
+      check.Not(t => t != null && System.DateTime.IsLeapYear(t.Year));
+
+    /// <summary>
+    /// Checks if the target is a weekday
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<DateTimeOffset> NotWeekday(this Check<DateTimeOffset> check) =>
+      check.Not(t => t.DayOfWeek != System.DayOfWeek.Saturday && t.DayOfWeek != System.DayOfWeek.Sunday);
+
+    /// <summary>
+    /// Checks if the target is a weekend
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<DateTimeOffset> NotWeekend(this Check<DateTimeOffset> check) =>
+      check.Not(t => t.DayOfWeek == System.DayOfWeek.Saturday || t.DayOfWeek == System.DayOfWeek.Sunday);
 
     //
     // DateTimeOffset (values)
@@ -457,7 +505,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasDate(this Check<DateTimeOffset> check, Func<Check<DateTime>, bool> checkValue) =>
+    public static Check<DateTimeOffset> Date(this Check<DateTimeOffset> check, Func<Check<DateTime>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Date));
 
     /// <summary>
@@ -466,7 +514,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasDateTime(this Check<DateTimeOffset> check, Func<Check<DateTime>, bool> checkValue) =>
+    public static Check<DateTimeOffset> DateTime(this Check<DateTimeOffset> check, Func<Check<DateTime>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.DateTime));
 
     /// <summary>
@@ -475,7 +523,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasDay(this Check<DateTimeOffset> check, Func<Check<int>, bool> checkValue) =>
+    public static Check<DateTimeOffset> Day(this Check<DateTimeOffset> check, Func<Check<int>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Day));
 
     /// <summary>
@@ -484,7 +532,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasDayOfWeek(this Check<DateTimeOffset> check, Func<Check<DayOfWeek>, bool> checkValue) =>
+    public static Check<DateTimeOffset> DayOfWeek(this Check<DateTimeOffset> check, Func<Check<DayOfWeek>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.DayOfWeek));
 
     /// <summary>
@@ -493,7 +541,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasDayOfYear(this Check<DateTimeOffset> check, Func<Check<int>, bool> checkValue) =>
+    public static Check<DateTimeOffset> DayOfYear(this Check<DateTimeOffset> check, Func<Check<int>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.DayOfYear));
 
     /// <summary>
@@ -502,7 +550,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasHour(this Check<DateTimeOffset> check, Func<Check<int>, bool> checkValue) =>
+    public static Check<DateTimeOffset> Hour(this Check<DateTimeOffset> check, Func<Check<int>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Hour));
 
     /// <summary>
@@ -511,7 +559,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasLocalDateTime(this Check<DateTimeOffset> check, Func<Check<DateTime>, bool> checkValue) =>
+    public static Check<DateTimeOffset> LocalDateTime(this Check<DateTimeOffset> check, Func<Check<DateTime>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.LocalDateTime));
 
     /// <summary>
@@ -520,7 +568,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasMillisecond(this Check<DateTimeOffset> check, Func<Check<int>, bool> checkValue) =>
+    public static Check<DateTimeOffset> Millisecond(this Check<DateTimeOffset> check, Func<Check<int>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Millisecond));
 
     /// <summary>
@@ -529,7 +577,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasMinute(this Check<DateTimeOffset> check, Func<Check<int>, bool> checkValue) =>
+    public static Check<DateTimeOffset> Minute(this Check<DateTimeOffset> check, Func<Check<int>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Minute));
 
     /// <summary>
@@ -538,7 +586,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasMonth(this Check<DateTimeOffset> check, Func<Check<int>, bool> checkValue) =>
+    public static Check<DateTimeOffset> Month(this Check<DateTimeOffset> check, Func<Check<int>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Month));
 
     /// <summary>
@@ -547,7 +595,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasOffset(this Check<DateTimeOffset> check, Func<Check<TimeSpan>, bool> checkValue) =>
+    public static Check<DateTimeOffset> Offset(this Check<DateTimeOffset> check, Func<Check<TimeSpan>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Offset));
 
     /// <summary>
@@ -556,7 +604,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasSecond(this Check<DateTimeOffset> check, Func<Check<int>, bool> checkValue) =>
+    public static Check<DateTimeOffset> Second(this Check<DateTimeOffset> check, Func<Check<int>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Second));
 
     /// <summary>
@@ -565,7 +613,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasTicks(this Check<DateTimeOffset> check, Func<Check<long>, bool> checkValue) =>
+    public static Check<DateTimeOffset> Ticks(this Check<DateTimeOffset> check, Func<Check<long>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Ticks));
 
     /// <summary>
@@ -574,7 +622,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasTimeOfDay(this Check<DateTimeOffset> check, Func<Check<TimeSpan>, bool> checkValue) =>
+    public static Check<DateTimeOffset> TimeOfDay(this Check<DateTimeOffset> check, Func<Check<TimeSpan>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.TimeOfDay));
 
     /// <summary>
@@ -583,7 +631,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasUtcDateTime(this Check<DateTimeOffset> check, Func<Check<DateTime>, bool> checkValue) =>
+    public static Check<DateTimeOffset> UtcDateTime(this Check<DateTimeOffset> check, Func<Check<DateTime>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.UtcDateTime));
 
     /// <summary>
@@ -592,7 +640,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasUtcTicks(this Check<DateTimeOffset> check, Func<Check<long>, bool> checkValue) =>
+    public static Check<DateTimeOffset> UtcTicks(this Check<DateTimeOffset> check, Func<Check<long>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.UtcTicks));
 
     /// <summary>
@@ -601,7 +649,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<DateTimeOffset> HasYear(this Check<DateTimeOffset> check, Func<Check<int>, bool> checkValue) =>
+    public static Check<DateTimeOffset> Year(this Check<DateTimeOffset> check, Func<Check<int>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Year));
 
     //
@@ -614,7 +662,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasDays(this Check<TimeSpan> check, int value) =>
+    public static Check<TimeSpan> Days(this Check<TimeSpan> check, int value) =>
       check.That(t => t.Days == value);
 
     /// <summary>
@@ -623,7 +671,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasDuration(this Check<TimeSpan> check, TimeSpan value) =>
+    public static Check<TimeSpan> Duration(this Check<TimeSpan> check, TimeSpan value) =>
       check.That(t => t.Duration() == value);
 
     /// <summary>
@@ -632,7 +680,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasHours(this Check<TimeSpan> check, int value) =>
+    public static Check<TimeSpan> Hours(this Check<TimeSpan> check, int value) =>
       check.That(t => t.Hours == value);
 
     /// <summary>
@@ -641,7 +689,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasMilliseconds(this Check<TimeSpan> check, int value) =>
+    public static Check<TimeSpan> Milliseconds(this Check<TimeSpan> check, int value) =>
       check.That(t => t.Milliseconds == value);
 
     /// <summary>
@@ -650,7 +698,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasMinutes(this Check<TimeSpan> check, int value) =>
+    public static Check<TimeSpan> Minutes(this Check<TimeSpan> check, int value) =>
       check.That(t => t.Minutes == value);
 
     /// <summary>
@@ -659,7 +707,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasNegated(this Check<TimeSpan> check, TimeSpan value) =>
+    public static Check<TimeSpan> Negated(this Check<TimeSpan> check, TimeSpan value) =>
       check.That(t => t.Negate() == value);
 
     /// <summary>
@@ -668,7 +716,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasSeconds(this Check<TimeSpan> check, int value) =>
+    public static Check<TimeSpan> Seconds(this Check<TimeSpan> check, int value) =>
       check.That(t => t.Seconds == value);
 
     /// <summary>
@@ -677,7 +725,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasTicks(this Check<TimeSpan> check, long value) =>
+    public static Check<TimeSpan> Ticks(this Check<TimeSpan> check, long value) =>
       check.That(t => t.Ticks == value);
 
     /// <summary>
@@ -686,7 +734,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasTotalDays(this Check<TimeSpan> check, double value) =>
+    public static Check<TimeSpan> TotalDays(this Check<TimeSpan> check, double value) =>
       check.That(t => t.TotalDays == value);
 
     /// <summary>
@@ -695,7 +743,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasTotalHours(this Check<TimeSpan> check, double value) =>
+    public static Check<TimeSpan> TotalHours(this Check<TimeSpan> check, double value) =>
       check.That(t => t.TotalHours == value);
 
     /// <summary>
@@ -704,7 +752,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasTotalMilliseconds(this Check<TimeSpan> check, double value) =>
+    public static Check<TimeSpan> TotalMilliseconds(this Check<TimeSpan> check, double value) =>
       check.That(t => t.TotalMilliseconds == value);
 
     /// <summary>
@@ -713,7 +761,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasTotalMinutes(this Check<TimeSpan> check, double value) =>
+    public static Check<TimeSpan> TotalMinutes(this Check<TimeSpan> check, double value) =>
       check.That(t => t.TotalMinutes == value);
 
     /// <summary>
@@ -722,7 +770,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasTotalSeconds(this Check<TimeSpan> check, double value) =>
+    public static Check<TimeSpan> TotalSeconds(this Check<TimeSpan> check, double value) =>
       check.That(t => t.TotalSeconds == value);
 
     //
@@ -735,7 +783,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasDays(this Check<TimeSpan> check, Func<Check<int>, bool> checkValue) =>
+    public static Check<TimeSpan> Days(this Check<TimeSpan> check, Func<Check<int>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Days));
 
     /// <summary>
@@ -744,7 +792,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasDuration(this Check<TimeSpan> check, Func<Check<TimeSpan>, bool> checkValue) =>
+    public static Check<TimeSpan> Duration(this Check<TimeSpan> check, Func<Check<TimeSpan>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Duration()));
 
     /// <summary>
@@ -753,7 +801,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasHours(this Check<TimeSpan> check, Func<Check<int>, bool> checkValue) =>
+    public static Check<TimeSpan> Hours(this Check<TimeSpan> check, Func<Check<int>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Hours));
 
     /// <summary>
@@ -762,7 +810,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasMilliseconds(this Check<TimeSpan> check, Func<Check<int>, bool> checkValue) =>
+    public static Check<TimeSpan> Milliseconds(this Check<TimeSpan> check, Func<Check<int>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Milliseconds));
 
     /// <summary>
@@ -771,7 +819,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasMinutes(this Check<TimeSpan> check, Func<Check<int>, bool> checkValue) =>
+    public static Check<TimeSpan> Minutes(this Check<TimeSpan> check, Func<Check<int>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Minutes));
 
     /// <summary>
@@ -780,7 +828,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasNegated(this Check<TimeSpan> check, Func<Check<TimeSpan>, bool> checkValue) =>
+    public static Check<TimeSpan> Negated(this Check<TimeSpan> check, Func<Check<TimeSpan>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Negate()));
 
     /// <summary>
@@ -789,7 +837,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasSeconds(this Check<TimeSpan> check, Func<Check<int>, bool> checkValue) =>
+    public static Check<TimeSpan> Seconds(this Check<TimeSpan> check, Func<Check<int>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Seconds));
 
     /// <summary>
@@ -798,7 +846,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasTicks(this Check<TimeSpan> check, Func<Check<long>, bool> checkValue) =>
+    public static Check<TimeSpan> Ticks(this Check<TimeSpan> check, Func<Check<long>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.Ticks));
 
     /// <summary>
@@ -807,7 +855,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasTotalDays(this Check<TimeSpan> check, Func<Check<double>, bool> checkValue) =>
+    public static Check<TimeSpan> TotalDays(this Check<TimeSpan> check, Func<Check<double>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.TotalDays));
 
     /// <summary>
@@ -816,7 +864,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasTotalHours(this Check<TimeSpan> check, Func<Check<double>, bool> checkValue) =>
+    public static Check<TimeSpan> TotalHours(this Check<TimeSpan> check, Func<Check<double>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.TotalHours));
 
     /// <summary>
@@ -825,7 +873,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasTotalMilliseconds(this Check<TimeSpan> check, Func<Check<double>, bool> checkValue) =>
+    public static Check<TimeSpan> TotalMilliseconds(this Check<TimeSpan> check, Func<Check<double>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.TotalMilliseconds));
 
     /// <summary>
@@ -834,7 +882,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasTotalMinutes(this Check<TimeSpan> check, Func<Check<double>, bool> checkValue) =>
+    public static Check<TimeSpan> TotalMinutes(this Check<TimeSpan> check, Func<Check<double>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.TotalMinutes));
 
     /// <summary>
@@ -843,7 +891,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeSpan> HasTotalSeconds(this Check<TimeSpan> check, Func<Check<double>, bool> checkValue) =>
+    public static Check<TimeSpan> TotalSeconds(this Check<TimeSpan> check, Func<Check<double>, bool> checkValue) =>
       check.That(t => checkValue.Invoke(t.TotalSeconds));
 
     //
@@ -856,7 +904,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeZoneInfo> HasBaseUtcOffset(this Check<TimeZoneInfo> check, TimeSpan value) =>
+    public static Check<TimeZoneInfo> BaseUtcOffset(this Check<TimeZoneInfo> check, TimeSpan value) =>
       check.That(t => t?.BaseUtcOffset == value);
 
     /// <summary>
@@ -865,7 +913,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeZoneInfo> HasDaylightName(this Check<TimeZoneInfo> check, string value) =>
+    public static Check<TimeZoneInfo> DaylightName(this Check<TimeZoneInfo> check, string value) =>
       check.That(t => t?.DaylightName == value);
 
     /// <summary>
@@ -874,7 +922,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeZoneInfo> HasDisplayName(this Check<TimeZoneInfo> check, string value) =>
+    public static Check<TimeZoneInfo> DisplayName(this Check<TimeZoneInfo> check, string value) =>
       check.That(t => t?.DisplayName == value);
 
     /// <summary>
@@ -883,7 +931,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeZoneInfo> HasId(this Check<TimeZoneInfo> check, string value) =>
+    public static Check<TimeZoneInfo> Id(this Check<TimeZoneInfo> check, string value) =>
       check.That(t => t?.Id == value);
 
     /// <summary>
@@ -892,7 +940,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeZoneInfo> HasSerializedString(this Check<TimeZoneInfo> check, string value) =>
+    public static Check<TimeZoneInfo> SerializedString(this Check<TimeZoneInfo> check, string value) =>
       check.That(t => t?.ToSerializedString() == value);
 
     /// <summary>
@@ -901,7 +949,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeZoneInfo> HasStandardName(this Check<TimeZoneInfo> check, string value) =>
+    public static Check<TimeZoneInfo> StandardName(this Check<TimeZoneInfo> check, string value) =>
       check.That(t => t?.StandardName == value);
 
     /// <summary>
@@ -911,6 +959,14 @@ namespace Green
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static Check<TimeZoneInfo> SupportsDaylightSavingTime(this Check<TimeZoneInfo> check) =>
       check.That(t => t?.SupportsDaylightSavingTime == true);
+
+    /// <summary>
+    /// Checks if the target's <see cref="TimeZoneInfo.SupportsDaylightSavingTime"/> property is <see langword="false"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<TimeZoneInfo> DoesNotSupportDaylightSavingTime(this Check<TimeZoneInfo> check) =>
+      check.That(t => t?.SupportsDaylightSavingTime == false);
 
     //
     // TimeZoneInfo (values)
@@ -922,7 +978,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeZoneInfo> HasBaseUtcOffset(this Check<TimeZoneInfo> check, Func<Check<TimeSpan>, bool> checkValue) =>
+    public static Check<TimeZoneInfo> BaseUtcOffset(this Check<TimeZoneInfo> check, Func<Check<TimeSpan>, bool> checkValue) =>
       check.That(t => t != null && checkValue.Invoke(t.BaseUtcOffset));
 
     /// <summary>
@@ -931,7 +987,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeZoneInfo> HasDaylightName(this Check<TimeZoneInfo> check, Func<Check<string>, bool> checkValue) =>
+    public static Check<TimeZoneInfo> DaylightName(this Check<TimeZoneInfo> check, Func<Check<string>, bool> checkValue) =>
       check.That(t => t != null && checkValue.Invoke(t.DaylightName));
 
     /// <summary>
@@ -940,7 +996,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeZoneInfo> HasDisplayName(this Check<TimeZoneInfo> check, Func<Check<string>, bool> checkValue) =>
+    public static Check<TimeZoneInfo> DisplayName(this Check<TimeZoneInfo> check, Func<Check<string>, bool> checkValue) =>
       check.That(t => t != null && checkValue.Invoke(t.DisplayName));
 
     /// <summary>
@@ -949,7 +1005,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeZoneInfo> HasId(this Check<TimeZoneInfo> check, Func<Check<string>, bool> checkValue) =>
+    public static Check<TimeZoneInfo> Id(this Check<TimeZoneInfo> check, Func<Check<string>, bool> checkValue) =>
       check.That(t => t != null && checkValue.Invoke(t.Id));
 
     /// <summary>
@@ -958,7 +1014,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeZoneInfo> HasSerializedString(this Check<TimeZoneInfo> check, Func<Check<string>, bool> checkValue) =>
+    public static Check<TimeZoneInfo> SerializedString(this Check<TimeZoneInfo> check, Func<Check<string>, bool> checkValue) =>
       check.That(t => t != null && checkValue.Invoke(t.ToSerializedString()));
 
     /// <summary>
@@ -967,7 +1023,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<TimeZoneInfo> HasStandardName(this Check<TimeZoneInfo> check, Func<Check<string>, bool> checkValue) =>
+    public static Check<TimeZoneInfo> StandardName(this Check<TimeZoneInfo> check, Func<Check<string>, bool> checkValue) =>
       check.That(t => t != null && checkValue.Invoke(t.StandardName));
   }
 }

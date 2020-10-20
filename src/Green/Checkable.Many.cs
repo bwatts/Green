@@ -7,246 +7,146 @@ namespace Green
   public static partial class Checkable
   {
     /// <summary>
-    /// Checks if the target has an item that equals <paramref name="value"/> using <paramref name="comparer"/>
+    /// Checks if the target is empty
+    /// </summary>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static CheckMany<T> Empty<T>(this CheckMany<T> check) =>
+      check.That(t => t != null && !t.Any());
+
+    /// <summary>
+    /// Checks if the target is not empty
+    /// </summary>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static CheckMany<T> NotEmpty<T>(this CheckMany<T> check) =>
+      check.That(t => t != null && t.Any());
+
+    /// <summary>
+    /// Checks if the target contains <paramref name="value"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> Has<T>(this CheckMany<T> check, T value, IEqualityComparer<T> comparer) =>
+    public static CheckMany<T> Contains<T>(this CheckMany<T> check, T value, IEqualityComparer<T>? comparer = null) =>
       check.That(t => t != null && t.Contains(value, comparer));
 
     /// <summary>
-    /// Checks if the target has an item that equals <paramref name="value"/> using <see cref="EqualityComparer{T}.Default"/>
+    /// Checks if the target does not contain <paramref name="value"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
+    /// <param name="comparer">The object that performs the comparison, or <see cref="EqualityComparer{T}.Default"/></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> Has<T>(this CheckMany<T> check, T value) =>
-      check.Has(value, EqualityComparer<T>.Default);
-
-    /// <summary>
-    /// Checks if the target does not have an item that equals <paramref name="value"/> using <paramref name="comparer"/>
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare</param>
-    /// <param name="comparer">The object that performs the comparison</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> DoesNotHave<T>(this CheckMany<T> check, T value, IEqualityComparer<T> comparer) =>
+    public static CheckMany<T> DoesNotContain<T>(this CheckMany<T> check, T value, IEqualityComparer<T>? comparer = null) =>
       check.Not(t => t != null && t.Contains(value, comparer));
 
-    /// <summary>
-    /// Checks if the target does not have an item that equals <paramref name="value"/> using <see cref="EqualityComparer{T}.Default"/>
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> DoesNotHave<T>(this CheckMany<T> check, T value) =>
-      check.DoesNotHave(value, EqualityComparer<T>.Default);
-
     //
-    // All
+    // ContainsAll
     //
 
     /// <summary>
-    /// Checks if the target has all of the items in <paramref name="values"/> using <paramref name="comparer"/>
+    /// Checks if the target contains all of the items in <paramref name="values"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="values">The values to compare</param>
-    /// <param name="comparer">The object that performs the comparison</param>
+    /// <param name="comparer">The object that performs the comparison, or <see cref="EqualityComparer{T}.Default"/></param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasAll<T>(this CheckMany<T> check, IEnumerable<T> values, IEqualityComparer<T> comparer) =>
+    public static CheckMany<T> ContainsAll<T>(this CheckMany<T> check, IEnumerable<T> values, IEqualityComparer<T>? comparer = null) =>
       check.That(t => t != null && values != null && t.IsSupersetOf(values, comparer));
 
     /// <summary>
-    /// Checks if the target has all of the items in <paramref name="values"/> using <see cref="EqualityComparer{T}.Default"/>
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="values">The values to compare</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasAll<T>(this CheckMany<T> check, IEnumerable<T> values) =>
-      check.HasAll(values, EqualityComparer<T>.Default);
-
-    /// <summary>
-    /// Checks if the target has all of the items in <paramref name="values"/> using <see cref="EqualityComparer{T}.Default"/>
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="values">The values to compare</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasAll<T>(this CheckMany<T> check, params T[] values) =>
-      check.HasAll(values.AsEnumerable(), EqualityComparer<T>.Default);
-
-    /// <summary>
-    /// Checks if the target has all of the items in <paramref name="values"/> using <paramref name="comparer"/>
+    /// Checks if the target contains all of the items in <paramref name="values"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <param name="values">The values to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasAll<T>(this CheckMany<T> check, IEqualityComparer<T> comparer, params T[] values) =>
-      check.HasAll(values.AsEnumerable(), comparer);
+    public static CheckMany<T> ContainsAll<T>(this CheckMany<T> check, IEqualityComparer<T> comparer, params T[] values) =>
+      check.ContainsAll(values.AsEnumerable(), comparer);
 
     /// <summary>
-    /// Checks if the target has all items resulting in <see langword="true"/> from <paramref name="checkItem"/>
+    /// Checks if the target contains all of the items in <paramref name="values"/>
+    /// </summary>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="values">The values to compare</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static CheckMany<T> ContainsAll<T>(this CheckMany<T> check, params T[] values) =>
+      check.ContainsAll(values.AsEnumerable());
+
+    /// <summary>
+    /// Checks if the target's items all result in <see langword="true"/> from <paramref name="checkItem"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkItem">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasAll<T>(this CheckMany<T> check, Func<Check<T>, bool> checkItem) =>
+    public static CheckMany<T> ContainsAll<T>(this CheckMany<T> check, Func<Check<T>, bool> checkItem) =>
       check.That(t => t != null && t.All(checkItem.Invoke));
 
-    //
-    // Any
-    //
-
     /// <summary>
-    /// Checks if the target has any of the items in <paramref name="values"/> using <paramref name="comparer"/>
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="values">The values to compare</param>
-    /// <param name="comparer">The object that performs the comparison</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasAny<T>(this CheckMany<T> check, IEnumerable<T> values, IEqualityComparer<T> comparer) =>
-      check.That(t => t != null && values != null && t.IntersectsWith(values, comparer));
-
-    /// <summary>
-    /// Checks if the target has any of the items in <paramref name="values"/> using <see cref="EqualityComparer{T}.Default"/>
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="values">The values to compare</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasAny<T>(this CheckMany<T> check, IEnumerable<T> values) =>
-      check.HasAny(values, EqualityComparer<T>.Default);
-
-    /// <summary>
-    /// Checks if the target has any of the items in <paramref name="values"/> using <see cref="EqualityComparer{T}.Default"/>
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="values">The values to compare</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasAny<T>(this CheckMany<T> check, params T[] values) =>
-      check.HasAny(values.AsEnumerable());
-
-    /// <summary>
-    /// Checks if the target has any of the items in <paramref name="values"/> using <paramref name="comparer"/>
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="comparer">The object that performs the comparison</param>
-    /// <param name="values">The values to compare</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasAny<T>(this CheckMany<T> check, IEqualityComparer<T> comparer, params T[] values) =>
-      check.HasAny(values.AsEnumerable(), comparer);
-
-    /// <summary>
-    /// Checks if the target has any items resulting in <see langword="true"/> from <paramref name="checkItem"/>
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="checkItem">The function that checks each item</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasAny<T>(this CheckMany<T> check, Func<Check<T>, bool> checkItem) =>
-      check.That(t => t != null && t.Any(checkItem.Invoke));
-
-    /// <summary>
-    /// Checks if the target has any items
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasAny<T>(this CheckMany<T> check) =>
-      check.That(t => t != null && t.Any());
-
-    //
-    // None
-    //
-
-    /// <summary>
-    /// Checks if the target has none of the items in <paramref name="values"/> using <paramref name="comparer"/>
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="values">The values to compare</param>
-    /// <param name="comparer">The object that performs the comparison</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasNone<T>(this CheckMany<T> check, IEnumerable<T> values, IEqualityComparer<T> comparer) =>
-      check.That(t => t != null && values != null && !t.IntersectsWith(values, comparer));
-
-    /// <summary>
-    /// Checks if the target has none of the items in <paramref name="values"/> using <see cref="EqualityComparer{T}.Default"/>
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="values">The values to compare</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasNone<T>(this CheckMany<T> check, IEnumerable<T> values) =>
-      check.HasNone(values, EqualityComparer<T>.Default);
-
-    /// <summary>
-    /// Checks if the target has none of the items in <paramref name="values"/> using <see cref="EqualityComparer{T}.Default"/>
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="values">The values to compare</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasNone<T>(this CheckMany<T> check, params T[] values) =>
-      check.HasNone(values.AsEnumerable());
-
-    /// <summary>
-    /// Checks if the target has none of the items in <paramref name="values"/> using <paramref name="comparer"/>
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="comparer">The object that performs the comparison</param>
-    /// <param name="values">The values to compare</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasNone<T>(this CheckMany<T> check, IEqualityComparer<T> comparer, params T[] values) =>
-      check.HasNone(values.AsEnumerable(), comparer);
-
-    /// <summary>
-    /// Checks if the target has no items resulting in <see langword="true"/> from <paramref name="checkItem"/>
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="checkItem">The function that checks each item</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasNone<T>(this CheckMany<T> check, Func<Check<T>, bool> checkItem) =>
-      check.That(t => t != null && !t.Any(checkItem.Invoke));
-
-    /// <summary>
-    /// Checks if the target has no items
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasNone<T>(this CheckMany<T> check) =>
-      check.That(t => t != null && !t.Any());
-
-    //
-    // Where
-    //
-
-    /// <summary>
-    /// Checks if the target has all items resulting in <see langword="true"/> from <paramref name="predicate"/>
+    /// Checks if the target's items all items result in <see langword="true"/> from <paramref name="predicate"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="predicate">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasAllWhere<T>(this CheckMany<T> check, Func<T, bool> predicate) =>
+    public static CheckMany<T> ContainsAllWhere<T>(this CheckMany<T> check, Func<T, bool> predicate) =>
       check.That(t => t != null && predicate != null && t.All(predicate));
+
+    //
+    // ContainsAny
+    //
+
+    /// <summary>
+    /// Checks if the target has any of the items in <paramref name="values"/>
+    /// </summary>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="values">The values to compare</param>
+    /// <param name="comparer">The object that performs the comparison</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static CheckMany<T> ContainsAny<T>(this CheckMany<T> check, IEnumerable<T> values, IEqualityComparer<T>? comparer = null) =>
+      check.That(t => t != null && values != null && t.IntersectsWith(values, comparer));
+
+    /// <summary>
+    /// Checks if the target has any of the items in <paramref name="values"/>
+    /// </summary>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="comparer">The object that performs the comparison</param>
+    /// <param name="values">The values to compare</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static CheckMany<T> ContainsAny<T>(this CheckMany<T> check, IEqualityComparer<T> comparer, params T[] values) =>
+      check.ContainsAny(values.AsEnumerable(), comparer);
+
+    /// <summary>
+    /// Checks if the target has any of the items in <paramref name="values"/> using <see cref="EqualityComparer{T}.Default"/>
+    /// </summary>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="values">The values to compare</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static CheckMany<T> ContainsAny<T>(this CheckMany<T> check, params T[] values) =>
+      check.ContainsAny(values.AsEnumerable());
+
+    /// <summary>
+    /// Checks if any of the target's items result in <see langword="true"/> from <paramref name="checkItem"/>
+    /// </summary>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="checkItem">The function that checks each item</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static CheckMany<T> ContainsAny<T>(this CheckMany<T> check, Func<Check<T>, bool> checkItem) =>
+      check.That(t => t != null && t.Any(checkItem.Invoke));
 
     /// <summary>
     /// Checks if the target has any items resulting in <see langword="true"/> from <paramref name="predicate"/>
@@ -255,8 +155,54 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="predicate">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasAnyWhere<T>(this CheckMany<T> check, Func<T, bool> predicate) =>
+    public static CheckMany<T> ContainsAnyWhere<T>(this CheckMany<T> check, Func<T, bool> predicate) =>
       check.That(t => t != null && predicate != null && t.Any(predicate));
+
+    //
+    // ContainsNone
+    //
+
+    /// <summary>
+    /// Checks if the target contains none of the items in <paramref name="values"/> using <paramref name="comparer"/>
+    /// </summary>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="values">The values to compare</param>
+    /// <param name="comparer">The object that performs the comparison</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static CheckMany<T> ContainsNone<T>(this CheckMany<T> check, IEnumerable<T> values, IEqualityComparer<T>? comparer = null) =>
+      check.That(t => t != null && values != null && !t.IntersectsWith(values, comparer));
+
+    /// <summary>
+    /// Checks if the target contains none of the items in <paramref name="values"/> using <see cref="EqualityComparer{T}.Default"/>
+    /// </summary>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="values">The values to compare</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static CheckMany<T> ContainsNone<T>(this CheckMany<T> check, params T[] values) =>
+      check.ContainsNone(values.AsEnumerable());
+
+    /// <summary>
+    /// Checks if the target contains none of the items in <paramref name="values"/> using <paramref name="comparer"/>
+    /// </summary>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="comparer">The object that performs the comparison</param>
+    /// <param name="values">The values to compare</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static CheckMany<T> ContainsNone<T>(this CheckMany<T> check, IEqualityComparer<T> comparer, params T[] values) =>
+      check.ContainsNone(values.AsEnumerable(), comparer);
+
+    /// <summary>
+    /// Checks if none of the target's items result in <see langword="true"/> from <paramref name="checkItem"/>
+    /// </summary>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="checkItem">The function that checks each item</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static CheckMany<T> ContainsNone<T>(this CheckMany<T> check, Func<Check<T>, bool> checkItem) =>
+      check.That(t => t != null && !t.Any(checkItem.Invoke));
 
     /// <summary>
     /// Checks if the target has no items resulting in <see langword="true"/> from <paramref name="predicate"/>
@@ -265,68 +211,70 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="predicate">The function that checks each item</param>
     /// <returns>A continuation of <paramref name="check"/> check this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasNoneWhere<T>(this CheckMany<T> check, Func<T, bool> predicate) =>
+    public static CheckMany<T> ContainsNoneWhere<T>(this CheckMany<T> check, Func<T, bool> predicate) =>
       check.That(t => t != null && predicate != null && !t.Any(predicate));
 
-    /// <summary>
-    /// Checks if the target has <paramref name="count"/> items resulting in <see langword="true"/> from <paramref name="predicate"/>
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="count">The number of items that should result in <see langword="true"/> from <paramref name="predicate"/></param>
-    /// <param name="predicate">The function that checks each item</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasCountWhere<T>(this CheckMany<T> check, int count, Func<T, bool> predicate) =>
-      check.That(t => t != null && predicate != null && t.Count(predicate) == count);
-
     //
-    // Same
+    // EqualTo
     //
 
     /// <summary>
-    /// Checks if the target has the same items as <paramref name="items"/> using <paramref name="comparer"/>
+    /// Checks if the target has the same items as <paramref name="items"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="items">The items to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasSame<T>(this CheckMany<T> check, IEnumerable<T> items, IEqualityComparer<T> comparer) =>
+    public static CheckMany<T> EqualTo<T>(this CheckMany<T> check, IEnumerable<T> items, IEqualityComparer<T>? comparer = null) =>
       check.That(t => t != null && items != null && t.OrderBy(item => item).SequenceEqual(items.OrderBy(item => item), comparer));
 
     /// <summary>
-    /// Checks if the target has the same items as <paramref name="items"/> using <see cref="EqualityComparer{T}.Default"/>
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="items">The items to compare</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasSame<T>(this CheckMany<T> check, IEnumerable<T> items) =>
-      check.HasSame(items, EqualityComparer<T>.Default);
-
-    /// <summary>
-    /// Checks if the target has the same items as <paramref name="items"/> using <see cref="EqualityComparer{T}.Default"/>
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="items">The items to compare</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasSame<T>(this CheckMany<T> check, params T[] items) =>
-      check.HasSame(items.AsEnumerable());
-
-    /// <summary>
-    /// Checks if the target has the same items as <paramref name="items"/> using <paramref name="comparer"/>
+    /// Checks if the target has the same items as <paramref name="items"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <param name="items">The items to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasSame<T>(this CheckMany<T> check, IEqualityComparer<T> comparer, params T[] items) =>
-      check.HasSame(items.AsEnumerable(), comparer);
+    public static CheckMany<T> EqualTo<T>(this CheckMany<T> check, IEqualityComparer<T> comparer, params T[] items) =>
+      check.EqualTo(items.AsEnumerable(), comparer);
+
+    /// <summary>
+    /// Checks if the target has the same items as <paramref name="items"/>
+    /// </summary>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="items">The items to compare</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static CheckMany<T> EqualTo<T>(this CheckMany<T> check, params T[] items) =>
+      check.EqualTo(items.AsEnumerable());
+
+
+
+
+
+
+
+    /// <summary>
+    /// Checks if the target has the same items as <paramref name="items"/> using <see cref="EqualityComparer{T}.Default"/>
+    /// </summary>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="items">The items to compare</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static CheckMany<T> EquivalentTo<T>(this CheckMany<T> check, params T[] items) =>
+      check.EqualTo(items.AsEnumerable());
+
+
+
+
+
+
+
 
     //
-    // Same in order
+    // SameInOrderAs
     //
 
     /// <summary>
@@ -337,30 +285,10 @@ namespace Green
     /// <param name="items">The items to compare</param>
     /// <param name="comparer">The object that performs the comparison</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasSameInOrder<T>(this CheckMany<T> check, IEnumerable<T> items, IEqualityComparer<T> comparer) =>
+    public static CheckMany<T> SameAsInOrder<T>(this CheckMany<T> check, IEnumerable<T> items, IEqualityComparer<T>? comparer = null) =>
       check.That(t => t != null && items != null && t.SequenceEqual(items, comparer));
 
     /// <summary>
-    /// Checks if the target has the same items in the same order as <paramref name="items"/> using <see cref="EqualityComparer{T}.Default"/>
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="items">The items to compare</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasSameInOrder<T>(this CheckMany<T> check, IEnumerable<T> items) =>
-      check.HasSameInOrder(items, EqualityComparer<T>.Default);
-
-    /// <summary>
-    /// Checks if the target has the same items in the same order as <paramref name="items"/> using <see cref="EqualityComparer{T}.Default"/>
-    /// </summary>
-    /// <typeparam name="T">The type of items in the target sequence</typeparam>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="items">The items to compare</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasSameInOrder<T>(this CheckMany<T> check, params T[] items) =>
-      check.HasSameInOrder(items.AsEnumerable());
-
-    /// <summary>
     /// Checks if the target has the same items in the same order as <paramref name="items"/> using <paramref name="comparer"/>
     /// </summary>
     /// <typeparam name="T">The type of items in the target sequence</typeparam>
@@ -368,8 +296,18 @@ namespace Green
     /// <param name="comparer">The object that performs the comparison</param>
     /// <param name="items">The items to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static CheckMany<T> HasSameInOrder<T>(this CheckMany<T> check, IEqualityComparer<T> comparer, params T[] items) =>
-      check.HasSameInOrder(items.AsEnumerable(), comparer);
+    public static CheckMany<T> SameInOrderAs<T>(this CheckMany<T> check, IEqualityComparer<T> comparer, params T[] items) =>
+      check.SameInOrderAs(items.AsEnumerable(), comparer);
+
+    /// <summary>
+    /// Checks if the target has the same items in the same order as <paramref name="items"/> using <see cref="EqualityComparer{T}.Default"/>
+    /// </summary>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="items">The items to compare</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static CheckMany<T> SameInOrderAs<T>(this CheckMany<T> check, params T[] items) =>
+      check.SameInOrderAs(items.AsEnumerable());
 
     //
     // Counts
@@ -546,6 +484,29 @@ namespace Green
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
     public static CheckMany<T> Has8<T>(this CheckMany<T> check, Func<T, T, T, T, T, T, T, T, bool> checkItems) =>
       check.That(t => t.TryCountItems(8, out var items) && (checkItems == null || checkItems(items[0], items[1], items[2], items[3], items[4], items[5], items[6], items[7])));
+
+
+
+
+
+
+
+    /// <summary>
+    /// Checks if the target has <paramref name="count"/> items resulting in <see langword="true"/> from <paramref name="predicate"/>
+    /// </summary>
+    /// <typeparam name="T">The type of items in the target sequence</typeparam>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="count">The number of items that should result in <see langword="true"/> from <paramref name="predicate"/></param>
+    /// <param name="predicate">The function that checks each item</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static CheckMany<T> HasCountWhere<T>(this CheckMany<T> check, int count, Func<T, bool> predicate) =>
+      check.That(t => t != null && predicate != null && t.Count(predicate) == count);
+
+
+
+
+
+
 
     //
     // Has (pairs)

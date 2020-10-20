@@ -70,6 +70,25 @@ namespace Green
     public static CheckMany<TKey, TValue> ManyNot<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> target) =>
       new CheckMany<TKey, TValue>(target, false);
 
+
+
+
+    public static Check<T> Nullable<T>(T? target) where T : class =>
+      default;
+
+    public static Check<T> Nullable<T>(T? target) where T : struct =>
+      default;
+
+    public static Check<T> NullableNot<T>(T? target) where T : class =>
+      default;
+
+    public static Check<T> NullableNot<T>(T? target) where T : struct =>
+      default;
+
+
+
+
+
     internal interface ICheck<T>
     {
       T Target { get; }

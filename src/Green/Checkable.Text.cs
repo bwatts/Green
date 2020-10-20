@@ -9,30 +9,73 @@ namespace Green
   public static partial class Checkable
   {
     /// <summary>
-    /// Checks if the target equals <paramref name="value"/>
+    /// Checks if the target is equal to <paramref name="value"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<string> Is(this Check<string> check, string value) =>
+    public static Check<string> EqualTo(this Check<string> check, string? value) =>
       check.That(t => string.Equals(t, value));
 
     /// <summary>
-    /// Checks if the target equals <paramref name="value"/> using <paramref name="comparison"/>
+    /// Checks if the target is equal to <paramref name="value"/> using <paramref name="comparison"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare using <paramref name="comparison"/></param>
     /// <param name="comparison">The type of comparison to perform</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<string> Is(this Check<string> check, string value, StringComparison comparison) =>
+    public static Check<string> EqualTo(this Check<string> check, string? value, StringComparison comparison) =>
       check.That(t => string.Equals(t, value, comparison));
 
     /// <summary>
-    /// Checks if the target equals the empty string ("")
+    /// Checks if the target is equal to <paramref name="value"/> using <see cref="StringComparison.OrdinalIgnoreCase"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="value">The value to compare using <paramref name="comparison"/></param>
+    /// <param name="comparison">The type of comparison to perform</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<string> EquivalentTo(this Check<string> check, string? value) =>
+      check.EqualTo(value, StringComparison.OrdinalIgnoreCase);
+
+    /// <summary>
+    /// Checks if the target is not equal to <paramref name="value"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="value">The value to compare</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<string> NotEqualTo(this Check<string> check, string? value) =>
+      check.Not(t => string.Equals(t, value));
+
+    /// <summary>
+    /// Checks if the target is not equal to <paramref name="value"/> using <paramref name="comparison"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="value">The value to compare using <paramref name="comparison"/></param>
+    /// <param name="comparison">The type of comparison to perform</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<string> NotEqualTo(this Check<string> check, string? value, StringComparison comparison) =>
+      check.Not(t => string.Equals(t, value, comparison));
+
+    /// <summary>
+    /// Checks if the target is not equal to <paramref name="value"/> using <see cref="StringComparison.OrdinalIgnoreCase"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="value">The value to compare using <paramref name="comparison"/></param>
+    /// <param name="comparison">The type of comparison to perform</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<string> NotEquivalentTo(this Check<string> check, string? value) =>
+      check.NotEqualTo(value, StringComparison.OrdinalIgnoreCase);
+
+    //
+    // Values
+    //
+
+    /// <summary>
+    /// Checks if the target is equal to <see cref="string.Empty"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<string> IsEmpty(this Check<string> check) =>
+    public static Check<string> Empty(this Check<string> check) =>
       check.That(t => t == "");
 
     /// <summary>
@@ -40,15 +83,15 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<string> IsWhiteSpace(this Check<string> check) =>
+    public static Check<string> WhiteSpace(this Check<string> check) =>
       check.That(t => t != null && string.IsNullOrWhiteSpace(t));
 
     /// <summary>
-    /// Checks if the target is <see langword="null"/> or the empty string
+    /// Checks if the target is <see langword="null"/> or <see cref="string.Empty"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<string> IsNullOrEmpty(this Check<string> check) =>
+    public static Check<string> NullOrEmpty(this Check<string> check) =>
       check.That(string.IsNullOrEmpty);
 
     /// <summary>
@@ -56,25 +99,15 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<string> IsNullOrWhiteSpace(this Check<string> check) =>
+    public static Check<string> NullOrWhiteSpace(this Check<string> check) =>
       check.That(string.IsNullOrWhiteSpace);
 
     /// <summary>
-    /// Checks if the target does not equal <paramref name="value"/> using <paramref name="comparison"/>
-    /// </summary>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare using <paramref name="comparison"/></param>
-    /// <param name="comparison">The type of comparison to perform</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<string> IsNot(this Check<string> check, string value, StringComparison comparison) =>
-      check.Not(t => string.Equals(t, value, comparison));
-
-    /// <summary>
-    /// Checks if the target does not equal the empty string
+    /// Checks if the target is not equal to <see cref="string.Empty"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<string> IsNotEmpty(this Check<string> check) =>
+    public static Check<string> NotEmpty(this Check<string> check) =>
       check.That(t => t != "");
 
     /// <summary>
@@ -82,7 +115,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<string> IsNotWhiteSpace(this Check<string> check) =>
+    public static Check<string> NotWhiteSpace(this Check<string> check) =>
       check.Not(t => t != null && string.IsNullOrWhiteSpace(t));
 
     /// <summary>
@@ -90,28 +123,28 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<string> IsNotNullOrEmpty(this Check<string> check) =>
+    public static Check<string> NotNullOrEmpty(this Check<string> check) =>
       check.Not(string.IsNullOrEmpty);
 
     /// <summary>
-    /// Checks if the target is <see langword="null"/> or whitespace only
+    /// Checks if the target is not <see langword="null"/> or whitespace only
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<string> IsNotNullOrWhiteSpace(this Check<string> check) =>
+    public static Check<string> NotNullOrWhiteSpace(this Check<string> check) =>
       check.Not(string.IsNullOrWhiteSpace);
 
     //
-    // Has
+    // Length
     //
 
     /// <summary>
-    /// Checks if the <see cref="string.Length"/> property equals <paramref name="value"/>
+    /// Checks if the <see cref="string.Length"/> property is equal to <paramref name="value"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The length to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<string> HasLength(this Check<string> check, int value) =>
+    public static Check<string> Length(this Check<string> check, int value) =>
       check.That(t => t?.Length == value);
 
     /// <summary>
@@ -120,18 +153,40 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<string> HasLength(this Check<string> check, Func<Check<int>, bool> checkValue) =>
+    public static Check<string> Length(this Check<string> check, Func<Check<int>, bool> checkValue) =>
       check.That(t => t != null && checkValue.Invoke(t.Length));
 
     /// <summary>
-    /// Checks if the character at <paramref name="index"/> in the target equals <paramref name="value"/>
+    /// Checks if the <see cref="string.Length"/> property is not equal to <paramref name="value"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="value">The length to compare</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<string> NotLength(this Check<string> check, int value) =>
+      check.That(t => t?.Length != value);
+
+    /// <summary>
+    /// Checks if the <see cref="string.Length"/> property results in <see langword="false"/> from <paramref name="checkValue"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="checkValue">The function that checks the property value</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<string> NotLength(this Check<string> check, Func<Check<int>, bool> checkValue) =>
+      check.Not(t => t != null && checkValue.Invoke(t.Length));
+
+    //
+    // Char
+    //
+
+    /// <summary>
+    /// Checks if the character at <paramref name="index"/> in the target is equal to <paramref name="value"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="index">The index of the character in the string</param>
     /// <param name="value">The character to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    /// <exception cref="IndexOutOfRangeException">Thrown if <paramref name="index"/> is greater than or equal to the string's length</exception>
-    public static Check<string> HasChar(this Check<string> check, int index, char value) =>
+    /// <exception cref="IndexOutOfRangeException">Thrown if <paramref name="index"/>  greater than or equal to the string's length</exception>
+    public static Check<string> Char(this Check<string> check, int index, char value) =>
       check.That(t => t != null && index < t.Length && t[index] == value);
 
     /// <summary>
@@ -141,11 +196,32 @@ namespace Green
     /// <param name="index">The index of the character in the string</param>
     /// <param name="checkValue">The function that checks the character</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<string> HasChar(this Check<string> check, int index, Func<Check<char>, bool> checkValue) =>
+    public static Check<string> Char(this Check<string> check, int index, Func<Check<char>, bool> checkValue) =>
       check.That(t => t != null && index < t.Length && checkValue.Invoke(t[index]));
 
+    /// <summary>
+    /// Checks if the character at <paramref name="index"/> in the target is not equal to <paramref name="value"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="index">The index of the character in the string</param>
+    /// <param name="value">The character to compare</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    /// <exception cref="IndexOutOfRangeException">Thrown if <paramref name="index"/>  greater than or equal to the string's length</exception>
+    public static Check<string> NotChar(this Check<string> check, int index, char value) =>
+      check.Not(t => t != null && index < t.Length && t[index] == value);
+
+    /// <summary>
+    /// Checks if the character at <paramref name="index"/> in the target results in <see langword="false"/> from <paramref name="checkValue"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="index">The index of the character in the string</param>
+    /// <param name="checkValue">The function that checks the character</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<string> NotChar(this Check<string> check, int index, Func<Check<char>, bool> checkValue) =>
+      check.Not(t => t != null && index < t.Length && checkValue.Invoke(t[index]));
+
     //
-    // Content
+    // StartsWith
     //
 
     /// <summary>
@@ -179,66 +255,13 @@ namespace Green
       check.That(t => t != null && t.StartsWith(value, comparison));
 
     /// <summary>
-    /// Checks if the target ends with <paramref name="value"/>
+    /// Checks if the target starts with <paramref name="value"/> using <see cref="StringComparison.OrdinalIgnoreCase"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<string> EndsWith(this Check<string> check, string value) =>
-      check.That(t => t != null && t.EndsWith(value));
-
-    /// <summary>
-    /// Checks if the target ends with <paramref name="value"/>
-    /// </summary>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare</param>
-    /// <param name="ignoreCase">Whether to perform a case-insensitive comparison</param>
-    /// <param name="culture">Cultural information to use when comparing</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<string> EndsWith(this Check<string> check, string value, bool ignoreCase, CultureInfo culture) =>
-      check.That(t => t != null && t.EndsWith(value, ignoreCase, culture));
-
-    /// <summary>
-    /// Checks if the target ends with <paramref name="value"/> using <paramref name="comparison"/>
-    /// </summary>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare</param>
-    /// <param name="comparison">The type of comparison to perform</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<string> EndsWith(this Check<string> check, string value, StringComparison comparison) =>
-      check.That(t => t != null && t.EndsWith(value, comparison));
-
-    /// <summary>
-    /// Checks if the target contains <paramref name="value"/>
-    /// </summary>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<string> Contains(this Check<string> check, string value) =>
-      check.That(t => t != null && t.Contains(value));
-
-    /// <summary>
-    /// Checks if the target contains <paramref name="value"/>
-    /// </summary>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<string> Contains(this Check<string> check, char value) =>
-      check.That(t => t != null && t.Contains(value));
-
-    /// <summary>
-    /// Checks if the target contains <paramref name="value"/> using <paramref name="comparer"/>
-    /// </summary>
-    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
-    /// <param name="value">The value to compare</param>
-    /// <param name="comparer">The object that performs the comparison</param>
-    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<string> Contains(this Check<string> check, char value, IEqualityComparer<char> comparer) =>
-      check.That(t => t != null && t.Contains(value, comparer));
-
-    //
-    // Content (not)
-    //
+    public static Check<string> StartsWithEquivalent(this Check<string> check, string value) =>
+      check.That(t => t != null && t.StartsWith(value));
 
     /// <summary>
     /// Checks if the target does not start with <paramref name="value"/>
@@ -271,6 +294,58 @@ namespace Green
       check.Not(t => t != null && t.StartsWith(value, comparison));
 
     /// <summary>
+    /// Checks if the target does not start with <paramref name="value"/> using <see cref="StringComparison.OrdinalIgnoreCase"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="value">The value to compare at the start</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<string> DoesNotStartWithEquivalent(this Check<string> check, string value) =>
+      check.Not(t => t != null && t.StartsWith(value));
+
+    //
+    // EndsWith
+    //
+
+    /// <summary>
+    /// Checks if the target ends with <paramref name="value"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="value">The value to compare</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<string> EndsWith(this Check<string> check, string value) =>
+      check.That(t => t != null && t.EndsWith(value));
+
+    /// <summary>
+    /// Checks if the target ends with <paramref name="value"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="value">The value to compare</param>
+    /// <param name="ignoreCase">Whether to perform a case-insensitive comparison</param>
+    /// <param name="culture">Cultural information to use when comparing</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<string> EndsWith(this Check<string> check, string value, bool ignoreCase, CultureInfo culture) =>
+      check.That(t => t != null && t.EndsWith(value, ignoreCase, culture));
+
+    /// <summary>
+    /// Checks if the target ends with <paramref name="value"/> using <paramref name="comparison"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="value">The value to compare</param>
+    /// <param name="comparison">The type of comparison to perform</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<string> EndsWith(this Check<string> check, string value, StringComparison comparison) =>
+      check.That(t => t != null && t.EndsWith(value, comparison));
+
+    /// <summary>
+    /// Checks if the target ends with <paramref name="value"/> using <see cref="StringComparison.OrdinalIgnoreCase"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="value">The value to compare</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<string> EndsWithEquivalent(this Check<string> check, string value) =>
+      check.EndsWith(value, StringComparison.OrdinalIgnoreCase);
+
+    /// <summary>
     /// Checks if the target does not end with <paramref name="value"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
@@ -301,6 +376,77 @@ namespace Green
       check.Not(t => t != null && t.EndsWith(value, comparison));
 
     /// <summary>
+    /// Checks if the target does not end with <paramref name="value"/> using <see cref="StringComparison.OrdinalIgnoreCase"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="value">The value to compare at the end</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<string> DoesNotEndWithEquivalent(this Check<string> check, string value) =>
+      check.DoesNotEndWith(value, StringComparison.OrdinalIgnoreCase);
+
+    //
+    // Contains
+    //
+
+    /// <summary>
+    /// Checks if the target contains <paramref name="value"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="value">The value to compare</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<string> Contains(this Check<string> check, string value) =>
+      check.That(t => t != null && t.Contains(value));
+
+    /// <summary>
+    /// Checks if the target contains <paramref name="value"/> using <paramref name="comparison"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="value">The value to compare</param>
+    /// <param name="comparison">The type of comparison to perform</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<string> Contains(this Check<string> check, string value, StringComparison comparison) =>
+      check.That(t => t != null && t.Contains(value, comparison));
+
+    /// <summary>
+    /// Checks if the target contains <paramref name="value"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="value">The value to compare</param>
+    /// <param name="comparer">The object that performs the comparison</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<string> Contains(this Check<string> check, char value, IEqualityComparer<char>? comparer = null) =>
+      check.That(t => t != null && t.Contains(value, comparer));
+
+    /// <summary>
+    /// Checks if the target contains <paramref name="value"/> using <paramref name="comparer"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="value">The value to compare</param>
+    /// <param name="comparison">The object that performs the comparison</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<string> Contains(this Check<string> check, char value, StringComparison comparison) =>
+      check.That(t => t != null && t.Contains(value, comparison));
+
+    /// <summary>
+    /// Checks if the target contains <paramref name="value"/> using <see cref="StringComparison.OrdinalIgnoreCase"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="value">The value to compare</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<string> ContainsEquivalent(this Check<string> check, string value) =>
+      check.Contains(value, StringComparison.OrdinalIgnoreCase);
+
+    /// <summary>
+    /// Checks if the target contains <paramref name="value"/> using <see cref="StringComparison.OrdinalIgnoreCase"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="value">The value to compare</param>
+    /// <param name="comparison">The object that performs the comparison</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<string> ContainsEquivalent(this Check<string> check, char value) =>
+      check.Contains(value, StringComparison.OrdinalIgnoreCase);
+
+    /// <summary>
     /// Checks if the target does not contain <paramref name="value"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
@@ -310,23 +456,53 @@ namespace Green
       check.Not(t => t != null && t.Contains(value));
 
     /// <summary>
+    /// Checks if the target does not contain <paramref name="value"/> using <paramref name="comparison"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="value">The value to compare</param>
+    /// <param name="comparison">The type of comparison to perform</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<string> DoesNotContain(this Check<string> check, string value, StringComparison comparison) =>
+      check.Not(t => t != null && t.Contains(value, comparison));
+
+    /// <summary>
     /// Checks if the target does not contain <paramref name="value"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
+    /// <param name="comparer">The object that performs the comparison</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<string> DoesNotContain(this Check<string> check, char value) =>
-      check.Not(t => t != null && t.Contains(value));
+    public static Check<string> DoesNotContain(this Check<string> check, char value, IEqualityComparer<char>? comparer = null) =>
+      check.Not(t => t != null && t.Contains(value, comparer));
 
     /// <summary>
     /// Checks if the target does not contain <paramref name="value"/> using <paramref name="comparer"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
-    /// <param name="comparer">The object that performs the comparison</param>
+    /// <param name="comparison">The object that performs the comparison</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<string> DoesNotContain(this Check<string> check, char value, IEqualityComparer<char> comparer) =>
-      check.Not(t => t != null && t.Contains(value, comparer));
+    public static Check<string> DoesNotContain(this Check<string> check, char value, StringComparison comparison) =>
+      check.Not(t => t != null && t.Contains(value, comparison));
+
+    /// <summary>
+    /// Checks if the target does not contain <paramref name="value"/> using <see cref="StringComparison.OrdinalIgnoreCase"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="value">The value to compare</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<string> DoesNotContainEquivalent(this Check<string> check, string value) =>
+      check.Contains(value, StringComparison.OrdinalIgnoreCase);
+
+    /// <summary>
+    /// Checks if the target does not contain <paramref name="value"/> using <see cref="StringComparison.OrdinalIgnoreCase"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <param name="value">The value to compare</param>
+    /// <param name="comparison">The object that performs the comparison</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<string> DoesNotContainEquivalent(this Check<string> check, char value) =>
+      check.Contains(value, StringComparison.OrdinalIgnoreCase);
 
     //
     // Matches
@@ -488,7 +664,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsControl(this Check<char> check) =>
+    public static Check<char> Control(this Check<char> check) =>
       check.That(char.IsControl);
 
     /// <summary>
@@ -496,7 +672,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsDigit(this Check<char> check) =>
+    public static Check<char> Digit(this Check<char> check) =>
       check.That(char.IsDigit);
 
     /// <summary>
@@ -504,7 +680,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsHighSurrogate(this Check<char> check) =>
+    public static Check<char> HighSurrogate(this Check<char> check) =>
       check.That(char.IsHighSurrogate);
 
     /// <summary>
@@ -513,7 +689,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="lowSurrogate">The character to pair with the target</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsHighSurrogatePair(this Check<char> check, char lowSurrogate) =>
+    public static Check<char> HighSurrogatePair(this Check<char> check, char lowSurrogate) =>
       check.That(t => char.IsSurrogatePair(t, lowSurrogate));
 
     /// <summary>
@@ -521,7 +697,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsLetter(this Check<char> check) =>
+    public static Check<char> Letter(this Check<char> check) =>
       check.That(char.IsLetter);
 
     /// <summary>
@@ -529,7 +705,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsLetterOrDigit(this Check<char> check) =>
+    public static Check<char> LetterOrDigit(this Check<char> check) =>
       check.That(char.IsLetterOrDigit);
 
     /// <summary>
@@ -537,7 +713,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsLower(this Check<char> check) =>
+    public static Check<char> Lower(this Check<char> check) =>
       check.That(char.IsLower);
 
     /// <summary>
@@ -545,7 +721,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsLowSurrogate(this Check<char> check) =>
+    public static Check<char> LowSurrogate(this Check<char> check) =>
       check.That(char.IsLowSurrogate);
 
     /// <summary>
@@ -554,7 +730,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="highSurrogate">The character to pair with the target</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsLowSurrogatePair(this Check<char> check, char highSurrogate) =>
+    public static Check<char> LowSurrogatePair(this Check<char> check, char highSurrogate) =>
       check.That(t => char.IsSurrogatePair(highSurrogate, t));
 
     /// <summary>
@@ -562,7 +738,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsNumber(this Check<char> check) =>
+    public static Check<char> Number(this Check<char> check) =>
       check.That(char.IsNumber);
 
     /// <summary>
@@ -570,7 +746,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsPunctuation(this Check<char> check) =>
+    public static Check<char> Punctuation(this Check<char> check) =>
       check.That(char.IsPunctuation);
 
     /// <summary>
@@ -578,7 +754,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsSeparator(this Check<char> check) =>
+    public static Check<char> Separator(this Check<char> check) =>
       check.That(char.IsSeparator);
 
     /// <summary>
@@ -586,7 +762,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsSurrogate(this Check<char> check) =>
+    public static Check<char> Surrogate(this Check<char> check) =>
       check.That(char.IsSurrogate);
 
     /// <summary>
@@ -594,7 +770,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsSymbol(this Check<char> check) =>
+    public static Check<char> Symbol(this Check<char> check) =>
       check.That(char.IsSymbol);
 
     /// <summary>
@@ -602,7 +778,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsUpper(this Check<char> check) =>
+    public static Check<char> Upper(this Check<char> check) =>
       check.That(char.IsUpper);
 
     /// <summary>
@@ -610,7 +786,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsWhiteSpace(this Check<char> check) =>
+    public static Check<char> WhiteSpace(this Check<char> check) =>
       check.That(char.IsWhiteSpace);
 
     //
@@ -622,7 +798,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsNotControl(this Check<char> check) =>
+    public static Check<char> NotControl(this Check<char> check) =>
       check.Not(char.IsControl);
 
     /// <summary>
@@ -630,7 +806,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsNotDigit(this Check<char> check) =>
+    public static Check<char> NotDigit(this Check<char> check) =>
       check.Not(char.IsDigit);
 
     /// <summary>
@@ -638,7 +814,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsNotHighSurrogate(this Check<char> check) =>
+    public static Check<char> NotHighSurrogate(this Check<char> check) =>
       check.Not(char.IsHighSurrogate);
 
     /// <summary>
@@ -647,7 +823,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="lowSurrogate">The character to pair with the target</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsNotHighSurrogatePair(this Check<char> check, char lowSurrogate) =>
+    public static Check<char> NotHighSurrogatePair(this Check<char> check, char lowSurrogate) =>
       check.Not(t => char.IsSurrogatePair(t, lowSurrogate));
 
     /// <summary>
@@ -655,7 +831,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsNotLetter(this Check<char> check) =>
+    public static Check<char> NotLetter(this Check<char> check) =>
       check.Not(char.IsLetter);
 
     /// <summary>
@@ -663,7 +839,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsNotLetterOrDigit(this Check<char> check) =>
+    public static Check<char> NotLetterOrDigit(this Check<char> check) =>
       check.Not(char.IsLetterOrDigit);
 
     /// <summary>
@@ -671,7 +847,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsNotLower(this Check<char> check) =>
+    public static Check<char> NotLower(this Check<char> check) =>
       check.Not(char.IsLower);
 
     /// <summary>
@@ -679,7 +855,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsNotLowSurrogate(this Check<char> check) =>
+    public static Check<char> NotLowSurrogate(this Check<char> check) =>
       check.Not(char.IsLowSurrogate);
 
     /// <summary>
@@ -688,7 +864,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="highSurrogate">The character to pair with the target</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsNotLowSurrogatePair(this Check<char> check, char highSurrogate) =>
+    public static Check<char> NotLowSurrogatePair(this Check<char> check, char highSurrogate) =>
       check.Not(t => char.IsSurrogatePair(highSurrogate, t));
 
     /// <summary>
@@ -696,7 +872,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsNotNumber(this Check<char> check) =>
+    public static Check<char> NotNumber(this Check<char> check) =>
       check.Not(char.IsNumber);
 
     /// <summary>
@@ -704,7 +880,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsNotPunctuation(this Check<char> check) =>
+    public static Check<char> NotPunctuation(this Check<char> check) =>
       check.Not(char.IsPunctuation);
 
     /// <summary>
@@ -712,7 +888,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsNotSeparator(this Check<char> check) =>
+    public static Check<char> NotSeparator(this Check<char> check) =>
       check.Not(char.IsSeparator);
 
     /// <summary>
@@ -720,7 +896,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsNotSurrogate(this Check<char> check) =>
+    public static Check<char> NotSurrogate(this Check<char> check) =>
       check.Not(char.IsSurrogate);
 
     /// <summary>
@@ -728,7 +904,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsNotSymbol(this Check<char> check) =>
+    public static Check<char> NotSymbol(this Check<char> check) =>
       check.Not(char.IsSymbol);
 
     /// <summary>
@@ -736,7 +912,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsNotUpper(this Check<char> check) =>
+    public static Check<char> NotUpper(this Check<char> check) =>
       check.Not(char.IsUpper);
 
     /// <summary>
@@ -744,7 +920,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<char> IsNotWhiteSpace(this Check<char> check) =>
+    public static Check<char> NotWhiteSpace(this Check<char> check) =>
       check.Not(char.IsWhiteSpace);
 
     //
@@ -757,7 +933,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasAbsolutePath(this Check<Uri> check, string value) =>
+    public static Check<Uri> AbsolutePath(this Check<Uri> check, string value) =>
       check.That(t => t?.AbsolutePath == value);
 
     /// <summary>
@@ -766,7 +942,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasAbsoluteUri(this Check<Uri> check, string value) =>
+    public static Check<Uri> AbsoluteUri(this Check<Uri> check, string value) =>
       check.That(t => t?.AbsoluteUri == value);
 
     /// <summary>
@@ -775,7 +951,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasAuthority(this Check<Uri> check, string value) =>
+    public static Check<Uri> Authority(this Check<Uri> check, string value) =>
       check.That(t => t?.Authority == value);
 
     /// <summary>
@@ -784,7 +960,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasDnsSafeHost(this Check<Uri> check, string value) =>
+    public static Check<Uri> DnsSafeHost(this Check<Uri> check, string value) =>
       check.That(t => t?.DnsSafeHost == value);
 
     /// <summary>
@@ -793,7 +969,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasFragment(this Check<Uri> check, string value) =>
+    public static Check<Uri> Fragment(this Check<Uri> check, string value) =>
       check.That(t => t?.Fragment == value);
 
     /// <summary>
@@ -802,7 +978,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasHost(this Check<Uri> check, string value) =>
+    public static Check<Uri> Host(this Check<Uri> check, string value) =>
       check.That(t => t?.Host == value);
 
     /// <summary>
@@ -811,7 +987,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasHostNameType(this Check<Uri> check, UriHostNameType value) =>
+    public static Check<Uri> HostNameType(this Check<Uri> check, UriHostNameType value) =>
       check.That(t => t?.HostNameType == value);
 
     /// <summary>
@@ -820,7 +996,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasIdnHost(this Check<Uri> check, string value) =>
+    public static Check<Uri> IdnHost(this Check<Uri> check, string value) =>
       check.That(t => t?.IdnHost == value);
 
     /// <summary>
@@ -829,7 +1005,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasLocalPath(this Check<Uri> check, string value) =>
+    public static Check<Uri> LocalPath(this Check<Uri> check, string value) =>
       check.That(t => t?.LocalPath == value);
 
     /// <summary>
@@ -838,7 +1014,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasOriginalString(this Check<Uri> check, string value) =>
+    public static Check<Uri> OriginalString(this Check<Uri> check, string value) =>
       check.That(t => t?.OriginalString == value);
 
     /// <summary>
@@ -847,7 +1023,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasPathAndQuery(this Check<Uri> check, string value) =>
+    public static Check<Uri> PathAndQuery(this Check<Uri> check, string value) =>
       check.That(t => t?.PathAndQuery == value);
 
     /// <summary>
@@ -856,7 +1032,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasPort(this Check<Uri> check, int value) =>
+    public static Check<Uri> Port(this Check<Uri> check, int value) =>
       check.That(t => t?.Port == value);
 
     /// <summary>
@@ -865,7 +1041,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasQuery(this Check<Uri> check, string value) =>
+    public static Check<Uri> Query(this Check<Uri> check, string value) =>
       check.That(t => t?.Query == value);
 
     /// <summary>
@@ -874,7 +1050,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasScheme(this Check<Uri> check, string value) =>
+    public static Check<Uri> Scheme(this Check<Uri> check, string value) =>
       check.That(t => t?.Scheme == value);
 
     /// <summary>
@@ -883,7 +1059,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasSegments(this Check<Uri> check, string[] value) =>
+    public static Check<Uri> Segments(this Check<Uri> check, string[] value) =>
       check.That(t => Check.Many(t.Segments).HasSameInOrder(value));
 
     /// <summary>
@@ -892,7 +1068,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="value">The value to compare</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasUserInfo(this Check<Uri> check, string value) =>
+    public static Check<Uri> UserInfo(this Check<Uri> check, string value) =>
       check.That(t => t?.UserInfo == value);
 
     /// <summary>
@@ -900,7 +1076,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> IsAbsoluteUri(this Check<Uri> check) =>
+    public static Check<Uri> AbsoluteUri(this Check<Uri> check) =>
       check.That(t => t?.IsAbsoluteUri == true);
 
     /// <summary>
@@ -908,7 +1084,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> IsFile(this Check<Uri> check) =>
+    public static Check<Uri> File(this Check<Uri> check) =>
       check.That(t => t?.IsFile == true);
 
     /// <summary>
@@ -916,7 +1092,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> IsUnc(this Check<Uri> check) =>
+    public static Check<Uri> Unc(this Check<Uri> check) =>
       check.That(t => t?.IsUnc == true);
 
     /// <summary>
@@ -924,7 +1100,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> IsLoopback(this Check<Uri> check) =>
+    public static Check<Uri> Loopback(this Check<Uri> check) =>
       check.That(t => t?.IsLoopback == true);
 
     /// <summary>
@@ -932,8 +1108,48 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> IsUserEscaped(this Check<Uri> check) =>
+    public static Check<Uri> UserEscaped(this Check<Uri> check) =>
       check.That(t => t?.UserEscaped == true);
+
+    /// <summary>
+    /// Checks if the target's <see cref="Uri.IsAbsoluteUri"/> property is <see langword="true"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<Uri> NotAbsoluteUri(this Check<Uri> check) =>
+      check.That(t => t?.IsAbsoluteUri == false);
+
+    /// <summary>
+    /// Checks if the target's <see cref="Uri.IsFile"/> property is <see langword="true"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<Uri> NotFile(this Check<Uri> check) =>
+      check.That(t => t?.IsFile == false);
+
+    /// <summary>
+    /// Checks if the target's <see cref="Uri.AbsolutePath"/> property is <see langword="true"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<Uri> NotUnc(this Check<Uri> check) =>
+      check.That(t => t?.IsUnc == false);
+
+    /// <summary>
+    /// Checks if the target's <see cref="Uri.IsLoopback"/> property is <see langword="true"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<Uri> NotLoopback(this Check<Uri> check) =>
+      check.That(t => t?.IsLoopback == false);
+
+    /// <summary>
+    /// Checks if the target's <see cref="Uri.UserEscaped"/> property is <see langword="false"/>
+    /// </summary>
+    /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
+    /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
+    public static Check<Uri> NotUserEscaped(this Check<Uri> check) =>
+      check.That(t => t?.UserEscaped == false);
 
     //
     // Uri (values)
@@ -945,7 +1161,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasAbsolutePath(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
+    public static Check<Uri> AbsolutePath(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
       check.That(t => t != null && checkValue.Invoke(t.AbsolutePath));
 
     /// <summary>
@@ -954,7 +1170,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasAbsoluteUri(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
+    public static Check<Uri> AbsoluteUri(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
       check.That(t => t != null && checkValue.Invoke(t.AbsoluteUri));
 
     /// <summary>
@@ -963,7 +1179,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasAuthority(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
+    public static Check<Uri> Authority(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
       check.That(t => t != null && checkValue.Invoke(t.Authority));
 
     /// <summary>
@@ -972,7 +1188,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasDnsSafeHost(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
+    public static Check<Uri> DnsSafeHost(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
       check.That(t => t != null && checkValue.Invoke(t.DnsSafeHost));
 
     /// <summary>
@@ -981,7 +1197,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasFragment(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
+    public static Check<Uri> Fragment(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
       check.That(t => t != null && checkValue.Invoke(t.Fragment));
 
     /// <summary>
@@ -990,7 +1206,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasHost(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
+    public static Check<Uri> Host(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
       check.That(t => t != null && checkValue.Invoke(t.Host));
 
     /// <summary>
@@ -999,7 +1215,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasHostNameType(this Check<Uri> check, Func<Check<UriHostNameType>, bool> checkValue) =>
+    public static Check<Uri> HostNameType(this Check<Uri> check, Func<Check<UriHostNameType>, bool> checkValue) =>
       check.That(t => t != null && checkValue.Invoke(t.HostNameType));
 
     /// <summary>
@@ -1008,7 +1224,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasIdnHost(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
+    public static Check<Uri> IdnHost(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
       check.That(t => t != null && checkValue.Invoke(t.IdnHost));
 
     /// <summary>
@@ -1017,7 +1233,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasLocalPath(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
+    public static Check<Uri> LocalPath(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
       check.That(t => t != null && checkValue.Invoke(t.LocalPath));
 
     /// <summary>
@@ -1026,7 +1242,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasOriginalString(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
+    public static Check<Uri> OriginalString(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
       check.That(t => t != null && checkValue.Invoke(t.OriginalString));
 
     /// <summary>
@@ -1035,7 +1251,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasPathAndQuery(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
+    public static Check<Uri> PathAndQuery(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
       check.That(t => t != null && checkValue.Invoke(t.PathAndQuery));
 
     /// <summary>
@@ -1044,7 +1260,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasPort(this Check<Uri> check, Func<Check<int>, bool> checkValue) =>
+    public static Check<Uri> Port(this Check<Uri> check, Func<Check<int>, bool> checkValue) =>
       check.That(t => t != null && checkValue.Invoke(t.Port));
 
     /// <summary>
@@ -1053,7 +1269,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasQuery(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
+    public static Check<Uri> Query(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
       check.That(t => t != null && checkValue.Invoke(t.Query));
 
     /// <summary>
@@ -1062,7 +1278,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasScheme(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
+    public static Check<Uri> Scheme(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
       check.That(t => t != null && checkValue.Invoke(t.Scheme));
 
     /// <summary>
@@ -1071,7 +1287,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasSegments(this Check<Uri> check, Func<CheckMany<string>, bool> checkValue) =>
+    public static Check<Uri> Segments(this Check<Uri> check, Func<CheckMany<string>, bool> checkValue) =>
       check.That(t => t != null && checkValue.Invoke(t.Segments));
 
     /// <summary>
@@ -1080,7 +1296,7 @@ namespace Green
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <param name="checkValue">The function that checks the property value</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<Uri> HasUserInfo(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
+    public static Check<Uri> UserInfo(this Check<Uri> check, Func<Check<string>, bool> checkValue) =>
       check.That(t => t != null && checkValue.Invoke(t.UserInfo));
   }
 }

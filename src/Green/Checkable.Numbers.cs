@@ -4,16 +4,12 @@ namespace Green
 {
   public static partial class Checkable
   {
-    //
-    // Byte
-    //
-
     /// <summary>
     /// Checks if the target is zero
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<byte> IsZero(this Check<byte> check) =>
+    public static Check<byte> Zero(this Check<byte> check) =>
       check.That(t => t == 0);
 
     /// <summary>
@@ -21,7 +17,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<byte> IsNotZero(this Check<byte> check) =>
+    public static Check<byte> NotZero(this Check<byte> check) =>
       check.That(t => t != 0);
 
     /// <summary>
@@ -29,7 +25,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<byte> IsEven(this Check<byte> check) =>
+    public static Check<byte> Even(this Check<byte> check) =>
       check.That(t => t % 2 == 0);
 
     /// <summary>
@@ -37,7 +33,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<byte> IsOdd(this Check<byte> check) =>
+    public static Check<byte> Odd(this Check<byte> check) =>
       check.That(t => t % 2 != 0);
 
     /// <summary>
@@ -45,7 +41,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<byte> IsPercentage(this Check<byte> check) =>
+    public static Check<byte> Percentage(this Check<byte> check) =>
       check.That(t => t >= 0 && t <= 100);
 
     /// <summary>
@@ -53,7 +49,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<byte> IsMinValue(this Check<byte> check) =>
+    public static Check<byte> MinValue(this Check<byte> check) =>
       check.That(t => t == byte.MinValue);
 
     /// <summary>
@@ -61,7 +57,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<byte> IsMaxValue(this Check<byte> check) =>
+    public static Check<byte> MaxValue(this Check<byte> check) =>
       check.That(t => t == byte.MaxValue);
 
     /// <summary>
@@ -69,7 +65,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<byte> IsNotMinValue(this Check<byte> check) =>
+    public static Check<byte> NotMinValue(this Check<byte> check) =>
       check.That(t => t != byte.MinValue);
 
     /// <summary>
@@ -77,7 +73,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<byte> IsNotMaxValue(this Check<byte> check) =>
+    public static Check<byte> NotMaxValue(this Check<byte> check) =>
       check.That(t => t != byte.MaxValue);
 
     //
@@ -89,7 +85,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<decimal> IsNegative(this Check<decimal> check) =>
+    public static Check<decimal> Negative(this Check<decimal> check) =>
       check.That(t => t < 0);
 
     /// <summary>
@@ -97,7 +93,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<decimal> IsNotPositive(this Check<decimal> check) =>
+    public static Check<decimal> NotPositive(this Check<decimal> check) =>
       check.That(t => t <= 0);
 
     /// <summary>
@@ -105,7 +101,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<decimal> IsZero(this Check<decimal> check) =>
+    public static Check<decimal> Zero(this Check<decimal> check) =>
       check.That(t => t == 0);
 
     /// <summary>
@@ -113,7 +109,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<decimal> IsNotNegative(this Check<decimal> check) =>
+    public static Check<decimal> NotNegative(this Check<decimal> check) =>
       check.That(t => t >= 0);
 
     /// <summary>
@@ -121,7 +117,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<decimal> IsPositive(this Check<decimal> check) =>
+    public static Check<decimal> Positive(this Check<decimal> check) =>
       check.That(t => t > 0);
 
     /// <summary>
@@ -129,7 +125,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<decimal> IsAdjustedPercentage(this Check<decimal> check) =>
+    public static Check<decimal> AdjustedPercentage(this Check<decimal> check) =>
       check.That(t => t >= 0 && t <= 100);
 
     /// <summary>
@@ -137,7 +133,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<decimal> IsLiteralPercentage(this Check<decimal> check) =>
+    public static Check<decimal> LiteralPercentage(this Check<decimal> check) =>
       check.That(t => t >= 0 && t <= 1);
 
     /// <summary>
@@ -147,7 +143,7 @@ namespace Green
     /// <param name="value">The value to compare using <paramref name="precision"/></param>
     /// <param name="precision">The amount the target and <paramref name="value"/> may differ by while still being equal</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<decimal> IsCloseTo(this Check<decimal> check, decimal value, decimal precision) =>
+    public static Check<decimal> Approximately(this Check<decimal> check, decimal value, decimal precision) =>
       check.That(t => Math.Abs(t - value) <= precision);
 
     /// <summary>
@@ -155,7 +151,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<decimal> IsMinValue(this Check<decimal> check) =>
+    public static Check<decimal> MinValue(this Check<decimal> check) =>
       check.That(t => t == decimal.MinValue);
 
     /// <summary>
@@ -163,7 +159,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<decimal> IsMaxValue(this Check<decimal> check) =>
+    public static Check<decimal> MaxValue(this Check<decimal> check) =>
       check.That(t => t == decimal.MaxValue);
 
     /// <summary>
@@ -171,7 +167,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<decimal> IsNotMinValue(this Check<decimal> check) =>
+    public static Check<decimal> NotMinValue(this Check<decimal> check) =>
       check.That(t => t != decimal.MinValue);
 
     /// <summary>
@@ -179,7 +175,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<decimal> IsNotMaxValue(this Check<decimal> check) =>
+    public static Check<decimal> NotMaxValue(this Check<decimal> check) =>
       check.That(t => t != decimal.MaxValue);
 
     //
@@ -191,7 +187,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<double> IsNegative(this Check<double> check) =>
+    public static Check<double> Negative(this Check<double> check) =>
       check.That(t => t < 0);
 
     /// <summary>
@@ -199,7 +195,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<double> IsNotPositive(this Check<double> check) =>
+    public static Check<double> NotPositive(this Check<double> check) =>
       check.That(t => t <= 0);
 
     /// <summary>
@@ -207,7 +203,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<double> IsZero(this Check<double> check) =>
+    public static Check<double> Zero(this Check<double> check) =>
       check.That(t => t == 0);
 
     /// <summary>
@@ -215,7 +211,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<double> IsNotNegative(this Check<double> check) =>
+    public static Check<double> NotNegative(this Check<double> check) =>
       check.That(t => t >= 0);
 
     /// <summary>
@@ -223,7 +219,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<double> IsPositive(this Check<double> check) =>
+    public static Check<double> Positive(this Check<double> check) =>
       check.That(t => t > 0);
 
     /// <summary>
@@ -231,7 +227,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<double> IsAdjustedPercentage(this Check<double> check) =>
+    public static Check<double> AdjustedPercentage(this Check<double> check) =>
       check.That(t => t >= 0 && t <= 100);
 
     /// <summary>
@@ -239,7 +235,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<double> IsLiteralPercentage(this Check<double> check) =>
+    public static Check<double> LiteralPercentage(this Check<double> check) =>
       check.That(t => t >= 0 && t <= 1);
 
     /// <summary>
@@ -249,7 +245,7 @@ namespace Green
     /// <param name="value">The value to compare using <paramref name="precision"/></param>
     /// <param name="precision">The amount the target and <paramref name="value"/> may differ by while still being equal</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<double> IsCloseTo(this Check<double> check, double value, double precision) =>
+    public static Check<double> Approximately(this Check<double> check, double value, double precision) =>
       check.That(t => Math.Abs(t - value) <= precision);
 
     /// <summary>
@@ -257,7 +253,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<double> IsMinValue(this Check<double> check) =>
+    public static Check<double> MinValue(this Check<double> check) =>
       check.That(t => t == double.MinValue);
 
     /// <summary>
@@ -265,23 +261,23 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<double> IsMaxValue(this Check<double> check) =>
+    public static Check<double> MaxValue(this Check<double> check) =>
       check.That(t => t == double.MaxValue);
 
     /// <summary>
-    /// Checks if the target is <see cref="double.MinValue"/>
+    /// Checks if the target is not <see cref="double.MinValue"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<double> IsNotMinValue(this Check<double> check) =>
+    public static Check<double> NotMinValue(this Check<double> check) =>
       check.That(t => t == double.MinValue);
 
     /// <summary>
-    /// Checks if the target is <see cref="double.MaxValue"/>
+    /// Checks if the target is not <see cref="double.MaxValue"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<double> IsNotMaxValue(this Check<double> check) =>
+    public static Check<double> NotMaxValue(this Check<double> check) =>
       check.That(t => t == double.MaxValue);
 
     //
@@ -293,7 +289,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<short> IsNegative(this Check<short> check) =>
+    public static Check<short> Negative(this Check<short> check) =>
       check.That(t => t < 0);
 
     /// <summary>
@@ -301,7 +297,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<short> IsNotPositive(this Check<short> check) =>
+    public static Check<short> NotPositive(this Check<short> check) =>
       check.That(t => t <= 0);
 
     /// <summary>
@@ -309,7 +305,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<short> IsZero(this Check<short> check) =>
+    public static Check<short> Zero(this Check<short> check) =>
       check.That(t => t == 0);
 
     /// <summary>
@@ -317,7 +313,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<short> IsNotNegative(this Check<short> check) =>
+    public static Check<short> NotNegative(this Check<short> check) =>
       check.That(t => t >= 0);
 
     /// <summary>
@@ -325,7 +321,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<short> IsPositive(this Check<short> check) =>
+    public static Check<short> Positive(this Check<short> check) =>
       check.That(t => t > 0);
 
     /// <summary>
@@ -333,7 +329,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<short> IsEven(this Check<short> check) =>
+    public static Check<short> Even(this Check<short> check) =>
       check.That(t => t % 2 == 0);
 
     /// <summary>
@@ -341,7 +337,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<short> IsOdd(this Check<short> check) =>
+    public static Check<short> Odd(this Check<short> check) =>
       check.That(t => t % 2 != 0);
 
     /// <summary>
@@ -349,7 +345,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<short> IsPercentage(this Check<short> check) =>
+    public static Check<short> Percentage(this Check<short> check) =>
       check.That(t => t >= 0 && t <= 100);
 
     /// <summary>
@@ -357,7 +353,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<short> IsMinValue(this Check<short> check) =>
+    public static Check<short> MinValue(this Check<short> check) =>
       check.That(t => t == short.MinValue);
 
     /// <summary>
@@ -365,7 +361,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<short> IsMaxValue(this Check<short> check) =>
+    public static Check<short> MaxValue(this Check<short> check) =>
       check.That(t => t == short.MaxValue);
 
     /// <summary>
@@ -373,7 +369,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<short> IsNotMinValue(this Check<short> check) =>
+    public static Check<short> NotMinValue(this Check<short> check) =>
       check.That(t => t == short.MinValue);
 
     /// <summary>
@@ -381,7 +377,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<short> IsNotMaxValue(this Check<short> check) =>
+    public static Check<short> NotMaxValue(this Check<short> check) =>
       check.That(t => t == short.MaxValue);
 
     //
@@ -393,7 +389,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<int> IsNegative(this Check<int> check) =>
+    public static Check<int> Negative(this Check<int> check) =>
       check.That(t => t < 0);
 
     /// <summary>
@@ -401,7 +397,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<int> IsNotPositive(this Check<int> check) =>
+    public static Check<int> NotPositive(this Check<int> check) =>
       check.That(t => t <= 0);
 
     /// <summary>
@@ -409,7 +405,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<int> IsZero(this Check<int> check) =>
+    public static Check<int> Zero(this Check<int> check) =>
       check.That(t => t == 0);
 
     /// <summary>
@@ -417,7 +413,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<int> IsNotNegative(this Check<int> check) =>
+    public static Check<int> NotNegative(this Check<int> check) =>
       check.That(t => t >= 0);
 
     /// <summary>
@@ -425,7 +421,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<int> IsPositive(this Check<int> check) =>
+    public static Check<int> Positive(this Check<int> check) =>
       check.That(t => t > 0);
 
     /// <summary>
@@ -433,7 +429,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<int> IsEven(this Check<int> check) =>
+    public static Check<int> Even(this Check<int> check) =>
       check.That(t => t % 2 == 0);
 
     /// <summary>
@@ -441,7 +437,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<int> IsOdd(this Check<int> check) =>
+    public static Check<int> Odd(this Check<int> check) =>
       check.That(t => t % 2 != 0);
 
     /// <summary>
@@ -449,7 +445,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<int> IsPercentage(this Check<int> check) =>
+    public static Check<int> Percentage(this Check<int> check) =>
       check.That(t => t >= 0 && t <= 100);
 
     /// <summary>
@@ -457,7 +453,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<int> IsMinValue(this Check<int> check) =>
+    public static Check<int> MinValue(this Check<int> check) =>
       check.That(t => t == int.MinValue);
 
     /// <summary>
@@ -465,23 +461,23 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<int> IsMaxValue(this Check<int> check) =>
+    public static Check<int> MaxValue(this Check<int> check) =>
       check.That(t => t == int.MaxValue);
 
     /// <summary>
-    /// Checks if the target is <see cref="int.MinValue"/>
+    /// Checks if the target is not <see cref="int.MinValue"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<int> IsNotMinValue(this Check<int> check) =>
+    public static Check<int> NotMinValue(this Check<int> check) =>
       check.That(t => t == int.MinValue);
 
     /// <summary>
-    /// Checks if the target is <see cref="int.MaxValue"/>
+    /// Checks if the target is not <see cref="int.MaxValue"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<int> IsNotMaxValue(this Check<int> check) =>
+    public static Check<int> NotMaxValue(this Check<int> check) =>
       check.That(t => t == int.MaxValue);
 
     //
@@ -493,7 +489,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<long> IsNegative(this Check<long> check) =>
+    public static Check<long> Negative(this Check<long> check) =>
       check.That(t => t < 0);
 
     /// <summary>
@@ -501,7 +497,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<long> IsNotPositive(this Check<long> check) =>
+    public static Check<long> NotPositive(this Check<long> check) =>
       check.That(t => t <= 0);
 
     /// <summary>
@@ -509,7 +505,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<long> IsZero(this Check<long> check) =>
+    public static Check<long> Zero(this Check<long> check) =>
       check.That(t => t == 0);
 
     /// <summary>
@@ -517,7 +513,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<long> IsNotNegative(this Check<long> check) =>
+    public static Check<long> NotNegative(this Check<long> check) =>
       check.That(t => t >= 0);
 
     /// <summary>
@@ -525,7 +521,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<long> IsPositive(this Check<long> check) =>
+    public static Check<long> Positive(this Check<long> check) =>
       check.That(t => t > 0);
 
     /// <summary>
@@ -533,7 +529,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<long> IsEven(this Check<long> check) =>
+    public static Check<long> Even(this Check<long> check) =>
       check.That(t => t % 2 == 0);
 
     /// <summary>
@@ -541,7 +537,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<long> IsOdd(this Check<long> check) =>
+    public static Check<long> Odd(this Check<long> check) =>
       check.That(t => t % 2 != 0);
 
     /// <summary>
@@ -549,7 +545,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<long> IsPercentage(this Check<long> check) =>
+    public static Check<long> Percentage(this Check<long> check) =>
       check.That(t => t >= 0 && t <= 100);
 
     /// <summary>
@@ -557,7 +553,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<long> IsMinValue(this Check<long> check) =>
+    public static Check<long> MinValue(this Check<long> check) =>
       check.That(t => t == long.MinValue);
 
     /// <summary>
@@ -565,23 +561,23 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<long> IsMaxValue(this Check<long> check) =>
+    public static Check<long> MaxValue(this Check<long> check) =>
       check.That(t => t == long.MaxValue);
 
     /// <summary>
-    /// Checks if the target is <see cref="long.MinValue"/>
+    /// Checks if the target is not <see cref="long.MinValue"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<long> IsNotMinValue(this Check<long> check) =>
+    public static Check<long> NotMinValue(this Check<long> check) =>
       check.That(t => t == long.MinValue);
 
     /// <summary>
-    /// Checks if the target is <see cref="long.MaxValue"/>
+    /// Checks if the target is not <see cref="long.MaxValue"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<long> IsNotMaxValue(this Check<long> check) =>
+    public static Check<long> NotMaxValue(this Check<long> check) =>
       check.That(t => t == long.MaxValue);
 
     //
@@ -593,7 +589,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<float> IsNegative(this Check<float> check) =>
+    public static Check<float> Negative(this Check<float> check) =>
       check.That(t => t < 0);
 
     /// <summary>
@@ -601,7 +597,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<float> IsNotPositive(this Check<float> check) =>
+    public static Check<float> NotPositive(this Check<float> check) =>
       check.That(t => t <= 0);
 
     /// <summary>
@@ -609,7 +605,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<float> IsZero(this Check<float> check) =>
+    public static Check<float> Zero(this Check<float> check) =>
       check.That(t => t == 0);
 
     /// <summary>
@@ -617,7 +613,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<float> IsNotNegative(this Check<float> check) =>
+    public static Check<float> NotNegative(this Check<float> check) =>
       check.That(t => t >= 0);
 
     /// <summary>
@@ -625,7 +621,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<float> IsPositive(this Check<float> check) =>
+    public static Check<float> Positive(this Check<float> check) =>
       check.That(t => t > 0);
 
     /// <summary>
@@ -633,7 +629,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<float> IsAdjustedPercentage(this Check<float> check) =>
+    public static Check<float> AdjustedPercentage(this Check<float> check) =>
       check.That(t => t >= 0 && t <= 100);
 
     /// <summary>
@@ -641,7 +637,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<float> IsLiteralPercentage(this Check<float> check) =>
+    public static Check<float> LiteralPercentage(this Check<float> check) =>
       check.That(t => t >= 0 && t <= 1);
 
     /// <summary>
@@ -651,7 +647,7 @@ namespace Green
     /// <param name="value">The value to compare using <paramref name="precision"/></param>
     /// <param name="precision">The amount the target and <paramref name="value"/> may differ by while still being equal</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<float> IsCloseTo(this Check<float> check, float value, float precision) =>
+    public static Check<float> Approximately(this Check<float> check, float value, float precision) =>
       check.That(t => Math.Abs(t - value) <= precision);
 
     /// <summary>
@@ -659,7 +655,7 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<float> IsMinValue(this Check<float> check) =>
+    public static Check<float> MinValue(this Check<float> check) =>
       check.That(t => t == float.MinValue);
 
     /// <summary>
@@ -667,23 +663,23 @@ namespace Green
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<float> IsMaxValue(this Check<float> check) =>
+    public static Check<float> MaxValue(this Check<float> check) =>
       check.That(t => t == float.MaxValue);
 
     /// <summary>
-    /// Checks if the target is <see cref="float.MinValue"/>
+    /// Checks if the target is not <see cref="float.MinValue"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<float> IsNotMinValue(this Check<float> check) =>
+    public static Check<float> NotMinValue(this Check<float> check) =>
       check.That(t => t == float.MinValue);
 
     /// <summary>
-    /// Checks if the target is <see cref="float.MaxValue"/>
+    /// Checks if the target is not <see cref="float.MaxValue"/>
     /// </summary>
     /// <param name="check">The <see langword="bool"/>-valued query being continued</param>
     /// <returns>A continuation of <paramref name="check"/> applying this operator. Implicitly converts to <see langword="bool"/>.</returns>
-    public static Check<float> IsNotMaxValue(this Check<float> check) =>
+    public static Check<float> NotMaxValue(this Check<float> check) =>
       check.That(t => t == float.MaxValue);
   }
 }
